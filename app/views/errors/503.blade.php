@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Application Error - Technic Solder</title>
+    <title>Application Error - Solder Pack</title>
 
     <link rel="shortcut icon" href="{{{ asset('favicon.ico') }}}">
     <link href="{{ URL::to('css/errors.css') }}" rel="stylesheet" type='text/css'>

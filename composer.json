@@ -1,7 +1,7 @@
 {
 	"name": "solder/solder",
 	"type": "application",
-	"description": "Technic Solder API using Laravel Framework",
+	"description": "Solder Pack API using Laravel Framework",
 	"keywords": ["technic", "solder", "api"],
 	"homepage": "https://github.com/TechnicPack/TechnicSolder",
 	"license": "MIT",

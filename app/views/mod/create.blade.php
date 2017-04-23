@@ -44,7 +44,7 @@
                 <div class="form-group">
                     <label for="donatelink">Author Donation Link</label>
                     <input type="text" class="form-control" name="donatelink" id="donatelink">
-                    <span class="help-block">This is only used by the official Technic Solder</span>
+                    <span class="help-block">This is only used by the official Solder Pack</span>
                 </div>
 
                 {{ Form::submit('Add Mod', array('class' => 'btn btn-success')) }}

@@ -16,7 +16,7 @@
     <form class="vertical-form" method="post" action="{{ URL::to('login') }}">
       <div style="margin:0;padding:0;display:inline;">
         <legend>
-        Technic Solder
+        Solder Pack
         </legend>
         @if (Session::has('login_failed'))
           <ul class="notice errors">
