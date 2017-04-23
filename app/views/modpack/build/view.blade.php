@@ -16,17 +16,47 @@
 		<a href="{{ URL::current() }}" class="btn btn-xs btn-warning">Refresh</a>
 		<a href="{{ URL::to('modpack/build/' . $build->id . '?action=edit') }}" class="btn btn-xs btn-danger">Edit</a>
 	    <a href="{{ URL::to('modpack/view/' . $build->modpack->id) }}" class="btn btn-xs btn-info">Back to Modpack</a>
+		<a href="{{ URL::to("modpack/add-build/".$build->modpack->id."?action=clone&build_id=$build->id") }}" class="btn btn-xs btn-success">Clone</a>
+
 	</div>
-	Build Info: {{ $build->modpack->name }} - Build {{ $build->version }}
+	Build Info: {{ $build->modpack->name }} - {{ $build->version }}
 	</div>
 	<div class="panel-body">
 		<div class="col-md-6">
-			<label>Build Version: <span class="label label-default">{{ $build->version }}</span></label><br>
+			<label>Build Version:
+				<span class="label label-default">{{ $build->version }}
+				</span></label><br>
 			<label>Minecraft Version: <span class="label label-default">{{ $build->minecraft }}</span></label><br>
+			<div class="form-inline">
+				<label for="latest">
+					Latest:
+				</label>
+				@if($build->modpack->latest == $build->version)
+					<span class="label label-default">Yes</span>
+				@else
+					<select onchange="update('latest', $(this).val())" id="latest" class="form-control">
+						<option>No</option>
+						<option value="{{$build->version}}">Yes</option>
+					</select>
+				@endif
+			</div>
 		</div>
 		<div class="col-md-6">
 			<label>Java Version: <span class="label label-default">{{ !empty($build->min_java) ? $build->min_java : 'Not Required'  }}</span></label><br>
 			<label>Memory (<i>in MB</i>): <span class="label label-default">{{ $build->min_memory != 0 ? $build->min_memory : 'Not Required' }}</span></label>
+			<div class="form-inline">
+				<label for="recommended">
+					Recommended:
+				</label>
+				@if($build->modpack->recommended == $build->version)
+					<span class="label label-default">Yes</span>
+				@else
+				<select onchange="update('recommended', $(this).val())" id="recommended" class="form-control">
+						<option>No</option>
+						<option value="{{$build->version}}">Yes</option>
+				</select>
+				@endif
+			</div>
 		</div>
 	</div>
 </div>
@@ -141,6 +171,37 @@ var $select = $("#mod-version").selectize({
 		});
 var modversion = $select[0].selectize;
 
+function update(key, value) {
+    var url = {
+        "latest": "{{URL::to("modpack/modify/latest")}}",
+		"recommended" : "{{URL::to("modpack/modify/recommended")}}"
+    };
+
+	var data = {
+        "build" : "{{ $build->id }}",
+        "action" : key,
+		"modpack" : "{{$build->modpack->id}}"
+	};
+	data[key] = value;
+    $.ajax({
+		type: "POST",
+		url: url[key],
+		data: data,
+        success: function (data) {
+            console.log(data);
+            if('success' in data){
+                $.jGrowl("Modpack updated", { group: 'alert-success' });
+                document.getElementById(key).outerHTML = "<span class='label label-default'>Yes</span>";
+            } else {
+                $.jGrowl("Unable to change settings", { group: 'alert-warning' });
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            $.jGrowl(textStatus + ': ' + errorThrown, { group: 'alert-danger' });
+        }
+	});
+}
+
 $(".mod-version").submit(function(e) {
 	e.preventDefault();
 	$.ajax({
@@ -148,7 +209,7 @@ $(".mod-version").submit(function(e) {
 		url: "{{ URL::to('modpack/modify/version') }}",
 		data: $(this).serialize(),
 		success: function (data) {
-			console.log(data.reason);
+			console.log(data);
 			if(data.status == 'success'){
 				$.jGrowl("Modversion Updated", { group: 'alert-success' });
 			} else if(data.status == 'failed') {

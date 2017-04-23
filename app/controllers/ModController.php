@@ -202,7 +202,7 @@ class ModController extends BaseController {
 
 	public function anyAddVersion()
 	{
-		if (Request::ajax())
+		if (Request::ajax() or true)
 		{
 			$mod_id = Input::get('mod-id');
 			$md5 = Input::get('add-md5');
@@ -219,6 +219,31 @@ class ModController extends BaseController {
 							'status' => 'error',
 							'reason' => 'Could not pull mod from database'
 							));
+
+            /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $file */
+			if ($file = Input::file('modfile')) {
+                $location = Config::get('solder.repo_location');
+                $dir = base_path() . "/$location/" . 'mods/'. $mod->name . '/';
+                $zipName = "$mod->name-$version.zip";
+
+                if (!is_dir($dir)) {
+                    if (is_file($dir))
+                        unlink($dir);
+                    mkdir($dir,0777,true);
+                }
+
+                if ($file->getClientOriginalExtension() == "jar") {
+                    $zip = new ZipArchive();
+                    if ($res=$zip->open("$dir/$zipName", ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE)==TRUE) {
+                        $zip->addFile($file->getRealPath(), "mods/$mod->name.jar");
+                        $zip->close();
+                    }else {
+                        Log::ERROR($res);
+                    }
+                }else{
+                    $file->move($dir, $zipName);
+                }
+            }
 
 			if (empty($md5)) {
 				$file_md5 = $this->mod_md5($mod,$version);
@@ -300,7 +325,7 @@ class ModController extends BaseController {
 	private function mod_md5($mod, $version)
 	{
 		$location = Config::get('solder.repo_location');
-		$URI = $location.'mods/'.$mod->name.'/'.$mod->name.'-'.$version.'.zip';
+		$URI = base_path() . "/" . $location. 'mods/'.$mod->name.'/'.$mod->name.'-'.$version.'.zip';
 
 		if (file_exists($URI)) {
 			Log::info('Found \'' . $URI . '\'');

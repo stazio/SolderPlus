@@ -33,7 +33,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ URL::to('dashboard') }}"><img src="{{ URL::asset('img/title.png') }}"> {{ SOLDER_VERSION }}</a>
+            <a class="navbar-brand" href="{{ URL::to('dashboard') }}"><img src="{{ URL::asset('img/title.png') }}"><img height="25px" src="{{ URL::asset('img/plus.ico') }}"> {{ SOLDER_VERSION }}</a>
         </div>
         <ul class="nav navbar-top-links navbar-left">
           @if (Cache::get('update'))
@@ -105,9 +105,9 @@
                       <li>
                           <a href="{{ URL::to('solder/configure') }}">Main Settings</a>
                       </li>
-                      <li>
+                      {{--<li>
                           <a href="{{ URL::to('solder/update') }}">Update Checker</a>
-                      </li>
+                      </li>--}}
                       <li>
                           <a href="{{ URL::to('user/list') }}">User Management</a>
                       </li>

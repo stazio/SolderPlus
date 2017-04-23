@@ -11,6 +11,7 @@
 	Create New Build ({{ $modpack->name }})
 	</div>
 	<div class="panel-body">
+
 		@if ($errors->all())
 			<div class="alert alert-danger">
 			@foreach ($errors->all() as $error)
@@ -32,7 +33,9 @@
 					<label for="version">Minecraft Version</label>
 					<select class="form-control" name="minecraft">
 						@foreach ($minecraft as $version)
-						<option value="{{ $version['version'] }}">{{ $version['version'] }}</option>
+						<option value="{{ $version['version'] }}"
+								{{($buildS and $buildS->minecraft == $version['version']) ? "selected" : ""}}
+						>{{ $version['version'] }}</option>
 						@endforeach
 					</select>
 				</div>
@@ -41,7 +44,7 @@
 					<select class="form-control" name="clone">
 						<option value="">Do not clone</option>
 						@foreach ($modpack->builds as $build)
-							<option value="{{ $build->id }}">{{ $build->version }}</option>
+							<option value="{{ $build->id }}" {{($buildS and $buildS->id == $build->id) ? "selected" : ""}}>{{ $build->version }}</option>
 						@endforeach
 					</select>
 					<p class="help-block">This will clone all the mods and mod versions of another build in this pack.</p>
@@ -54,19 +57,23 @@
 				<div class="form-group">
 					<label for="java-version">Minimum Java Version</label>
 					<select class="form-control" name="java-version" id="java-version">
-						<option value="1.8">Java 1.8</option>
-						<option value="1.7">Java 1.7</option>
-						<option value="1.6">Java 1.6</option>
-						<option value="">No Requirement</option>
+						<option value="1.8" {{($buildS and $buildS->min_java == "1.8")  ? "selected" : ""}}>Java 1.8</option>
+						<option value="1.7" {{($buildS and $buildS->min_java == "1.7")  ? "selected" : ""}}>Java 1.7</option>
+						<option value="1.6" {{($buildS and $buildS->min_java == "1.6")  ? "selected" : ""}}>Java 1.6</option>
+						<option value="" 	{{($buildS and $buildS->min_java == null) ? "selected" : ""}}>No Requirement</option>
 					</select>
 				</div>
 				<div class="form-group">
 					<label for="memory">Minimum Memory (<i>in MB</i>)</label>
 					<div class="input-group">
 						<span class="input-group-addon">
-							<input type="checkbox" id="memory-enabled" name="memory-enabled" aria-label="mb">
+							<input  {{($buildS and $buildS->min_memory > 0) ? "checked" : ""}}
+
+									type="checkbox" id="memory-enabled" name="memory-enabled" aria-label="mb">
 						</span>
-						<input disabled type="text" class="form-control" name="memory" id="memory" aria-label="mb" aria-describedby="addon-mb">
+						<input {{($buildS and $buildS->min_memory > 0) ? "" : "disabled"}}
+							   type="text" class="form-control" name="memory"
+							   id="memory" aria-label="mb" aria-describedby="addon-mb" value="{{($buildS and $buildS->min_memory > 0) ? $buildS->min_memory : ""}}">
 						<span class="input-group-addon" id="addon-mb">MB</span>
 					</div>
 					<p class="help-block">Check the checkbox to enable the memory requirement.</p>

@@ -47,7 +47,55 @@
 						<span class="help-block">Private modpacks will only be available to clients that are linked to this modpack. You can link clients below. You can also individually mark builds as private.</span>
 					</div>
 				</div>
-				@if ($modpack->private || $modpack->private_builds())
+				<div class="control-group">
+					<label class="control-label" for="build">Latest Build</label>
+					<div class="controls">
+						<select name="latest" id="">
+							@if ($modpack->latest != "null")
+								<option value="{{$modpack->latest}}">
+									{{$modpack->latest}}
+								</option>
+							@else
+								<option value="null" selected>None</option>
+							@endif
+
+							@foreach($modpack->builds as $build)
+								@if ($modpack->latest != $build->latest)
+									<option value="{{$build->version}}">
+										{{$build->version}}
+									</option>
+								@endif
+							@endforeach
+						</select>
+						<span class="help-block">This is what build will be downloaded if you select "Latest Version" in the Technic Launcher.</span>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="build">Recommended Build</label>
+					<div class="controls">
+						<select name="recommended" id="">
+							@if ($modpack->recommended != "null")
+								<option value="{{$modpack->recommended}}">
+									{{$modpack->recommended}}
+								</option>
+							@else
+								<option value="null" selected>None</option>
+							@endif
+
+							@foreach($modpack->builds as $build)
+								@if ($modpack->recommended != $build->version)
+									<option value="{{$build->version}}">
+										{{$build->version}}
+									</option>
+								@endif
+							@endforeach
+						</select>
+						<span class="help-block">This is what build will be downloaded by default.</span>
+					</div>
+				</div>
+
+			@if ($modpack->private || $modpack->private_builds())
 				<hr>
 				<h3>Client Access</h3>
 				<p>Check the clients below you want to have access to this modpack if anything is set to private.</p>

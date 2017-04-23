@@ -5,7 +5,7 @@
 @section('content')
 <div class="page-header">
 <h1>Solder Dashboard</h1>
-<p class="lead">Welcome to Technic Solder!</p>
+<p class="lead">Welcome to Solder Plus!</p>
 </div>
 @if (Session::has('permission'))
 <div class="alert alert-danger">
@@ -94,7 +94,7 @@
 				</table>
 			</div>
 		</div>
-	</div>
+	</div>{{--
 	<div class="panel panel-default">
 		<div class="panel-heading" role="tab" id="changelogHeading">
 		<h3 class="panel-title">
@@ -103,6 +103,7 @@
 			</a>
 		</h3>
 		</div>
+
 		<div id="changelog" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="changelogHeading">
 			<div class="panel-body">
 				<p><strong>{{SOLDER_VERSION}}</strong></p>
@@ -118,6 +119,6 @@
 			</div>
 		</div>
 	</div>
-</div>
-<p>TechnicSolder is an open source project. It is under the MIT license. Source Code: <a href="https://github.com/TechnicPack/TechnicSolder" target="_blank">https://github.com/TechnicPack/TechnicSolder</a></p>
+</div>--}}
+<p>SolderPlus is based on Technic Solder, both of which are open source projects. They are both under the MIT license. Source Code: <a href="https://github.com/stazio/SolderPlus" target="_blank">https://github.com/stazio/SolderPlus</a></p>
 @endsection

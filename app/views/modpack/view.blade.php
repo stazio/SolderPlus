@@ -47,7 +47,11 @@
 					<td><input type="checkbox" name="published" value="1" class="published" rel="{{ $build->id }}"{{ ($build->is_published ? " checked" : "") }}></td>
 					<td><input type="checkbox" name="private" value="1" class="private" rel="{{ $build->id }}"{{ ($build->private ? " checked" : "") }}></td>
 					<td>{{ $build->created_at }}</td>
-					<td>{{ HTML::link('modpack/build/'.$build->id, "Manage",'class="btn btn-xs btn-primary"') }} {{ HTML::link('modpack/build/'.$build->id.'?action=edit', "Edit",'class="btn btn-xs btn-warning"') }} {{ HTML::link('modpack/build/'.$build->id.'?action=delete', "Delete",'class="btn btn-xs btn-danger"') }}</td>
+					<td>{{ HTML::link('modpack/build/'.$build->id, "Manage",'class="btn btn-xs btn-primary"') }}
+						{{ HTML::link('modpack/build/'.$build->id.'?action=edit', "Settings",'class="btn btn-xs btn-warning"') }}
+						{{ HTML::link('modpack/build/'.$build->id.'?action=delete', "Delete",'class="btn btn-xs btn-danger"') }}
+						{{ HTML::link("modpack/add-build/$modpack->id?action=clone&build_id=$build->id", "Clone",'class="btn btn-xs btn-success"') }}
+					</td>
 				</tr>
 			@endforeach
 			</tbody>

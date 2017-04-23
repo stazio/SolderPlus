@@ -112,10 +112,17 @@ class ModpackController extends BaseController {
 
 		$minecraft = MinecraftUtils::getMinecraft();
 
+		$build = null;
+		if (Input::get('action') == 'clone') {
+		    $build_id = Input::get('build_id');
+		    $build = Build::where('id', $build_id)->get();
+        }
+
 		return View::make('modpack.build.create')
 			->with(array(
 				'modpack' => $modpack,
-				'minecraft' => $minecraft
+				'minecraft' => $minecraft,
+                'buildS' => $build ? $build[0] : null
 				));
 	}
 
@@ -172,7 +179,6 @@ class ModpackController extends BaseController {
 
 	public function postCreate()
 	{
-
 		$rules = array(
 			'name' => 'required|unique:modpacks',
 			'slug' => 'required|unique:modpacks'
@@ -285,6 +291,8 @@ class ModpackController extends BaseController {
 		$modpack->slug = Input::get('slug');
 		$modpack->hidden = Input::get('hidden') ? true : false;
 		$modpack->private = Input::get('private') ? true : false;
+		$modpack->latest = Input::get('latest');
+		$modpack->recommended = Input::get('recommended');
 		$modpack->save();
 
 		$useS3 = Config::get('solder.use_s3') ? true : false;
@@ -586,6 +594,7 @@ class ModpackController extends BaseController {
 
 		switch ($action)
 		{
+
 			case "version":
 				$version_id = Input::get('version');
 				$modversion_id = Input::get('modversion_id');

@@ -5,10 +5,10 @@ class BaseController extends Controller {
 	public function __construct()
 	{
 		if(!defined('SOLDER_STREAM')) {
-			define('SOLDER_STREAM', 'DEV');
+			define('SOLDER_STREAM', 'STAZ');
 		}
 		if(!defined('SOLDER_VERSION')) {
-			define('SOLDER_VERSION', 'v0.7.3.1');
+			define('SOLDER_VERSION', 'v1.0.0');
 		}
 
 		UpdateUtils::init();
