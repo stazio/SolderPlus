@@ -28,7 +28,7 @@
 				<hr>
 				<div class="form-group">
 		            <label for="version">Build Number</label>
-		            <input type="text" class="form-control" name="version" id="version"  value="{{ $build->version }}">
+		            <input type="text" class="form-control" name="version" id="version" value="{{ $build->version }}">
 		        </div>
 		        <div class="form-group">
 		            <label for="version">Minecraft Version</label>
@@ -76,7 +76,7 @@
 @section('bottom')
 <script type="text/javascript">
 $('#memory-enabled').change(function(){
-    if ($('#memory-enabled').is(':checked') == true){
+    if ($('#memory-enabled').is(':checked')){
         $('#memory').prop('disabled', false);
     } else {
         $('#memory').val('').prop('disabled', true);

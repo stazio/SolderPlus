@@ -701,6 +701,8 @@ class ModpackController extends BaseController {
 				return Response::json(array(
 						"success" => "Updated build ".$build->version."'s private status.",
 					));
+            default:
+                return Response::view('errors.missing', array(), 404);
 		}
 	}
 }

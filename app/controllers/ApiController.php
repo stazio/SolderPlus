@@ -47,6 +47,7 @@ class APIController extends BaseController {
 	{
 		return Response::json(array(
 				'api'     => 'TechnicSolder',
+				'is_plus' => true,
 				'version' => SOLDER_VERSION,
 				'stream' => SOLDER_STREAM
 				));
@@ -102,6 +103,7 @@ class APIController extends BaseController {
 					$response['mods'][$mod->name] = $mod-> pretty_name;
 				}
 				//usort($response['mod'], function($a, $b){return strcasecmp($a['name'], $b['name']);});
+				if (isset($response['mods']))
 				Cache::put('modlist',$response['mods'],5);
 			}
 			return Response::json($response);

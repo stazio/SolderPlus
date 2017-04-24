@@ -34,11 +34,21 @@
 				@if($build->modpack->latest == $build->version)
 					<span class="label label-default">Yes</span>
 				@else
-					<select onchange="update('latest', $(this).val())" id="latest" class="form-control">
+					<select onchange="update('latest', $(this).val())" id="latest"
+							class="form-control input-sm">
 						<option>No</option>
 						<option value="{{$build->version}}">Yes</option>
 					</select>
 				@endif
+			</div>
+			<div class="form-inline">
+				<label for="published">
+					Published:
+				</label>
+				<select onchange="update('published', $(this).val())" id="published" class="form-control input-sm keep-select">
+					<option value="1"  {{$build->is_published == true ? "selected" : ""}}>Yes</option>
+					<option value="0" {{$build->is_published != true ? "selected" : ""}}>No</option>
+				</select>
 			</div>
 		</div>
 		<div class="col-md-6">
@@ -51,7 +61,8 @@
 				@if($build->modpack->recommended == $build->version)
 					<span class="label label-default">Yes</span>
 				@else
-				<select onchange="update('recommended', $(this).val())" id="recommended" class="form-control">
+				<select onchange="update('recommended', $(this).val())" id="recommended"
+						class="form-control input-sm">
 						<option>No</option>
 						<option value="{{$build->version}}">Yes</option>
 				</select>
@@ -66,17 +77,27 @@
 	</div>
 	<div class="panel-body">
 		<div class="table-responsive">
-		<table class="table">
+			<form method="post" action="{{ URL::to('modpack/build/modify') }}" class="mod-add">
+
+			<table class="table">
 			<thead>
+				<tr>
 				<th style="width: 60%">Add a Mod</th>
 				<th></th>
 				<th></th>
+				</tr>
 			</thead>
 			<tbody>
-			<form method="post" action="{{ URL::to('modpack/build/modify') }}" class="mod-add">
 			<input type="hidden" name="build" value="{{ $build->id }}">
 			<input type="hidden" name="action" value="add">
 			<tr id="mod-list-add">
+				@if(Mod::all()->isEmpty())
+					<td>
+						No Mods Found.
+						{{HTML::link('mod/create', 'Add A Mod', ['class' => 'btn btn-success btn-sm'])}}
+					</td>
+
+					@else
 				<td>
 					<i class="icon-plus"></i>
 					<select class="form-control" name="mod-name" id="mod" placeholder="Select a Mod...">
@@ -92,24 +113,27 @@
 				<td>
 					<button type="submit" class="btn btn-success btn-small">Add Mod</button>
 				</td>
+				@endif
 			</tr>
-			</form>
 			</tbody>
 		</table>
+			</form>
 		</div>
 	</div>
 </div>
 <div class="panel panel-default">
 	<div class="panel-heading">
-	Build Management: {{ $build->modpack->name }} - Build {{ $build->version }}
+	Build Management: {{ $build->modpack->name }} - {{ $build->version }}
 	</div>
 	<div class="panel-body">
 		<div class="table-responsive">
 		<table class="table" id="mod-list">
 			<thead>
+			<tr>
 				<th id="mod-header" style="width: 60%">Mod Name</th>
 				<th>Version</th>
 				<th></th>
+			</tr>
 			</thead>
 			<tbody>
 				@foreach ($build->modversions->sortByDesc('build_id', SORT_NATURAL) as $ver)
@@ -150,152 +174,158 @@
 @endsection
 @section('bottom')
 <script type="text/javascript">
-var $select = $("#mod").selectize({
-			dropdownParent: "body",
-			persist: false,
-			maxItems: 1,
-			sortField: {
-				field: 'text',
-				direction: 'asc'
-			},
-		});
-var mod = $select[0].selectize;
-var $select = $("#mod-version").selectize({
-			dropdownParent: "body",
-			persist: false,
-			maxItems: 1,
-			sortField: {
-					field: 'text',
-					direction: 'asc'
-				},
-		});
-var modversion = $select[0].selectize;
-
-function update(key, value) {
-    var url = {
-        "latest": "{{URL::to("modpack/modify/latest")}}",
-		"recommended" : "{{URL::to("modpack/modify/recommended")}}"
-    };
-
-	var data = {
-        "build" : "{{ $build->id }}",
-        "action" : key,
-		"modpack" : "{{$build->modpack->id}}"
-	};
-	data[key] = value;
-    $.ajax({
-		type: "POST",
-		url: url[key],
-		data: data,
-        success: function (data) {
-            console.log(data);
-            if('success' in data){
-                $.jGrowl("Modpack updated", { group: 'alert-success' });
-                document.getElementById(key).outerHTML = "<span class='label label-default'>Yes</span>";
-            } else {
-                $.jGrowl("Unable to change settings", { group: 'alert-warning' });
-            }
+if($("#mod").length) {
+    var $select = $("#mod").selectize({
+        dropdownParent: "body",
+        persist: false,
+        maxItems: 1,
+        sortField: {
+            field: 'text',
+            direction: 'asc'
         },
-        error: function (xhr, textStatus, errorThrown) {
-            $.jGrowl(textStatus + ': ' + errorThrown, { group: 'alert-danger' });
+    });
+    var mod = $select[0].selectize;
+    var $select = $("#mod-version").selectize({
+        dropdownParent: "body",
+        persist: false,
+        maxItems: 1,
+        sortField: {
+            field: 'text',
+            direction: 'asc'
+        },
+    });
+    var modversion = $select[0].selectize;
+
+    function update(key, value) {
+        var url = {
+            "latest": "{{URL::to("modpack/modify/latest")}}",
+            "recommended": "{{URL::to("modpack/modify/recommended")}}",
+            "published": "{{URL::to("modpack/modify/published")}}"
+        };
+
+        var data = {
+            "build": "{{ $build->id }}",
+            "action": key,
+            "modpack": "{{$build->modpack->id}}"
+        };
+        data[key] = value;
+        $.ajax({
+            type: "POST",
+            url: url[key],
+            data: data,
+            success: function (data) {
+                console.log(data);
+                if ('success' in data) {
+                    $.jGrowl("Modpack updated", {group: 'alert-success'});
+                    if (!$("#" + key).hasClass('keep-select'))
+                        document.getElementById(key).outerHTML = "<span class='label label-default'>Yes</span>";
+                } else {
+                    $.jGrowl("Unable to change settings", {group: 'alert-warning'});
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $.jGrowl(textStatus + ': ' + errorThrown, {group: 'alert-danger'});
+            }
+        });
+    }
+
+    $(".mod-version").submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "{{ URL::to('modpack/modify/version') }}",
+            data: $(this).serialize(),
+            success: function (data) {
+                console.log(data);
+                if (data.status == 'success') {
+                    $.jGrowl("Modversion Updated", {group: 'alert-success'});
+                } else if (data.status == 'failed') {
+                    $.jGrowl("Unable to update modversion", {group: 'alert-warning'});
+                } else if (data.status == 'aborted') {
+                    $.jGrowl("Mod was already set to that version", {group: 'alert-success'});
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $.jGrowl(textStatus + ': ' + errorThrown, {group: 'alert-danger'});
+            }
+        });
+    });
+
+    $(".mod-delete").submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "{{ URL::to('modpack/modify/delete') }}",
+            data: $(this).serialize(),
+            success: function (data) {
+                console.log(data.reason);
+                if (data.status == 'success') {
+                    $.jGrowl("Modversion Deleted", {group: 'alert-success'});
+                } else {
+                    $.jGrowl("Unable to delete modversion", {group: 'alert-warning'});
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $.jGrowl(textStatus + ': ' + errorThrown, {group: 'alert-danger'});
+            }
+        });
+        $(this).parent().parent().fadeOut();
+    });
+
+    $(".mod-add").submit(function (e) {
+        e.preventDefault();
+        if ($("#mod-version").val()) {
+            $.ajax({
+                type: "POST",
+                url: "{{ URL::to('modpack/modify/add') }}",
+                data: $(this).serialize(),
+                success: function (data) {
+                    if (data.status == 'success') {
+                        $("#mod-list-add").after('<tr><td>' + data.pretty_name + '</td><td>' + data.version + '</td><td></td></tr>');
+                        $.jGrowl("Mod " + data.pretty_name + " added at " + data.version, {group: 'alert-success'});
+                    } else {
+                        $.jGrowl("Unable to add mod. Reason: " + data.reason, {group: 'alert-warning'});
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    $.jGrowl(textStatus + ': ' + errorThrown, {group: 'alert-danger'});
+                }
+            });
+        } else {
+            $.jGrowl("Please select a Modversion", {group: 'alert-warning'});
         }
+    });
+
+    function refreshModVersions() {
+        modversion.disable();
+        modversion.clearOptions();
+        $.ajax({
+            type: "GET",
+            url: "{{ URL::to('api/mod/') }}/" + mod.getValue(),
+            success: function (data) {
+                if (data.versions.length === 0) {
+                    $.jGrowl("No Modversions found for " + data.pretty_name, {group: 'alert-warning'});
+                    $("#mod-version").attr("placeholder", "No Modversions found...");
+                } else {
+                    $(data.versions).each(function (e, m) {
+                        modversion.addOption({value: m, text: m});
+                        modversion.refreshOptions(false);
+                        $("#mod-version").attr("placeholder", "Select a Modversion...");
+                    });
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $.jGrowl(textStatus + ': ' + errorThrown, {group: 'alert-danger'});
+            }
+        });
+        modversion.enable();
+    }
+
+    mod.on('change', refreshModVersions);
+    $(document).ready(function(){
+        refreshModVersions();
 	});
 }
-
-$(".mod-version").submit(function(e) {
-	e.preventDefault();
-	$.ajax({
-		type: "POST",
-		url: "{{ URL::to('modpack/modify/version') }}",
-		data: $(this).serialize(),
-		success: function (data) {
-			console.log(data);
-			if(data.status == 'success'){
-				$.jGrowl("Modversion Updated", { group: 'alert-success' });
-			} else if(data.status == 'failed') {
-				$.jGrowl("Unable to update modversion", { group: 'alert-warning' });
-			} else if(data.status == 'aborted') {
-				$.jGrowl("Mod was already set to that version", { group: 'alert-success' });
-			}
-		},
-		error: function (xhr, textStatus, errorThrown) {
-			$.jGrowl(textStatus + ': ' + errorThrown, { group: 'alert-danger' });
-		}
-	});
-});
-
-$(".mod-delete").submit(function(e) {
-	e.preventDefault();
-	$.ajax({
-		type: "POST",
-		url: "{{ URL::to('modpack/modify/delete') }}",
-		data: $(this).serialize(),
-		success: function (data) {
-			console.log(data.reason);
-			if(data.status == 'success'){
-				$.jGrowl("Modversion Deleted", { group: 'alert-success' });
-			} else {
-				$.jGrowl("Unable to delete modversion", { group: 'alert-warning' });
-			}
-		},
-		error: function (xhr, textStatus, errorThrown) {
-			$.jGrowl(textStatus + ': ' + errorThrown, { group: 'alert-danger' });
-		}
-	});
-	$(this).parent().parent().fadeOut();
-});
-
-$(".mod-add").submit(function(e) {
-	e.preventDefault();
-	if($("#mod-version").val()){
-		$.ajax({
-			type: "POST",
-			url: "{{ URL::to('modpack/modify/add') }}",
-			data: $(this).serialize(),
-			success: function (data) {
-				if(data.status == 'success'){
-					$("#mod-list-add").after('<tr><td>' + data.pretty_name + '</td><td>' + data.version + '</td><td></td></tr>');
-					$.jGrowl("Mod " + data.pretty_name + " added at " + data.version, { group: 'alert-success' });
-				} else {
-					$.jGrowl("Unable to add mod. Reason: " + data.reason, { group: 'alert-warning' });
-				}
-			},
-			error: function (xhr, textStatus, errorThrown) {
-				$.jGrowl(textStatus + ': ' + errorThrown, { group: 'alert-danger' });
-			}
-		});
-	} else {
-		$.jGrowl("Please select a Modversion", { group: 'alert-warning'});
-	}
-});
-
-function refreshModVersions() {
-	modversion.disable();
-	modversion.clearOptions();
-	$.ajax({
-		type: "GET",
-		url: "{{ URL::to('api/mod/') }}/" + mod.getValue(),
-		success: function (data) {
-			if (data.versions.length === 0){
-				$.jGrowl("No Modversions found for " + data.pretty_name, { group: 'alert-warning' });
-				$("#mod-version").attr("placeholder", "No Modversions found...");
-			} else {
-				$(data.versions).each(function(e, m) {
-					modversion.addOption({value: m, text: m});
-					modversion.refreshOptions(false);
-					$("#mod-version").attr("placeholder", "Select a Modversion...");
-				});
-			}
-		},
-		error: function (xhr, textStatus, errorThrown) {
-			$.jGrowl(textStatus + ': ' + errorThrown, { group: 'alert-danger' });
-		}
-	});
-	modversion.enable();
-}
-
-mod.on('change', refreshModVersions);
-
 $( document ).ready(function() {
 	$("#mod-list").dataTable({
     	"order": [[ 0, "asc" ]],
@@ -305,7 +335,6 @@ $( document ).ready(function() {
 			{ "width": "30%", "targets": 1 }
 		]
     });
-    refreshModVersions();
 });
 </script>
 @endsection
