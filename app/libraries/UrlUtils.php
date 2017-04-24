@@ -2,12 +2,12 @@
 
 class UrlUtils {
 
-	/**
-	 * Initializes a cURL session with common options
-	 * @param  String $url
-	 * @param  int $timeout
-	 * @return resource
-	 */
+    /**
+     * Initializes a cURL session with common options
+     * @param  String $url
+     * @return resource
+     * @internal param int $timeout
+     */
 	private static function curl_init($url)
 	{
 		$ch = curl_init($url);
@@ -47,9 +47,10 @@ class UrlUtils {
 	/**
 	 * Gets URL contents and returns them
 	 * @param  String $url
+     * @param  $something mixed TODO Wut. (MinecraftUtils::checkRemoteFile uses 2 params???)
 	 * @return String
 	 */
-	public static function get_url_contents($url)
+	public static function get_url_contents($url, $something)
 	{
 		$ch = self::curl_init($url);
 

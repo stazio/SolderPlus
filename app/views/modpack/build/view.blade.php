@@ -175,26 +175,25 @@
 @section('bottom')
 <script type="text/javascript">
 if($("#mod").length) {
-    var $select = $("#mod").selectize({
+    var mod = $("#mod").selectize({
         dropdownParent: "body",
         persist: false,
         maxItems: 1,
         sortField: {
             field: 'text',
             direction: 'asc'
-        },
-    });
-    var mod = $select[0].selectize;
-    var $select = $("#mod-version").selectize({
+        }
+    })[0].selectize;
+
+    var modversion = $("#mod-version").selectize({
         dropdownParent: "body",
         persist: false,
         maxItems: 1,
         sortField: {
             field: 'text',
             direction: 'asc'
-        },
-    });
-    var modversion = $select[0].selectize;
+        }
+    })[0].selectize;
 
     function update(key, value) {
         var url = {
@@ -280,7 +279,7 @@ if($("#mod").length) {
                 url: "{{ URL::to('modpack/modify/add') }}",
                 data: $(this).serialize(),
                 success: function (data) {
-                    if (data.status == 'success') {
+                    if (data.status === 'success') {
                         $("#mod-list-add").after('<tr><td>' + data.pretty_name + '</td><td>' + data.version + '</td><td></td></tr>');
                         $.jGrowl("Mod " + data.pretty_name + " added at " + data.version, {group: 'alert-success'});
                     } else {

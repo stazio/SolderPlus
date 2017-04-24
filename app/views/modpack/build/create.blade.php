@@ -90,7 +90,7 @@
 @section('bottom')
 <script type="text/javascript">
 $('#memory-enabled').change(function(){
-    if ($('#memory-enabled').is(':checked') == true){
+    if ($('#memory-enabled').is(':checked') === true){
         $('#memory').prop('disabled', false);
     } else {
         $('#memory').val('').prop('disabled', true);

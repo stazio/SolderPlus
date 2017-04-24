@@ -49,7 +49,8 @@ Log::useFiles(storage_path().'/logs/'. $logFile);
 |
 */
 
-App::error(function(Exception $exception, $code)
+App::error(/** @noinspection PhpInconsistentReturnPointsInspection */
+function(Exception $exception, $code)
 {
 	Log::error($exception);
 
@@ -58,7 +59,8 @@ App::error(function(Exception $exception, $code)
 	}
 });
 
-App::fatal(function(Exception $exception)
+App::fatal(/** @noinspection PhpInconsistentReturnPointsInspection */
+function(Exception $exception)
 {
 	Log::error($exception);
 

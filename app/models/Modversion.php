@@ -25,5 +25,3 @@ class Modversion extends Eloquent {
 		return number_format($size)." bytes";
 	}
 }
-
-?>

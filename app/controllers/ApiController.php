@@ -53,7 +53,7 @@ class APIController extends BaseController {
 				));
 	}
 
-	public function getModpack($modpack = null, $build = null)
+    public function getModpack($modpack = null, $build = null)
 	{
 		if (empty($modpack))
 		{
@@ -62,6 +62,7 @@ class APIController extends BaseController {
 				$include = Input::get('include');
 				switch ($include)
 				{
+					default:
 					case "full":
 						$modpacks = $this->fetchModpacks();
 						$m_array = array();
@@ -79,8 +80,7 @@ class APIController extends BaseController {
 			} else {
 				return Response::json($this->fetchModpacks());
 			}
-		}
-		else {
+		} else {
 			if (empty($build))
 				return Response::json($this->fetchModpack($modpack));
 			else
@@ -377,5 +377,3 @@ class APIController extends BaseController {
 	}
 
 }
-
-?>

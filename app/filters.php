@@ -38,7 +38,8 @@ App::missing(function($exception)
 |
 */
 
-Route::filter('auth', function()
+Route::filter('auth', /** @noinspection PhpInconsistentReturnPointsInspection */
+function()
 {
 	if (Auth::guest()) return Redirect::guest('login');
 });
@@ -59,7 +60,8 @@ Route::filter('auth.basic', function()
 |
 */
 
-Route::filter('guest', function()
+Route::filter('guest', /** @noinspection PhpInconsistentReturnPointsInspection */
+function()
 {
 	if (Auth::check()) return Redirect::to('/');
 });
@@ -83,7 +85,8 @@ Route::filter('csrf', function()
 	}
 });
 
-Route::filter('solder_users', function()
+Route::filter('solder_users', /** @noinspection PhpInconsistentReturnPointsInspection */
+function()
 {
 	$user = Request::segment(3);
 	$action = Request::segment(2);
@@ -107,7 +110,8 @@ Route::filter('solder_users', function()
 	}
 });
 
-Route::filter('solder_keys', function()
+Route::filter('solder_keys', /** @noinspection PhpInconsistentReturnPointsInspection */
+function()
 {
 	$perm = Auth::user()->permission;
 	$perm = $perm['attributes'];
@@ -118,7 +122,8 @@ Route::filter('solder_keys', function()
 	}
 });
 
-Route::filter('solder_clients', function()
+Route::filter('solder_clients', /** @noinspection PhpInconsistentReturnPointsInspection */
+function()
 {
 	$perm = Auth::user()->permission;
 	$perm = $perm['attributes'];
@@ -129,7 +134,8 @@ Route::filter('solder_clients', function()
 	}
 });
 
-Route::filter('solder_modpacks', function()
+Route::filter('solder_modpacks', /** @noinspection PhpInconsistentReturnPointsInspection */
+function()
 {
 	$check = '';
 	switch(Request::segment(2)){
@@ -152,7 +158,8 @@ Route::filter('solder_modpacks', function()
 	}
 });
 
-Route::filter('solder_mods', function()
+Route::filter('solder_mods', /** @noinspection PhpInconsistentReturnPointsInspection */
+function()
 {
 	$check = '';
 	switch(Request::segment(2)){
@@ -184,7 +191,8 @@ Route::filter('solder_mods', function()
 	}
 });
 
-Route::filter('modpack', function()
+Route::filter('modpack', /** @noinspection PhpInconsistentReturnPointsInspection */
+function()
 {
 	$modpack = Request::segment(3);
 	$perm = Auth::user()->permission;
@@ -199,7 +207,8 @@ Route::filter('modpack', function()
 	}
 });
 
-Route::filter('build', function()
+Route::filter('build', /** @noinspection PhpInconsistentReturnPointsInspection */
+function()
 {
 	$buildId = Request::segment(3);
 	$build = Build::find($buildId);

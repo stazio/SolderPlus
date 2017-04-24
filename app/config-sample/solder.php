@@ -62,5 +62,3 @@ return array(
 	 */
 	'bucket' => 'solder',
 );
-
-?>

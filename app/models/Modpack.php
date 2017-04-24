@@ -25,5 +25,3 @@ class Modpack extends Eloquent {
 		return $private;
 	}
 }
-
-?>

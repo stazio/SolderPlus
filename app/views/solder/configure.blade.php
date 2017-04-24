@@ -97,7 +97,6 @@
 
                 <p>You can change these settings in <strong>app/config/solder.php</strong></p>
             </div>
-        </span>
     </div>
 @endsection
 @section('bottom')
@@ -110,7 +109,7 @@ $('#minecraft-cache').click(function(e) {
         type: "GET",
         url: "{{ URL::to('solder/cache-minecraft/') }}/",
         success: function (data) {
-            if (data.status == "success") {
+            if (data.status === "success") {
                 console.log(data.reason);
                 $("#minecraft-ajax").removeClass("alert-warning alert-success alert-danger").addClass("alert-success").html('Minecraft version caching complete.');
                 $("#minecraft-cache").html('Update Cache');
