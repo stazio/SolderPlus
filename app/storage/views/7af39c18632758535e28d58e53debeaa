@@ -1,0 +1,68 @@
+<?php $__env->startSection('title'); ?>
+    <title>Create Mod - TechnicSolder</title>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+<div class="page-header">
+<h1>Mod Library</h1>
+</div>
+<div class="panel panel-default">
+	<div class="panel-heading">
+	Add Mod
+	</div>
+	<div class="panel-body">
+		<?php if($errors->all()): ?>
+            <div class="alert alert-danger">
+            <?php foreach($errors->all() as $error): ?>
+                <?php echo $error; ?><br />
+            <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+		<form method="post" action="<?php echo URL::to('mod/create'); ?>">
+		<div class="row">
+			<div class="col-md-offset-3 col-md-6">
+				<div class="form-group">
+                    <label for="pretty_name">Mod Name</label>
+                    <input type="text" class="form-control" name="pretty_name" id="pretty_name">
+                </div>
+                <div class="form-group">
+                    <label for="name">Mod Slug</label>
+                    <input type="text" class="form-control" name="name" id="name">
+                </div>
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <input type="text" class="form-control" name="author" id="author">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea name="description" id="description" class="form-control" rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="link">Mod Website</label>
+                    <input type="text" class="form-control" name="link" id="link">
+                </div>
+                <div class="form-group">
+                    <label for="donatelink">Author Donation Link</label>
+                    <input type="text" class="form-control" name="donatelink" id="donatelink">
+                    <span class="help-block">This is only used by the official Solder Pack</span>
+                </div>
+
+                <?php echo Form::submit('Add Mod', array('class' => 'btn btn-success')); ?>
+
+                <?php echo HTML::link('mod/list/', 'Go Back', array('class' => 'btn btn-primary')); ?>
+
+			</div>
+		</div>
+		</form>
+	</div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('bottom'); ?>
+<script type="text/javascript">
+$("#name").slugify('#pretty_name');
+$(".modslug").slugify("#pretty_name");
+$("#name").keyup(function() {
+	$(".modslug").html($(this).val());
+});
+</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts/master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

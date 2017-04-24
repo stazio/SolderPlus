@@ -1,0 +1,25 @@
+<?php $__env->startSection('title'); ?>
+    <title>Delete User - TechnicSolder</title>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+<div class="page-header">
+<h1>User Management</h1>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+    	<h3 style="margin-top:10px;">Delete User (<?php echo $user->username; ?> <?php echo Auth::user()->id == $user->id ? "<i class='text-warning'>That's you!</i>" : ""; ?>)</h3>
+    </div>
+    <div class="panel-body">
+    	<p>This will immediately remove the user from Solder.<br>Are you sure you want to remove <strong><?php echo $user->username; ?></strong>?</p>
+		<?php if(Auth::user()->id == $user->id): ?>
+			<p class="alert alert-danger" style="display: inline-block;">You are about to delete yourself. If you do this, you will no longer be able to access Solder.</p>
+		<?php endif; ?>
+		<form method="post" action="<?php echo URL::current(); ?>">
+			<button type="submit" class="btn btn-danger">Confirm Deletion</button> 
+			<?php echo HTML::link('user/list/', 'Go Back', array('class' => 'btn btn-primary')); ?>
+
+		</form>
+	</div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts/master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,23 @@
+<?php $__env->startSection('title'); ?>
+    <title><?php echo $build->version; ?> - <?php echo $build->modpack->name; ?> - TechnicSolder</title>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+<h1>Build Management</h1>
+<hr>
+<div class="panel panel-default">
+	<div class="panel-heading">
+	Delete request for build <?php echo $build->version; ?> (<?php echo $build->modpack->name; ?>)
+	</div>
+	<div class="panel-body">
+		<p>Are you sure you want to delete this build? This action is irreversible!</p>
+		<form method="post" action="<?php echo URL::full(); ?>">
+			<input type="hidden" name="confirm-delete" value="1">
+			<?php echo Form::submit('Delete Build', array('class' => 'btn btn-danger')); ?>
+
+			<?php echo HTML::link('modpack/view/'.$build->modpack->id, 'Go Back', array('class' => 'btn btn-primary')); ?>
+
+		</form>
+	</div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts/master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
