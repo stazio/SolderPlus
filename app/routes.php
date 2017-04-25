@@ -16,10 +16,17 @@ Route::group(array('before' => 'auth'), function() {
 });
 
 /**
+ * Installer
+ */
+Route::controller('install', 'InstallController');
+
+
+/**
  * Authentication Routes
  **/
 Route::get('login', 'BaseController@showLogin');
 Route::post('login', 'BaseController@postLogin');
+
 Route::get('logout', function() {
 	Auth::logout();
 	return Redirect::to('login')->with('logout','You have been logged out.');

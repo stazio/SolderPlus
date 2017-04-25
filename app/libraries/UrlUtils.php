@@ -47,7 +47,7 @@ class UrlUtils {
 	/**
 	 * Gets URL contents and returns them
 	 * @param  String $url
-	 * @return String
+	 * @return array
 	 */
 	public static function get_url_contents($url)
 	{

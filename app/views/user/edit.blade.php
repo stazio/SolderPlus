@@ -44,7 +44,7 @@
                     <input type="text" class="form-control" name="email" id="email" value="{{ $user->email }}">
                 </div>
                 <div class="form-group">
-                    <label for="username">Username</label>
+                    <label for="username">Name</label>
                     <input type="text" class="form-control" name="username" id="username" value="{{ $user->username }}">
                 </div>
                 <hr>

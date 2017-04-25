@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Sign in &middot; TechnicSolder</title>
+    <title>Sign in &middot; Solder Plus</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -16,7 +16,7 @@
     <form class="vertical-form" method="post" action="{{ URL::to('login') }}">
       <div style="margin:0;padding:0;display:inline;">
         <legend>
-        Solder Pack
+        Solder Plus
         </legend>
         @if (Session::has('login_failed'))
           <ul class="notice errors">

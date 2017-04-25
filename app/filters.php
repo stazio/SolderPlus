@@ -11,9 +11,15 @@
 |
 */
 
+/**
+ * @param $request Request
+ */
 App::before(function($request)
 {
-	//
+    // Staz'z Installer
+    if (!InstallController::isInstalled() && !Request::is('install*')) {
+        return Redirect::action('InstallController@getIndex');
+    }
 });
 
 
@@ -26,6 +32,7 @@ App::missing(function($exception)
 {
 	return Response::view('errors.500', array('code' => 404, 'exception' => new Exception('Page not found')), 404);
 });
+
 
 /*
 |--------------------------------------------------------------------------

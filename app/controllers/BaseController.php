@@ -5,8 +5,9 @@ class BaseController extends Controller {
 	public function __construct()
 	{
 		if(!defined('SOLDER_STREAM')) {
-			define('SOLDER_STREAM', 'STAZ');
+			define('SOLDER_STREAM', 'DEV');
 		}
+
 		if(!defined('SOLDER_VERSION')) {
 			define('SOLDER_VERSION', 'v1.0.0');
 		}
@@ -42,8 +43,16 @@ class BaseController extends Controller {
 
 			return Redirect::to('dashboard/');
 		} else {
-			return Redirect::to('login')->with('login_failed',"Invalid Username/Password");
+			return Redirect::to('login')->with('login_failed',"Invalid Email/Password");
 		}
 	}
 
+	public function validate($rules) {
+	    $validation = Validator::make(Input::all(), $rules);
+
+	    if ($validation->fails()) {
+            return Redirect::back()->withErrors($validation->messages());
+        }
+        return false;
+    }
 }
