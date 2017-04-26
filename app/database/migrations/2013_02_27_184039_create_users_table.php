@@ -21,15 +21,6 @@ class CreateUsersTable extends Migration {
 			$table->timestamps();
 		});
 
-		/**
-		 * Create Default User
-		 **/
-		$user = new User();
-		$user->username = 'admin';
-		$user->email = 'admin@admin.com';
-		$user->password = Hash::make('admin');
-		$user->created_ip = getHostByName(getHostName());
-		$user->save();
 	}
 
 	/**

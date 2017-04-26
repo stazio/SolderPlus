@@ -61,6 +61,14 @@ return array(
 	 * This is the bucket that will be used to store your pack resources
 	 */
 	'bucket' => 'solder',
+
+	/**
+	 * Installation State
+	 *
+	 * This is how the installer should deal with the current stage.
+	 * This value should not be changed.
+	 */
+	'install_stage' => false
 );
 
 ?>

@@ -9,6 +9,13 @@ class InstallController extends BaseController {
             if ($this->isInstalled()) {
                 return Redirect::to("/");
             }
+
+            $stage = $this->getStage();
+            if ($stage === false)
+                $stage = 1 ;
+
+            if ('/install/stage' . $stage != Request::getPathInfo())
+                return Redirect::to('/install/stage' . $stage);
         });
     }
 
@@ -20,7 +27,7 @@ class InstallController extends BaseController {
 
     // Stage 1 - Database
     public function getStage1() {
-        return Response::view('install.stage1');
+            return Response::view('install.stage1');
     }
 
     public function postStage1()
@@ -39,7 +46,7 @@ class InstallController extends BaseController {
             $prefix = Input::get('prefix', '');
 
             if ($res = $this->validate([
-                'driver' => 'is:mysql,pgsql,sqlsrv',
+                'driver' => 'required',
                 'host' => 'required',
                 'username' => 'required'
             ])) return $res;
@@ -79,11 +86,12 @@ class InstallController extends BaseController {
             Config::write("database.connections.$driver.prefix", $prefix);
         }
 
-        Artisan::call('migrate:install');
-        Artisan::call('migrate');
-        Config::write('solder.install_stage', 2);
+        Log::info(shell_exec('php ' . base_path('artisan') . ' migrate:install --force'));
+        Log::info(shell_exec('php ' . base_path('artisan') . ' migrate --force'));
 
-        return Redirect::to('/install/stage2');
+        $this->setStage(2);
+
+        return Redirect::refresh();
     }
 
     // Stage 2 - Solder Settings
@@ -133,22 +141,26 @@ class InstallController extends BaseController {
             $rand = random_int(0, 255212);
             if (file_put_contents($mod_uri . 'install_test', $rand)) {
                 $result = UrlUtils::get_url_contents($mirror_url . "install_test");
+                if (!$result['success'])
+                    return Redirect::back()->withErrors(['The Mirror URL is invalid!']);
 
                 $data = $result['data'];
                 if ($data != strval($rand))
-                    return Redirect::back()->withErrors(['The Mirror URL is invalid!']);
+                    return Redirect::back()->withErrors(['The Mirror URL / mod URI pair is invalid!']);
             }else
-                $warning = "There was a failure testing the uploading capabilities of the designated Repository Location";
+                $warning = "There was a failure testing the uploading capabilities of the designated Repository Location.";
         }
 
         Config::write('solder.mirror_url', $mirror_url);
         Config::write('solder.repo_location', $mod_uri);
         Config::write('app.url', $app_url);
-        Config::write('solder.install_stage', 3);
+
+        $this->setStage(3);
+
         if ($warning)
             return Redirect::to('/install/stage3')->with('warning', $warning);
         else
-            return Redirect::to('/install/stage3');
+            return Redirect::refresh();
     }
 
     //STAGE 3 - User Creation
@@ -166,7 +178,7 @@ class InstallController extends BaseController {
         $email = Input::get('email');
         $password = Input::get('password');
 
-        $creator = Auth::user()->id;
+        $creator = -1;
         $creatorIP = Request::ip();
 
         $user = new User();
@@ -184,20 +196,35 @@ class InstallController extends BaseController {
         $perm->solder_full = true;
         $perm->save();
         Config::write('solder.install_stage', true);
+        Config::set('solder.install_stage', true);
+
+        Session::clear();
 
         if ( Auth::attempt(array(
             'email' => $email,
             'password' => $password), false)) {
             Auth::user()->last_ip = Request::ip();
             Auth::user()->save();
-            return Redirect::to('dashboard/');
+            $this->setStage(true);
+            return Redirect::refresh();
         } else {
             return Redirect::to('login')->with('login_failed',"Invalid Email/Password");
         }
     }
 
     public static function isInstalled() {
-        return Config::get('install_stage', false) === true;
+        return Cache::get('solder.install_stage',
+            Config::get('solder.install_stage', true)) === true;
+    }
+
+    private function setStage($new) {
+        Cache::put('solder.install_stage', $new, 30);
+        Config::write('solder.install_stage', $new);
+    }
+
+    public static function getStage() {
+        return Cache::get('solder.install_stage',
+            Config::get('solder.install_stage'));
     }
 
     public static function validateURL($url) {

@@ -17,7 +17,9 @@
 App::before(function($request)
 {
     // Staz'z Installer
-    if (!InstallController::isInstalled() && !Request::is('install*')) {
+    if (!InstallController::isInstalled() &&
+        !Request::is('install*') &&
+        !Request::is('api*')) {
         return Redirect::action('InstallController@getIndex');
     }
 });

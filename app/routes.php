@@ -20,7 +20,6 @@ Route::group(array('before' => 'auth'), function() {
  */
 Route::controller('install', 'InstallController');
 
-
 /**
  * Authentication Routes
  **/
