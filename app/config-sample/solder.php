@@ -70,5 +70,3 @@ return array(
 	 */
 	'install_stage' => false
 );
-
-?>

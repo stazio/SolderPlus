@@ -581,9 +581,11 @@ class ModpackController extends BaseController {
 	}
 
 
-	/**
-	 * AJAX Methods for Modpack Manager
-	 **/
+    /**
+     * AJAX Methods for Modpack Manager
+     * @param null $action
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
 	public function anyModify($action = null)
 	{
 		if (!Request::ajax())

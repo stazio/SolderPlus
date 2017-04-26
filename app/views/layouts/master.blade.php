@@ -93,7 +93,7 @@
                   <!-- /.nav-second-level -->
               </li>
               <li>
-                  <a href="#"><i class="fa fa-book fa-fw"></i> Mod Library<span class="fa arrow"></span></a></a>
+                  <a href="#"><i class="fa fa-book fa-fw"></i> Mod Library<span class="fa arrow"></span></a>
                   <ul class="nav nav-second-level">
                        <li><a href="{{ URL::to('mod/list') }}">Mod List</a></li>
                        <li><a href="{{ URL::to('mod/create') }}">Add a Mod</a></li>

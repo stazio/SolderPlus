@@ -4,7 +4,8 @@ class URLUtilsTest extends TestCase {
 
     public function testCheckRemoteFile()
 	{
-		$json = UrlUtils::checkRemoteFile("http://speedtest.wdc01.softlayer.com/downloads/test10.zip", 5);
+        /** @noinspection PhpMethodParametersCountMismatchInspection */
+        $json = UrlUtils::checkRemoteFile("http://speedtest.wdc01.softlayer.com/downloads/test10.zip", 5);
         $this->assertTrue(is_array($json));
 
         $this->assertTrue(array_key_exists('success', $json));
@@ -15,7 +16,8 @@ class URLUtilsTest extends TestCase {
 
     public function testCheckRemoteFileNon200()
 	{
-		$json = UrlUtils::checkRemoteFile("http://speedtest.wdc01.softlayer.com/downloads/testbob.zip", 5);
+        /** @noinspection PhpMethodParametersCountMismatchInspection */
+        $json = UrlUtils::checkRemoteFile("http://speedtest.wdc01.softlayer.com/downloads/testbob.zip", 5);
         $this->assertTrue(is_array($json));
 
         $this->assertTrue(array_key_exists('success', $json));
@@ -27,7 +29,8 @@ class URLUtilsTest extends TestCase {
 
     public function testGetHeaders()
 	{
-		$json = UrlUtils::getHeaders("http://speedtest.wdc01.softlayer.com/downloads/test10.zip", 5);
+        /** @noinspection PhpMethodParametersCountMismatchInspection */
+        $json = UrlUtils::getHeaders("http://speedtest.wdc01.softlayer.com/downloads/test10.zip", 5);
         $this->assertTrue(is_array($json));
 
         $this->assertTrue(array_key_exists('success', $json));
@@ -38,7 +41,8 @@ class URLUtilsTest extends TestCase {
 
     public function testGetHeadersNon200()
 	{
-		$json = UrlUtils::getHeaders("http://speedtest.wdc01.softlayer.com/downloads/testbob.zip", 5);
+        /** @noinspection PhpMethodParametersCountMismatchInspection */
+        $json = UrlUtils::getHeaders("http://speedtest.wdc01.softlayer.com/downloads/testbob.zip", 5);
         $this->assertTrue(is_array($json));
 
         $this->assertTrue(array_key_exists('success', $json));
@@ -50,7 +54,8 @@ class URLUtilsTest extends TestCase {
 
     public function testGetRemoteMD5()
 	{
-		$json = UrlUtils::get_remote_md5("http://speedtest.wdc01.softlayer.com/downloads/test10.zip", 5);
+        /** @noinspection PhpMethodParametersCountMismatchInspection */
+        $json = UrlUtils::get_remote_md5("http://speedtest.wdc01.softlayer.com/downloads/test10.zip", 5);
         $this->assertTrue(is_array($json));
 
         $this->assertTrue(array_key_exists('success', $json));
@@ -63,7 +68,8 @@ class URLUtilsTest extends TestCase {
 
     public function testGetRemoteMD5Non200()
 	{
-		$json = UrlUtils::get_remote_md5("http://speedtest.wdc01.softlayer.com/downloads/testbob.zip", 5);
+        /** @noinspection PhpMethodParametersCountMismatchInspection */
+        $json = UrlUtils::get_remote_md5("http://speedtest.wdc01.softlayer.com/downloads/testbob.zip", 5);
         $this->assertTrue(is_array($json));
 
         $this->assertTrue(array_key_exists('success', $json));

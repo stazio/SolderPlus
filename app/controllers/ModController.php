@@ -7,9 +7,9 @@ class ModController extends BaseController {
 	{
 		parent::__construct();
 		$this->beforeFilter('perm', array('solder_mods'));
-		$this->beforeFilter('perm', array('mods_manage'), array('only' => array('view','versions')));
-		$this->beforeFilter('perm', array('mods_create'), array('only' => array('create')));
-		$this->beforeFilter('perm', array('mods_delete'), array('only' => array('delete')));
+		$this->beforeFilter('perm', array('mods_manage'));
+		$this->beforeFilter('perm', array('mods_create'));
+		$this->beforeFilter('perm', array('mods_delete'));
 	}
 
 		public function getIndex()
