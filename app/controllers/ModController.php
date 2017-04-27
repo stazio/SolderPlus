@@ -71,6 +71,7 @@ class ModController extends BaseController {
 		$mod->description = Input::get('description');
 		$mod->link = Input::get('link');
 		$mod->donatelink = Input::get('donatelink');
+		$mod->mod_type = Input::get('mod_type', Mod::MOD_TYPE_UNIVERSAL);
 		$mod->save();
 		return Redirect::to('mod/view/'.$mod->id);
 	}
@@ -115,6 +116,7 @@ class ModController extends BaseController {
 		$mod->description = Input::get('description');
 		$mod->link = Input::get('link');
 		$mod->donatelink = Input::get('donatelink');
+		$mod->mod_type = Input::get('mod_type', $mod->mod_type);
 		$mod->save();
 		Cache::forget('mod.'.$mod->name);
 
