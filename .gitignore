@@ -12,3 +12,4 @@ bootstrap/compiled.php
 .env.testing.php
 .idea/
 public/mods/
+storage/logs/
