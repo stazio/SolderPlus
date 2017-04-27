@@ -140,7 +140,7 @@ class InstallController extends BaseController {
 
             $rand = random_int(0, 255212);
             if (file_put_contents($mod_uri . 'install_test', $rand)) {
-                $result = UrlUtils::get_url_contents($mirror_url . "install_test");
+                $result = UrlUtils::get_url_contents($mirror_url . "install_test", null);
                 if (!$result['success'])
                     return Redirect::back()->withErrors(['The Mirror URL is invalid!']);
 
@@ -228,7 +228,7 @@ class InstallController extends BaseController {
     }
 
     public static function validateURL($url) {
-        $result = UrlUtils::get_url_contents($url . "api/");
+        $result = UrlUtils::get_url_contents($url . "api/", '');
         if ($result['success']) {
             $res = json_decode($result['data']);
             if ($res->api == "TechnicSolder")
