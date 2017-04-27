@@ -153,6 +153,7 @@ class APIController extends BaseController {
 		$response['description'] = $mod->description;
 		$response['link'] = $mod->link;
 		$response['donate'] = $mod->donatelink;
+		$response['mod_type'] = $mod->mod_type;
 		$response['versions'] = array();
 
 		foreach ($mod->versions as $version)
