@@ -69,6 +69,14 @@
                                            value="{{ $mod->donatelink }}">
                                     <span class="help-block">This is only in use by the official Technic Solder</span>
                                 </div>
+                                <div class="form-group">
+                                    <label for="mod_type">Mod Type</label>
+                                    <select name="mod_type" id="mod_type" class="form-control">
+                                        <option value="{{Mod::MOD_TYPE_UNIVERSAL}}" {{$mod->isUniversalMod() ? 'selected' : ''}}>Universal (Client + Server)</option>
+                                        <option value="{{Mod::MOD_TYPE_SERVER}}"  {{$mod->isServerMod() ? 'selected' : ''}}>Server Only</option>
+                                        <option value="{{Mod::MOD_TYPE_CLIENT}}"  {{$mod->isClientMod() ? 'selected' : ''}}>Client Only</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         {{ Form::submit('Save Changes', array('class' => 'btn btn-success')) }}

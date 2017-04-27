@@ -47,6 +47,15 @@
                     <span class="help-block">This is only used by the official Solder Pack</span>
                 </div>
 
+                <div class="form-group">
+                    <label for="mod_type">Mod Type</label>
+                    <select name="mod_type" id="mod_type" class="form-control">
+                        <option value="{{Mod::MOD_TYPE_UNIVERSAL}}">Universal (Client + Server)</option>
+                        <option value="{{Mod::MOD_TYPE_SERVER}}">Server Only</option>
+                        <option value="{{Mod::MOD_TYPE_CLIENT}}">Client Only</option>
+                    </select>
+                </div>
+
                 {{ Form::submit('Add Mod', array('class' => 'btn btn-success')) }}
                 {{ HTML::link('mod/list/', 'Go Back', array('class' => 'btn btn-primary')) }}
 			</div>
