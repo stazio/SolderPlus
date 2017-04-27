@@ -13,5 +13,12 @@ bootstrap/compiled.php
 .idea/
 public/mods/
 app/storage/logs/*
+app/storage/cache/
+app/storage/debugbar/*
+app/storage/github-api-cache/*
+app/storage/meta/*
+app/storage/resources/*
+app/storage/sessions/*
+app/storage/views/
 _ide_helper.php
 apache_error.log
