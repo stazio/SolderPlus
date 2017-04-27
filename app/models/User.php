@@ -3,6 +3,21 @@
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
+/**
+ * Class User
+ * @property int id
+ * @property string username
+ * @property string email
+ * @property string password
+ * @property string created_ip
+ * @property string last_ip
+ * @property string created_at
+ * @property string updated_at
+ * @property string remember_token
+ * @property string updated_by_ip
+ * @property string created_by_user_id
+ * @property string updated_by_user_id
+ */
 class User extends Eloquent implements UserInterface, RemindableInterface {
 	public $timestamps = true;
 

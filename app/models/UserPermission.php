@@ -1,5 +1,21 @@
 <?php
 
+/**
+ * Class UserPermission
+ * @property int id
+ * @property int user_id
+ * @property boolean solder_full
+ * @property boolean solder_users
+ * @property boolean mods_create
+ * @property boolean mods_manage
+ * @property boolean mods_delete
+ * @property boolean modpacks
+ * @property boolean solder_keys
+ * @property boolean solder_clients
+ * @property boolean modpacks_create
+ * @property boolean modpacks_manage
+ * @property boolean modpacks_delete
+ */
 class UserPermission extends Eloquent {
 	protected $table = 'user_permissions';
 	public $timestamps = true;

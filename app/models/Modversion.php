@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Class Modversion
+ * @property int id
+ * @property int mod_id
+ * @property string version
+ * @property string md5
+ * @property string created_at
+ * @property string updated_at
+ * @property int filesize
+ */
 class Modversion extends Eloquent {
 	protected $table = 'modversions';
 	public $timestamps = true;
