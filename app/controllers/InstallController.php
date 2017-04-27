@@ -19,7 +19,7 @@ class InstallController extends BaseController {
         });
     }
 
-    public function getIndex($method = null)
+    public function getIndex()
     {
         return Redirect::to('/install/stage1');
     }
@@ -125,7 +125,7 @@ class InstallController extends BaseController {
         // Check's if this is a local file...
         if (starts_with($mod_uri, 'http')) {
             $warning = "Because you used a URL, you will not be able to upload mods to Solder!";
-            $result = UrlUtils::get_url_contents($mirror_url);
+            $result = UrlUtils::get_url_contents($mirror_url, '');
             if (!$result['success'])
                 return Redirect::back()->withErrors(['The Mirror URL is invalid!']);
         }else {
