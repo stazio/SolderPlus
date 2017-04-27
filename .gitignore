@@ -12,4 +12,6 @@ bootstrap/compiled.php
 .env.testing.php
 .idea/
 public/mods/
-storage/logs/
+app/storage/logs/*
+_ide_helper.php
+apache_error.log
