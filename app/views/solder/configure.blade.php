@@ -56,7 +56,6 @@
                     <input type="text" class="form-control" name="md5_file_timeout" id="md5_file_timeout" value="{{ ConfUtils::get('solder.md5_file_timeout') }}" disabled>
                     <span class="help-block">This is the amount of time (in seconds) Solder will attempt to hash a mod before timing out.</span>
                 </div>
-                {{//<input class="btn btn-success" type="submit" value="Save">}}
         	</div>
             </form>
         </div>
