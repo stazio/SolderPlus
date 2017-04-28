@@ -33,7 +33,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?php echo URL::to('dashboard'); ?>"><img src="<?php echo URL::asset('img/title.png'); ?>"><img height="25px" src="<?php echo URL::asset('img/plus.ico'); ?>"> <?php echo SOLDER_VERSION; ?></a>
+            <a class="navbar-brand" href="<?php echo URL::to('dashboard'); ?>"><img src="<?php echo URL::asset('img/solderplus.png'); ?>" height="41px"> <?php echo SOLDER_VERSION; ?></a>
         </div>
         <ul class="nav navbar-top-links navbar-left">
           <?php if(Cache::get('update')): ?>
