@@ -34,7 +34,7 @@
             <span class="icon-bar"></span>
         </button>
         <div class="navbar-brand">
-            <img src="{{ URL::asset('img/title.png') }}"><img height="25px" src="{{ URL::asset('img/plus.ico') }}"> {{ SOLDER_VERSION }}
+            <a class="navbar-brand"><img src="{{ URL::asset('img/solderplus.png') }}" height="41px"> {{ SOLDER_VERSION }}</a>
         </div>
 
     </div>
