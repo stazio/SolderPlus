@@ -115,7 +115,7 @@ class InstallController extends BaseController {
         if (!ends_with('/', $app_url))
             $app_url .= "/";
 
-        if (!$this->validateURL($app_url))
+        if (!$this->validateAppURL($app_url))
             return Redirect::back()->withErrors(['Application URL is invalid!']);
 
         if (!ends_with('/', $mirror_url)) {
@@ -162,6 +162,9 @@ class InstallController extends BaseController {
         else
             return Redirect::refresh();
     }
+
+
+
 
     //STAGE 3 - User Creation
     public function getStage3() {
@@ -227,7 +230,7 @@ class InstallController extends BaseController {
             Config::get('solder.install_stage'));
     }
 
-    public static function validateURL($url) {
+    public static function validateAppURL($url) {
         $result = UrlUtils::get_url_contents($url . "api/", '');
         if ($result['success']) {
             $res = json_decode($result['data']);
@@ -238,5 +241,30 @@ class InstallController extends BaseController {
                             return true;
         }
             return false;
+    }
+
+    //TODO implement this in this file somewhere.
+    public static function validateURIs($mod_uri, $mirror_url) {
+        $mod_uri = realpath($mod_uri) . "/";
+
+        // Let us test if the mirror URL and the repo URI are the same.
+        if (!is_dir($mod_uri))
+            mkdir($mod_uri, 0777, true);
+
+        if (file_exists($mod_uri . 'install_test'))
+            unlink($mod_uri . 'install_test');
+
+        $rand = random_int(0, 255212);
+        if (file_put_contents($mod_uri . 'install_test', $rand)) {
+            $result = UrlUtils::get_url_contents($mirror_url . "install_test", null);
+            if (!$result['success'])
+                return 'The Mirror URL is invalid!';
+
+            $data = $result['data'];
+            if ($data != strval($rand))
+                return 'The Mirror URL / mod URI pair is invalid!';
+        }else
+            return [true, "There was a failure testing the uploading capabilities of the designated Repository Location."];
+        return true;
     }
 }

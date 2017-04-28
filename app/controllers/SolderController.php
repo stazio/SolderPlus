@@ -9,16 +9,45 @@ class SolderController extends BaseController {
 
 	public function getConfigure()
 	{
-		if (Input::get('edit-solder'))
-		{
-			Config::set('solder.mirror_url',Input::get('mirror_url'));
-			Config::set('solder.repo_location',Input::get('repo_location'));
-			Config::set('solder.platform_key',Input::get('platform_key'));
-			return Redirect::to('solder/configure')
-				->with('success','Your solder configuration has been updated.');
-		}
 		return View::make('solder.configure');
 	}
+
+    public function postConfigure() {
+
+        $mirror_url = Input::get('mirror_url', Config::get('solder.mirror_url'));
+        $repo_location = Input::get('repo_location', '');
+        $md5_connect_timeout = Input::get('md5_connect_timeout', Config::get('solder.md5_connect_timeout'));
+        $md5_file_timeout = Input::get('md5_file_timeout', Config::get('solder.md5_file_timeout'));
+
+        if (!starts_with($repo_location, 'http')) {
+            if (!starts_with($repo_location, '/')) {
+                $repo_location = base_path($repo_location);
+            }
+            $res = InstallController::validateURIs($repo_location, $mirror_url);
+            if ($res !== true) {
+                if (is_array($res)) {
+                    $warning = $res[1];
+                }else
+                    return Redirect::back()->withErrors([$res]);
+            }
+        }else
+            $warning =
+                "It is recommended to NOT use an URL (starts with http or https) because mod uploads will not work then!";
+
+       ConfUtils::saveAll([
+           'solder.mirror_url' => $mirror_url,
+           'solder.repo_location' => $repo_location,
+           'solder.md5_connect_timeout' => $md5_connect_timeout,
+           'solder.md5_file_timeout' => $md5_file_timeout
+       ]);
+
+       if (isset($warning))
+           return Redirect::action('SolderController@getConfigure')->
+           with('warning', $warning);
+       else
+       return Redirect::action('SolderController@getConfigure')->
+       with('success', 'Settings were updated successfully.');
+    }
 
 	public function getUpdate()
 	{
