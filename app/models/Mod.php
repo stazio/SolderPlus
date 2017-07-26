@@ -21,7 +21,18 @@ class Mod extends Eloquent {
 
 	public $timestamps = true;
 
-	public function versions()
+    public static function notInBuild(Build $build)
+    {
+        $mods = Mod::all();
+        $versions = $build->modversions()->get();
+        /** @var Modversion $mod */
+        foreach ($versions as $mod) {
+            $mods->whereNot('id', '=', $mod->mod_id);
+        }
+        return $mods;
+    }
+
+    public function versions()
 	{
 		return $this->hasMany('Modversion');
 	}
