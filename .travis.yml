@@ -30,9 +30,10 @@ before_install:
   - echo $REPO
   - rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
   - composer self-update
-install: travis_retry composer install --prefer-source --no-interaction
+install:
+  - travis_retry composer install --prefer-source --no-interaction
+  - cp app/config-sample app/config -r
 before_script:
-  - cp app/config-sample app/config
   - php artisan env
   - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS solder;' -U postgres; fi"
   - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'create database solder;' -U postgres; fi"
