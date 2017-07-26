@@ -15,11 +15,15 @@
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 	<div class="panel panel-default">
 		<div class="panel-heading" role="tab" id="recentModpacksHeading">
-		<h3 class="panel-title">
-			<a data-toggle="collapse" data-parent="#accordion" href="#recentModpacks" aria-expanded="true" aria-controls="recentModpacks">
-				<i class="fa fa-refresh"></i> Recently Updated Modpacks
-			</a>
-		</h3>
+			<div class="pull-right">
+				<a href="{{ URL::to('modpack/create') }}" class="btn btn-success btn-xs"><i class="icon-plus icon-white"></i>New</a>
+				<a href="{{ URL::to('modpack/list') }}" class="btn btn-primary btn-xs"><i class="icon-plus icon-white"></i>List</a>
+			</div>
+			<h3 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#recentModpacks" aria-expanded="true" aria-controls="recentModpacks">
+					<i class="fa fa-refresh"></i> Recently Updated Modpacks
+				</a>
+			</h3>
 		</div>
 		<div id="recentModpacks" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="recentModpacksHeading">
 			<div class="panel-body">
@@ -54,7 +58,14 @@
 	</div>
 	<div class="panel panel-default">
 		<div class="panel-heading" role="tab" id="recentModVersionsHeading">
-		<h3 class="panel-title">
+			<div class="pull-right"><a href="{{ URL::to('mod/create') }}"
+			   class="btn btn-success btn-xs">
+				<i class="icon-plus icon-white"></i>
+				Add
+				</a>
+				<a href="{{ URL::to('mod/list') }}" class="btn btn-primary btn-xs"><i class="icon-plus icon-white"></i>List</a>
+			</div>
+			<h3 class="panel-title">
 			<a data-toggle="collapse" data-parent="#accordion" href="#recentModVersions" aria-expanded="true" aria-controls="recentModVersions">
 				<i class="fa fa-refresh"></i> Recently Added Mod Versions
 			</a>
