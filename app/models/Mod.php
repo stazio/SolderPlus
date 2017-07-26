@@ -26,10 +26,10 @@ class Mod extends Eloquent {
         $mods = Mod::query();
         $versions = $build->modversions()->get();
         /** @var Modversion $mod */
-        foreach ($versions as $mod) {
+        foreach ($versions as $mod) {Log::info($mod->mod_id);
             $mods->where('id', '!=', $mod->mod_id);
         }
-        return $mods;
+        return $mods->get();
     }
 
     public function versions()
