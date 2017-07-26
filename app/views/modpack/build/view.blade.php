@@ -101,10 +101,9 @@
 				<td>
 					<i class="icon-plus"></i>
 					<select class="form-control" name="mod-name" id="mod" placeholder="Select a Mod...">
-						@foreach (Mod::all() as $mod)
-							@if (!$build->hasMod($mod))
-							<option value="{{ $mod->name }}">{{ $mod->pretty_name }}</option>
-							@endif
+                        <?php /** @var Build $build */ ?>
+						@foreach (Mod::notInBuild($build) as $mod)
+                                <option value="{{ $mod->name }}">{{ $mod->pretty_name }}</option>
 						@endforeach
 					</select>
 				</td>
