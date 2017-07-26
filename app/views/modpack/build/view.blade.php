@@ -286,7 +286,7 @@ if(
                     if (data.status === 'success') {
                         $("#mod-list-add").after('<tr><td>' + data.pretty_name + '</td><td>' + data.version + '</td><td></td></tr>');
                         $.jGrowl("Mod " + data.pretty_name + " added at " + data.version, {group: 'alert-success'});
-                        mod.removeItem(mod.items[0]);
+                        mod.removeOption(mod.items[0]);
                     } else {
                         $.jGrowl("Unable to add mod. Reason: " + data.reason, {group: 'alert-warning'});
                     }
