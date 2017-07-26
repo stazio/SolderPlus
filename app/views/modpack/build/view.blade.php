@@ -317,6 +317,7 @@ if(
                         modversion.refreshOptions(false);
                         $("#mod-version").attr("placeholder", "Select a Modversion...");
                     });
+                    modversion.addItem(modversion.objects[Object.keys(modversion.objects)[Object.keys(modversion.objects).length - 1]]);
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
