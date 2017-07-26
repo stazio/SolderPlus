@@ -8,6 +8,20 @@ class BaseTest extends TestCase {
 
 		Session::start();
 
+        $creator = Auth::user()->id;
+        $creatorIP = Request::ip();
+
+        $user = new User();
+        $user->id = 1;
+        $user->email = 'test@test.com';
+        $user->username = 'Test User';
+        $user->password = Hash::make('Password');
+        $user->created_ip = $creatorIP;
+        $user->created_by_user_id = $creator;
+        $user->updated_by_ip = $creatorIP;
+        $user->updated_by_user_id = $creator;
+        $user->save();
+
 		Route::enableFilters();
 	}
 
