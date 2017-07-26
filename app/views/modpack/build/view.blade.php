@@ -152,7 +152,7 @@
 									@endforeach
 								</select>
 								<span class="input-group-btn">
-									<button type="submit" class="btn btn-primary">Change</button>
+									<button id="add-mod-submit" type="submit" class="btn btn-primary">Change</button>
 								</span>
 							</div>
 						</form>
@@ -175,7 +175,8 @@
 @endsection
 @section('bottom')
 <script type="text/javascript">
-if($("#mod").length) {
+if(
+    $("#mod").length) {
     var mod = $("#mod").selectize({
         dropdownParent: "body",
         persist: false,
@@ -185,6 +186,8 @@ if($("#mod").length) {
             direction: 'asc'
         }
     })[0].selectize;
+
+
 
     var modversion = $("#mod-version").selectize({
         dropdownParent: "body",
@@ -283,6 +286,7 @@ if($("#mod").length) {
                     if (data.status === 'success') {
                         $("#mod-list-add").after('<tr><td>' + data.pretty_name + '</td><td>' + data.version + '</td><td></td></tr>');
                         $.jGrowl("Mod " + data.pretty_name + " added at " + data.version, {group: 'alert-success'});
+                        mod.removeItem(mod.items[0]);
                     } else {
                         $.jGrowl("Unable to add mod. Reason: " + data.reason, {group: 'alert-warning'});
                     }
@@ -291,6 +295,7 @@ if($("#mod").length) {
                     $.jGrowl(textStatus + ': ' + errorThrown, {group: 'alert-danger'});
                 }
             });
+
         } else {
             $.jGrowl("Please select a Modversion", {group: 'alert-warning'});
         }
