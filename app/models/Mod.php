@@ -23,7 +23,7 @@ class Mod extends Eloquent {
 
     public static function notInBuild(Build $build)
     {
-        $mods = Mod::all();
+        $mods = Mod::query();
         $versions = $build->modversions()->get();
         /** @var Modversion $mod */
         foreach ($versions as $mod) {
