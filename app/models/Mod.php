@@ -37,4 +37,9 @@ class Mod extends Eloquent {
     public function isClientMod() {
         return $this->mod_type == Mod::MOD_TYPE_CLIENT;
     }
+	
+	
+	public static function modNotIn(int $build) {
+		return	Mod::all();
+	}
 }
