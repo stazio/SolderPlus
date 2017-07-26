@@ -8,7 +8,7 @@ class BaseTest extends TestCase {
 
 		Session::start();
 
-        $creator = Auth::user()->id;
+        $creator = -1;
         $creatorIP = Request::ip();
 
         $user = new User();
