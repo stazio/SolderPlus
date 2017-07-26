@@ -9,7 +9,7 @@ class DashboardController extends BaseController {
 
 	public function getIndex()
 	{
-		$builds = Build::where('is_published', '=', '1')->orderBy('updated_at', 'desc')->take(5)->get();
+		$builds = Build::orderBy('updated_at', 'desc')->take(5)->get();
 
 		$modversions = Modversion::whereNotNull('md5')->orderBy('updated_at', 'desc')->take(5)->get();
 
