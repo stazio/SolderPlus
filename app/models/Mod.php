@@ -13,6 +13,7 @@
  * @property string pretty_name
  * @property string donatelink
  * @property int mod_type
+ * @property Modversion[] versions
  */
 
 class Mod extends Eloquent {
@@ -30,6 +31,11 @@ class Mod extends Eloquent {
             $mods->where('id', '!=', $mod->mod_id);
         }
         return $mods->get();
+    }
+
+    public static function getByName($mod)
+    {
+        return self::where('name', '=', $mod);
     }
 
     public function versions()
