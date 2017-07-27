@@ -9,6 +9,8 @@
  * @property string created_at
  * @property string updated_at
  * @property int filesize
+ * @property Mod mod
+ * @property Build[] builds
  */
 class Modversion extends Eloquent {
 	protected $table = 'modversions';
@@ -23,6 +25,7 @@ class Modversion extends Eloquent {
 	{
 		return $this->belongsToMany('Build')->withTimestamps();
 	}
+
 	public function humanFilesize($unit = "")
 	{
 		$size = $this->filesize;
