@@ -12,6 +12,8 @@ php:
   - hhvm
 services:
   - mysql
+cache:
+  - vendor
 env:
   global:
     - APP_ENV='testing'
