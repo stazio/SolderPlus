@@ -50,7 +50,7 @@ class UrlUtils {
      * @param  $something mixed TODO Wut. (MinecraftUtils::checkRemoteFile uses 2 params???)
 	 * @return String
 	 */
-	public static function get_url_contents($url, $something)
+	public static function get_url_contents($url, $something=null)
 	{
 		$ch = self::curl_init($url);
 
