@@ -8,7 +8,7 @@ class BaseTest extends TestCase {
 
 		Session::start();
 
-        if (!Mod::find(1)->get()) {
+        if (!Mod::find(1)) {
             $creator = -1;
             $creatorIP = Request::ip();
 
