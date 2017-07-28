@@ -1,6 +1,6 @@
 SolderPlus
 =============
-
+[![Build Status](https://travis-ci.org/stazio/SolderPlus.svg?branch=master)](https://travis-ci.org/stazio/SolderPlus)
 [![License](https://poser.pugx.org/solder/solder/license.svg)](https://packagist.org/packages/solder/solder)   
 
 What is SolderPlus?
