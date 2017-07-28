@@ -3,7 +3,9 @@
 Route::get('/', function() {
 	return Redirect::to('dashboard');
 });
-Route::controller('api', 'ApiController');
+Route::controller('api', 'ApiClientController');
+Route::controller('api/serverside', 'ApiServerController');
+
 Route::group(array('before' => 'auth'), function() {
 	Route::controller('client', 'ClientController');
 	Route::controller('dashboard', 'DashboardController');
