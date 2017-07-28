@@ -1,6 +1,6 @@
 <?php
 
-class APIClientController extends BaseController {
+class APIController extends BaseController {
 
     public function __construct()
     {
