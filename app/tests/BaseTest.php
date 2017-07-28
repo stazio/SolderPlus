@@ -22,6 +22,7 @@ class BaseTest extends TestCase {
         $user->updated_by_user_id = $creator;
         $user->save();
 
+        Config::set('install_stage', true);
 		Route::enableFilters();
 	}
 
