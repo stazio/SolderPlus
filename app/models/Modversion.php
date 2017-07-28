@@ -10,14 +10,12 @@
  * @property string updated_at
  * @property int filesize
  * @property Mod mod
- * @property int mod_type
  * @property Build[] builds
  */
 class Modversion extends Eloquent {
 	protected $table = 'modversions';
 	public $timestamps = true;
 
-    const MOD_TYPE_UNIVERSAL = 0, MOD_TYPE_SERVER = 1, MOD_TYPE_CLIENT = 2;
 
 	public function mod()
 	{

@@ -69,6 +69,14 @@
                                            value="{{ $mod->donatelink }}">
                                     <span class="help-block">This is only in use by the official Technic Solder</span>
                                 </div>
+                                <div class="form-group">
+                                    <label for="mod_type">Mod Type</label>
+                                    <select id=mod_type name="mod_type" class="form-control">
+                                        <option value="{{Mod::MOD_TYPE_UNIVERSAL}}">Universal</option>
+                                        <option value="{{Mod::MOD_TYPE_CLIENT}}">Client</option>
+                                        <option value="{{Mod::MOD_TYPE_SERVER}}">Server</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         {{ Form::submit('Save Changes', array('class' => 'btn btn-success')) }}
@@ -87,7 +95,6 @@
                             <th style="width: 22%">MD5</th>
                             <th style="width: 22%">Download URL</th>
                             <th style="width: 9%">Filesize</th>
-                            <th style="width: 12%">Type</th>
                             <th style="width: 25%"></th>
                         </tr>
                         </thead>
@@ -103,13 +110,7 @@
                                 </td>
                                 <td><span id="add-url">N/A</span></td>
                                 <td>N/A</td>
-                                <td>
-                                    <select name="mod_type" class="form-control">
-                                        <option value="{{Modversion::MOD_TYPE_UNIVERSAL}}">Universal</option>
-                                        <option value="{{Modversion::MOD_TYPE_CLIENT}}">Client</option>
-                                        <option value="{{Modversion::MOD_TYPE_SERVER}}">Server</option>
-                                    </select>
-                                </td>
+
 
                                 <td>
                                     <label class="btn btn-primary btn-sm" for="file">
@@ -139,13 +140,7 @@
                                         </small>
                                     </td>
                                     <td>{{ $ver->humanFilesize("MB") }}</td>
-                                    <td>
-                                        <select name="mod_type" class="form-control">
-                                            <option value="{{Modversion::MOD_TYPE_UNIVERSAL}}">Universal</option>
-                                            <option value="{{Modversion::MOD_TYPE_CLIENT}}">Client</option>
-                                            <option value="{{Modversion::MOD_TYPE_SERVER}}">Server</option>
-                                        </select>
-                                    </td>
+
                                     <td>
                                         <button type="submit" class="btn btn-primary btn-xs rehash"
                                                 rel="{{ $ver->id }}">Rehash
