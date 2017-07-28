@@ -12,7 +12,7 @@ class MoveModType extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('modversions', function($table) {
+        Schema::table('mods', function($table) {
             $table->integer('mod_type')->default(0);
         });
 	}
@@ -24,7 +24,7 @@ class MoveModType extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('modversions', function($table) {
+        Schema::table('mods', function($table) {
             $table->dropColumn('mod_type');
         });
 	}
