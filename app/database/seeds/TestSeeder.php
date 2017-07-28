@@ -11,7 +11,7 @@ class TestSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 
-		//$this->call('UserTableSeeder');
+		$this->call('UserTableSeeder');
 		$this->call('ModpackTableTestSeeder');
 		$this->call('ModTableTestSeeder');
 		$this->call('ClientTableTestSeeder');
