@@ -61,4 +61,6 @@ return array(
 	 * This is the bucket that will be used to store your pack resources
 	 */
 	'bucket' => 'solder',
+
+    'install_stage' => true
 );
