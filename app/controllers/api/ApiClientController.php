@@ -1,15 +1,57 @@
 <?php
 
-class APIClientController extends ApiBaseController {
-	public function getIndex()
-	{
-		return Response::json(array(
-				'api'     => 'TechnicSolder',
-				'is_plus' => true,
-				'version' => SOLDER_VERSION,
-				'stream' => SOLDER_STREAM
-				));
-	}
+class APIClientController extends BaseController {
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        /* This checks the client list for the CID. If a matching CID is found, all caching will be ignored
+           for this request */
+
+        if (Cache::has('clients'))
+            $clients = Cache::get('clients');
+        else {
+            $clients = Client::all();
+            Cache::put('clients', $clients, 1);
+        }
+
+        if (Cache::has('keys'))
+            $keys = Cache::get('keys');
+        else {
+            $keys = Key::all();
+            Cache::put('keys', $keys, 1);
+        }
+
+        $input_cid = Input::get('cid');
+        if(!empty($input_cid)) {
+            foreach ($clients as $client) {
+                if ($client->uuid == $input_cid) {
+                    $this->client = $client;
+                }
+            }
+        }
+
+        $input_key = Input::get('k');
+        if(!empty($input_key)) {
+            foreach ($keys as $key) {
+                if ($key->api_key == $input_key) {
+                    $this->key = $key;
+                }
+            }
+        }
+
+    }
+
+    public function getIndex()
+    {
+        return Response::json(array(
+            'api'     => 'TechnicSolder',
+            'is_plus' => true,
+            'version' => SOLDER_VERSION,
+            'stream' => SOLDER_STREAM
+        ));
+    }
 
     public function getModpack($modpack = null, $build = null)
 	{
@@ -42,7 +84,7 @@ class APIClientController extends ApiBaseController {
 			if (empty($build))
 				return Response::json($this->fetchModpack($modpack));
 			else
-				return Response::json($this->fetchBuild($modpack, $build));
+				return Response::json($this->fetchBuild($modpack, $build, Input::get('is_server', "false") == "false"));
 		}
 	}
 
@@ -224,7 +266,7 @@ class APIClientController extends ApiBaseController {
 		return $response;
 	}
 
-	private function fetchBuild($slug, $build)
+	private function fetchBuild($slug, $build, $client_only = true)
 	{
 		$response = array();
 
@@ -258,24 +300,30 @@ class APIClientController extends ApiBaseController {
 		$response['minecraft'] = $build->minecraft;
 		$response['java'] = $build->min_java;
 		$response['memory'] = $build->min_memory;
-		$response['forge'] = $build->forge;
+		$response['forge'] = $build->forge; // TODO is this needed?
 		$response['mods'] = array();
 
 		if (!Input::has('include'))
 		{
-			if (Cache::has('modpack.'.$slug.'.build.'.$buildpass.'modversion') && empty($this->client) && empty($this->key))
+			if (false && Cache::has('modpack.'.$slug.'.build.'.$buildpass.'modversion') && empty($this->client) && empty($this->key))
 			{
 				$response['mods'] = Cache::get('modpack.'.$slug.'.build.'.$buildpass.'modversion');
 			} else {
 				foreach ($build->modversions as $modversion)
 				{
-					$response['mods'][] = array(
-												"name" => $modversion->mod->name,
-												"version" => $modversion->version,
-												"md5" => $modversion->md5,
-												"filesize" => $modversion->filesize,
-												"url" => Config::get('solder.mirror_url').'mods/'.$modversion->mod->name.'/'.$modversion->mod->name.'-'.$modversion->version.'.zip'
-												);
+                    if (!$client_only or
+                        ($modversion->mod->mod_type == Mod::MOD_TYPE_UNIVERSAL or
+                        $modversion->mod->mod_type == Mod::MOD_TYPE_CLIENT)) {
+
+                        $response['mods'][] = array(
+                            "name" => $modversion->mod->name,
+                            "version" => $modversion->version,
+                            "md5" => $modversion->md5,
+                            "filesize" => $modversion->filesize,
+                            'mod_type' => $modversion->mod->mod_type,
+                            "url" => Config::get('solder.mirror_url') . 'mods/' . $modversion->mod->name . '/' . $modversion->mod->name . '-' . $modversion->version . '.zip'
+                        );
+                    }
 				}
 				usort($response['mods'], function($a, $b){return strcasecmp($a['name'], $b['name']);});
 				Cache::put('modpack.'.$slug.'.build.'.$buildpass.'modversion',$response['mods'],5);
@@ -287,18 +335,21 @@ class APIClientController extends ApiBaseController {
 			} else {
 				foreach ($build->modversions as $modversion)
 				{
-					$response['mods'][] = array(
-												"name" => $modversion->mod->name,
-												"version" => $modversion->version,
-												"md5" => $modversion->md5,
-												"filesize" => $modversion->filesize,
-												"pretty_name" => $modversion->mod->pretty_name,
-												"author" => $modversion->mod->author,
-												"description" => $modversion->mod->description,
-												"link" => $modversion->mod->link,
-												"donate" => $modversion->mod->donatelink,
-												"url" => Config::get('solder.mirror_url').'mods/'.$modversion->mod->name.'/'.$modversion->mod->name.'-'.$modversion->version.'.zip'
-												);
+
+				        $response['mods'][] = array( /// TODO there is probably a better way
+                            "name" => $modversion->mod->name,
+                            "version" => $modversion->version,
+                            "md5" => $modversion->md5,
+                            "filesize" => $modversion->filesize,
+                            "pretty_name" => $modversion->mod->pretty_name,
+                            "author" => $modversion->mod->author,
+                            "description" => $modversion->mod->description,
+                            "link" => $modversion->mod->link,
+                            "donate" => $modversion->mod->donatelink,
+                            "mod_type" => $modversion->mod_type,
+                            "url" => Config::get('solder.mirror_url') . 'mods/' . $modversion->mod->name . '/' . $modversion->mod->name . '-' . $modversion->version . '.zip'
+                        );
+
 				}
 				usort($response['mods'], function($a, $b){return strcasecmp($a['name'], $b['name']);});
 				Cache::put('modpack.'.$slug.'.build.'.$buildpass.'modversion.include.mods',$response['mods'],5);
