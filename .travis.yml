@@ -6,7 +6,6 @@ language: php
 cache:
   directories:
     - $HOME/.composer/cache
-    - vendor
 php:
   - 5.6
   - 7.0
