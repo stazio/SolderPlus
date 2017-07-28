@@ -241,6 +241,11 @@ class InstallController extends BaseController {
         return Response::view('install.stage5');
     }
 
+    public function postStage5() {
+        $this->setStage(true);
+        return Redirect::refresh();
+    }
+
     // Private Functions
     public static function isInstalled() {
         return Cache::get('solder.install_stage',
