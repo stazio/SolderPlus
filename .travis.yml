@@ -27,6 +27,7 @@ matrix:
       env: DB="pgsql" REPO="http://technic.pagefortress.com/" REPO_TYPE="remote" # driver for PostgreSQL currently unsupported by HHVM, requires 3rd party dependency
 sudo: false
 before_install:
+  - phpenv config-rm xdebug.ini
   - echo $REPO
   - rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
   - composer self-update
