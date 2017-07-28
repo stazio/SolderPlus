@@ -40,7 +40,7 @@ cp app/config-sample app/config
 composer install --no-dev
 ```
 
-Now you will need to copy an API key from the (TechnicPlatform)[https://www.technicpack.net/login].
+Now you will need to copy an API key from the [TechnicPlatform](https://www.technicpack.net/login).
 
 Your name in the corner -> Edit my profile -> Solder Configuration.
 
@@ -51,7 +51,17 @@ Now you are free to use Solder with your modpacks! Enjoy!
 New Features
 -----
 - Installer (Yes I know it's not done)
-- Upload mods to SolderPlus
+- Uploading files
+
+TODO
+-----
+- Bulk Uploader
+- Server Installer
+    - Endpoint
+    - App
+- Auto Updater
+- Create a rolling release system
+    - TravisCI
 
 Troubleshooting
 ---
