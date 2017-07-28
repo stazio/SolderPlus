@@ -3,24 +3,15 @@ SolderPlus
 
 [![License](https://poser.pugx.org/solder/solder/license.svg)](https://packagist.org/packages/solder/solder)   
 
-Join us on [Discord](https://discord.gg/0Ehm7p0AD3PdYLT1)!
-
 What is SolderPlus?
 -------------
 SolderPlus is a continuation of [TechnicSolder](http://docs.io).
 SolderPlus fixes many issues with the older solder, and implements a better workflow.
 
-Why Did I Continue?
+Why Did I Continue It?
 --------------
 I feel as if TechnicSolder had a lot of issues with workflow, and must-have features that were never implemented.
-It made it extremely difficult for the less-technical-minded people to use it.
-
-Goals
---------------
-- [ ] Add CurseForge mod fetching, so that you do not need to even download mods!
-- [ ] Create a server-pack installer for SolderPlus.
-- [ ] Streamline the adding of mods to modpacks.
-
+It was also extremely difficult for the less-technical-minded people to setup.
 
 Requirements
 -------------
@@ -66,4 +57,4 @@ TODO
 Troubleshooting
 ---
 - Email me at [staz@staz.io](mailto:staz@staz.io).
-- Submit an [issue](https://github.com/stazio/SolderPlus/issues)
+- Submit an [issue](https://github.com/stazio/SolderPlus/issues).
