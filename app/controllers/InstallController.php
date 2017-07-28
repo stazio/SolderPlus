@@ -164,9 +164,6 @@ class InstallController extends BaseController {
             return Redirect::refresh();
     }
 
-
-
-
     //STAGE 3 - User Creation
     public function getStage3() {
         return Response::view('install.stage3');
@@ -216,6 +213,35 @@ class InstallController extends BaseController {
         }
     }
 
+    // Stage 4 - API Key
+    public function getStage4()
+    {
+        return Response::view('install.stage4');
+    }
+
+    public function postStage4() {
+        if ($res = $this->validate([
+            'name'     => 'required',
+            'key'  => 'required'
+        ]))return $res;
+
+        $name = Input::get('name');
+        $key = Input::get('key');
+
+        Key::create([
+            'name' => $name,
+            'api_key' => $key
+        ]);
+
+        $this->setStage(5);
+        return Redirect::refresh();
+    }
+
+    public function getStage5() {
+        return Response::view('install.stage5');
+    }
+
+    // Private Functions
     public static function isInstalled() {
         return Cache::get('solder.install_stage',
             Config::get('solder.install_stage', true)) === true;

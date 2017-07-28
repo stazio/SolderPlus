@@ -56,7 +56,7 @@
 @show
 <div id="page-wrapper" style="margin-right:250px">
     <div class="row">
-        <h1>Installation - Stage @yield('stage-num') of 3</h1>
+        <h1>Installation - Stage @yield('stage-num') of 5</h1>
     </div>
 
     <div class="row">
@@ -75,7 +75,7 @@
             <form id="form" method="post">
                 {{Form::token()}}
                 @yield('form-data')
-                <input type="submit" class="btn btn-success" id="submit">
+                <input type="submit" class="btn btn-success" id="submit" value="Next">
             </form>
             @yield('after-form')
         </div>

@@ -9,4 +9,6 @@
  * @property string created_at
  * @property string updated_at
  */
-class Key extends Eloquent {}
+class Key extends Eloquent {
+    protected $fillable = ['name', 'api_key'];
+}
