@@ -204,8 +204,7 @@ class ModController extends BaseController {
 
 	public function anyAddVersion()
 	{
-		if (Request::ajax() or true)
-		{
+
 			$mod_id = Input::get('mod-id');
 			$md5 = Input::get('add-md5');
 			$version = Input::get('add-version');
@@ -289,9 +288,6 @@ class ModController extends BaseController {
 							'reason' => 'Remote MD5 failed. ' . $file_md5['message'],
 							));
 			}
-		}
-
-		return Response::view('errors.missing', array(), 404);
 	}
 
 	public function anyDeleteVersion($ver_id = null)
