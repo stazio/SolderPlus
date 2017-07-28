@@ -24,3 +24,4 @@ _ide_helper.php
 apache_error.log
 public/install_test
 error.log
+latest-build
