@@ -27,11 +27,12 @@ class InstallController extends BaseController {
 
     // Stage 1 - Database
     public function getStage1() {
-            return Response::view('install.stage1');
+        return Response::view('install.stage1');
     }
 
     public function postStage1()
     {
+        Log::info(shell_exec('php ' . base_path('artisan') . ' key:generate'));
         $driver = Input::get('driver');
         if ($driver == 'sqlite') {
             if (!copy(app_path('database-sample/production.sqlite'), app_path('database/production.sqlite')))
