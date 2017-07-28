@@ -12,13 +12,11 @@
  * @property string updated_at
  * @property string pretty_name
  * @property string donatelink
- * @property int mod_type
  * @property Modversion[] versions
  */
 
 class Mod extends Eloquent {
 
-    const MOD_TYPE_UNIVERSAL = 0, MOD_TYPE_SERVER = 1, MOD_TYPE_CLIENT = 2;
 
 	public $timestamps = true;
 

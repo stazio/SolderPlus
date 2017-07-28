@@ -69,14 +69,6 @@
                                            value="{{ $mod->donatelink }}">
                                     <span class="help-block">This is only in use by the official Technic Solder</span>
                                 </div>
-                                <div class="form-group">
-                                    <label for="mod_type">Mod Type</label>
-                                    <select name="mod_type" id="mod_type" class="form-control">
-                                        <option value="{{Mod::MOD_TYPE_UNIVERSAL}}" {{$mod->isUniversalMod() ? 'selected' : ''}}>Universal (Client + Server)</option>
-                                        <option value="{{Mod::MOD_TYPE_SERVER}}"  {{$mod->isServerMod() ? 'selected' : ''}}>Server Only</option>
-                                        <option value="{{Mod::MOD_TYPE_CLIENT}}"  {{$mod->isClientMod() ? 'selected' : ''}}>Client Only</option>
-                                    </select>
-                                </div>
                             </div>
                         </div>
                         {{ Form::submit('Save Changes', array('class' => 'btn btn-success')) }}
@@ -92,10 +84,11 @@
                         <tr>
                             <th style="width: 1%"></th>
                             <th style="width: 15%">Version</th>
-                            <th style="width: 25%">MD5</th>
-                            <th style="width: 35%">Download URL</th>
+                            <th style="width: 22%">MD5</th>
+                            <th style="width: 22%">Download URL</th>
                             <th style="width: 9%">Filesize</th>
-                            <th style="width: 15%"></th>
+                            <th style="width: 12%">Type</th>
+                            <th style="width: 25%"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -110,6 +103,14 @@
                                 </td>
                                 <td><span id="add-url">N/A</span></td>
                                 <td>N/A</td>
+                                <td>
+                                    <select name="mod_type" class="form-control">
+                                        <option value="{{Modversion::MOD_TYPE_UNIVERSAL}}">Universal</option>
+                                        <option value="{{Modversion::MOD_TYPE_CLIENT}}">Client</option>
+                                        <option value="{{Modversion::MOD_TYPE_SERVER}}">Server</option>
+                                    </select>
+                                </td>
+
                                 <td>
                                     <label class="btn btn-primary btn-sm" for="file">
                                         <input name="modfile" id="file" type="file" style="display:none;">
@@ -131,13 +132,20 @@
                                     <td><i class="version-icon fa fa-plus" rel="{{ $ver->id }}"></i></td>
                                     <td class="version" rel="{{ $ver->id }}">{{ $ver->version }}</td>
                                     <td><input type="text" class="md5 form-control" name="md5" id="md5"
-                                               placeholder="{{ $ver->md5 }}" rel="{{ $ver->id }}"></input></td>
+                                               placeholder="{{ $ver->md5 }}" rel="{{ $ver->id }}"></td>
                                     <td class="url" rel="{{ $ver->id }}">
                                         <small>
                                             <a href="{{ Config::get('solder.mirror_url').'mods/'.$mod->name.'/'.$mod->name.'-'.$ver->version.'.zip' }}">{{ Config::get('solder.mirror_url').'mods/'.$mod->name.'/'.$mod->name.'-'.$ver->version.'.zip' }}</a>
                                         </small>
                                     </td>
                                     <td>{{ $ver->humanFilesize("MB") }}</td>
+                                    <td>
+                                        <select name="mod_type" class="form-control">
+                                            <option value="{{Modversion::MOD_TYPE_UNIVERSAL}}">Universal</option>
+                                            <option value="{{Modversion::MOD_TYPE_CLIENT}}">Client</option>
+                                            <option value="{{Modversion::MOD_TYPE_SERVER}}">Server</option>
+                                        </select>
+                                    </td>
                                     <td>
                                         <button type="submit" class="btn btn-primary btn-xs rehash"
                                                 rel="{{ $ver->id }}">Rehash
