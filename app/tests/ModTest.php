@@ -84,12 +84,6 @@ class ModTest extends TestCase {
 		$this->assertRedirectedTo('/mod/view/2');
 	}
 
-	public function testModVersionAddPostNonAjax()
-	{
-		$this->call('POST', '/mod/add-version/', array("add-version"=>"v1.5.2.v01","add-md5"=>"9ece64de3e11a0f15f55ef34f2194760","mod-id"=>"2"));
-		$this->assertResponseStatus(404);
-	}
-
 	public function testModVersionAddPostEmptyVersion()
 	{
 		//Fake an AJAX call.
