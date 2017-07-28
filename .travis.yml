@@ -6,14 +6,13 @@ language: php
 cache:
   directories:
     - $HOME/.composer/cache
+    - vendor
 php:
   - 5.6
   - 7.0
   - hhvm
 services:
   - mysql
-cache:
-  - vendor
 env:
   global:
     - APP_ENV='testing'
