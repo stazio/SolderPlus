@@ -25,11 +25,24 @@ Requirements
 
 Installation
 -------------
+
+Installation is easy! Download the latest version [here](https://github.com/stazio/SolderPlus/releases).
+Extract the zip into the root of your server.
+**Note** that the *public* folder should be the main folder for production. 
+On some servers it could be called *public_html* or *htdocs*. Rename it accordingly.
+
+Then, simply run through the installer!  
+
+
+Dev Installation
+----------------
+Run the following command. 
 ```text
 git clone https://github.com/stazio/SolderPlus.git
 cp app/config-sample app/config
 composer install --no-dev
 ```
+To serve run ```php artisan serve```.
 
 Now you will need to copy an API key from the [TechnicPlatform](https://www.technicpack.net/login).
 
