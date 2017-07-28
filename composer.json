@@ -80,6 +80,7 @@
 			"rm -r latest-build/app/storage/views/*",
 
 			"rm -r latest-build/public/mods/*",
+			"cd latest-build; php artisan optimize",
 
 			"cd latest-build; zip latest-build.zip * -r"
 		]
