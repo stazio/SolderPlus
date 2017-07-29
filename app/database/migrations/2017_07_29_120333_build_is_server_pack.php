@@ -12,7 +12,7 @@ class BuildIsServerPack extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('build', function(Blueprint $table) {
+		Schema::table('builds', function(Blueprint $table) {
 		    $table->boolean('is_server_pack');
         } );
 	}
@@ -25,7 +25,7 @@ class BuildIsServerPack extends Migration {
 	public function down()
 	{
 
-        Schema::table('build', function(Blueprint $table) {
+        Schema::table('builds', function(Blueprint $table) {
             $table->removeColumn('is_server_pack');
         } );
 	}
