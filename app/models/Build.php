@@ -16,7 +16,7 @@
  * @property Modversion[] modversions
  * @property Modpack modpack
  * @property boolean is_server_pack
- * @property string server_pack_is_built
+ * @property boolean server_pack_is_built
  * @property string server_pack_file_path
  * @property string server_pack_url
  */
