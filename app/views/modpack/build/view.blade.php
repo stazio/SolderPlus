@@ -70,15 +70,36 @@
 			</div>
 		</div>
 
-        <div class="col-xs-12"><div class="form-inline">
+        <div class="col-xs-12">
+            <div class="form-inline">
                 <label for="server_pack">
                     Server Pack:
                 </label>
-                <select onchange="update('server_pack', $(this).val())" id="server_pack" name="server_pack"
+                <select onchange="update('server_pack', $(this).val()); doServerPackCheck();" id="server_pack" name="server_pack"
                         class="form-control input-sm keep-select">
                     <option value="0" {{!$build->is_server_pack ? "selected" : ""}}>No</option>
                     <option value="1" {{$build->is_server_pack ? "selected" : ""}}>Yes</option>
                 </select>
+
+            </div>
+            <div class="showIfServerPack">
+                <div class="server-pack-options" style="display: none;">
+                    <div class="option-0">
+                        Server pack failed being build.
+                        <a class="btn btn-primary btn-sm" href="#" onclick="buildServerPack();">Click</a> to try again.
+                    </div>
+                    <div class="option-1">
+                        Server pack is being built. Please wait this may take a while...
+                    </div>
+                    <div class="option-2">
+                        Server Pack generated. Follow this link to download: <a href="{{$build->server_pack_url}}">{{$build->server_pack_url}}</a>
+                        <br><a class="btn btn-primary btn-sm" href="#" onclick="buildServerPack();">Click</a> to rebuild.
+                    </div>
+                    <div class="option-3">
+                    Server Pack needs to be built.
+                    <a class="btn btn-primary btn-sm" href="#" onclick="buildServerPack();">Click</a> to rebuild.
+                    </div>
+                </div>
             </div>
         </div>
 	</div>
@@ -190,6 +211,48 @@
 @endsection
 @section('bottom')
 <script type="text/javascript">
+    function doServerPackCheck() {
+        if ($("#server_pack :selected").val()== "0") {
+            $(".showIfServerPack").css("display", "none");
+        }else
+            $(".showIfServerPack").css("display", "inherit");
+    }
+    $().ready(doServerPackCheck);
+
+    function buildServerPack() {
+        $.ajax({
+            type: "GET",
+            url: "{{URL::action('ModpackController@getBuildServerPack', [$build->id])}}",
+            beforeSend: function() {
+                showPackState(1);
+            },
+            success: function (data) {
+                console.log(data);
+                if ('success' in data) {
+                    $.jGrowl("Modpack updated", {group: 'alert-success'});
+                    showPackState(2);
+                } else {
+                    $.jGrowl("Unable to change settings", {group: 'alert-warning'});
+                    showPackState(0);
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $.jGrowl(textStatus + ': ' + errorThrown, {group: 'alert-danger'});
+                showPackState(0);
+            }
+        });
+    }
+
+    // 0 - fail
+    // 1 - generating
+    // 2 - generated
+    // 3 - needs
+    function showPackState(state) {
+        $(".server-pack-options").css('display', 'inherit');
+        $(".server-pack-options").children().css('display', 'none');
+        $(".server-pack-options .option-" + state).css('display', 'inherit');
+    }showPackState({{$build->server_pack_is_built ? 2 : 3}});
+
 if(
     $("#mod").length) {
     var mod = $("#mod").selectize({
