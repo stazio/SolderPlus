@@ -40,8 +40,8 @@ class Build extends Eloquent {
     }
 
     public function getServerPackUrlAttribute() {
-	    return Config::get('solder.mirror_url') . "mods/". "serverpacks/" .
-            $this->modpack->slug . "/" . $this->version . ".zip";
+	    return Config::get('solder.mirror_url') . "mods/" . "serverpacks/" .
+            $this->modpack->slug . "/" . $this->modpack->slug . "-" . $this->version . ".zip";
     }
 
 	public function buildServerPack() {
