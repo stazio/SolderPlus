@@ -45,17 +45,14 @@ class Build extends Eloquent {
     }
 
 	public function buildServerPack() {
-
-        if (!file_exists(Config::get('solder.repo_location') . "serverpacks/" .
-            $this->modpack->slug))
-	    mkdir(Config::get('solder.repo_location') . "serverpacks/" .
-            $this->modpack->slug, 0777, true);
-
-	    if (!file_exists('/tmp/solderFileTemp/'))
-	        mkdir('/tmp/solderFileTemp/');
-
         $dir = Config::get('solder.repo_location') . "serverpacks/" .
             $this->modpack->slug . "/root";
+
+        if (is_file($dir))
+            unlink($dir);
+
+	    if (!is_dir($dir))
+	        mkdir($dir, 0777, true);
 
         $versions = $this->modversions;
 	    foreach ($versions as $version) {
@@ -69,7 +66,10 @@ class Build extends Eloquent {
         }
 
         $zip = new ZipArchive();
-        $zip->open($this->server_pack_file_path, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+	    if (file_exists($this->server_pack_file_path))
+	        unlink($this->server_pack_file_path);
+
+        $zip->open($this->server_pack_file_path, ZipArchive::CREATE);
 
         $files = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($dir),
