@@ -13,8 +13,8 @@ class BuildIsServerPack extends Migration {
 	public function up()
 	{
 		Schema::table('builds', function(Blueprint $table) {
-            $table->boolean('is_server_pack');
-            $table->boolean('server_pack_is_built');
+            $table->boolean('is_server_pack')->default(false);
+            $table->boolean('server_pack_is_built')->default(false);
         } );
 	}
 
