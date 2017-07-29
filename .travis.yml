@@ -48,4 +48,4 @@ install:
   - php artisan db:seed --class="TestSeeder"
 
 script:
-  - "vendor/bin/phpunit --verbose
+  - "vendor/bin/phpunit --verbose"
