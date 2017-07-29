@@ -605,6 +605,7 @@ class ModpackController extends BaseController {
      */
 	public function anyModify($action = null)
 	{
+	    /** @var Build $build*/
 		if (!Request::ajax())
 			return Response::view('errors.missing', array(), 404);
 
@@ -720,6 +721,15 @@ class ModpackController extends BaseController {
 				return Response::json(array(
 						"success" => "Updated build ".$build->version."'s private status.",
 					));
+            case "server_pack":
+                $build = Build::find(Input::get('build'));
+                $server_pack = Input::get('server_pack');
+                $build->is_server_pack = $server_pack;
+                $build->save();
+                return Response::json(array(
+                    "success" => "Build ".$build->version."is " . ($build->is_server_pack ? "now" : "no longer").  " a server pack",
+                ));
+                break;
             default:
                 return Response::view('errors.missing', array(), 404);
 		}
