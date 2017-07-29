@@ -11,13 +11,18 @@
  * @property int filesize
  * @property Mod mod
  * @property Build[] builds
+ * @property string filepath
  */
 class Modversion extends Eloquent {
 	protected $table = 'modversions';
 	public $timestamps = true;
 
+    public function getFilepathAttribute($key)
+    {
+        return Config::get('solder.repo_location') . $this->mod->name . "/" . $this->mod->name . "-$this->version.zip";
+    }
 
-	public function mod()
+    public function mod()
 	{
 		return $this->belongsTo('Mod');
 	}
