@@ -15,6 +15,7 @@
  * @property int min_memory
  * @property Modversion[] modversions
  * @property Modpack modpack
+ * @property boolean is_server_pack
  */
 
 class Build extends Eloquent {
