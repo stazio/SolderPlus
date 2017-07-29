@@ -580,6 +580,23 @@ class ModpackController extends BaseController {
 		return Redirect::to('modpack/list/')->with('success','Modpack Deleted');
 	}
 
+	public function getBuildServerPack($build_id) {
+
+	    $build = Build::find($build_id);
+	    if ($build) {
+            /** @var Build $build */
+            $build->buildServerPack();
+
+            return Response::json([
+                'status' => 'success'
+            ], 200);
+        }else {
+            return Response::json([
+                'status' => 'error',
+                'reason' => 'Mod not found'
+            ], 404);
+        }
+    }
 
     /**
      * AJAX Methods for Modpack Manager
