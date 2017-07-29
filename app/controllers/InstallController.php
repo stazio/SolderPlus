@@ -87,8 +87,8 @@ class InstallController extends BaseController {
             Config::write("database.connections.$driver.prefix", $prefix);
         }
 
-        Log::info(shell_exec('php ' . base_path('artisan') . ' migrate:install --force'));
-        Log::info(shell_exec('php ' . base_path('artisan') . ' migrate --force'));
+        Log::info(shell_exec('php ' . base_path('artisan') . ' migrate:install'));
+        Log::info(shell_exec('php ' . base_path('artisan') . ' migrate'));
 
         $this->setStage(2);
 
