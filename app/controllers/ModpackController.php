@@ -590,12 +590,11 @@ class ModpackController extends BaseController {
             $build->save();
 
             return Response::json([
-                'status' => 'success'
+                'success' => 'Pack generated'
             ], 200);
         }else {
             return Response::json([
-                'status' => 'error',
-                'reason' => 'Mod not found'
+                'errors' => 'Mod not found'
             ], 404);
         }
     }
