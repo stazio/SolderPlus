@@ -36,7 +36,7 @@ class Build extends Eloquent {
 
     public function getServerPackFilePathAttribute() {
         return Config::get('solder.repo_location') . "serverpacks/" .
-        $this->modpack->slug . "/" . $this->version . ".zip";
+        $this->modpack->slug . "/" . $this->modpack->slug . "-" . $this->version . ".zip";
     }
 
     public function getServerPackUrlAttribute() {
@@ -69,10 +69,10 @@ class Build extends Eloquent {
         $zip = new ZipArchive();
         $zip->open($this->server_pack_file_path, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
-
+        $dir = Config::get('solder.repo_location') . "serverpacks/" .
+            $this->modpack->slug . "/root";
         $files = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator(Config::get('solder.repo_location') . "serverpacks/" .
-                $this->modpack->slug . "/root/"),
+            new RecursiveDirectoryIterator($dir),
             RecursiveIteratorIterator::LEAVES_ONLY
         );
 
@@ -83,14 +83,12 @@ class Build extends Eloquent {
             {
                 // Get real and relative path for current file
                 $filePath = $file->getRealPath();
-                $relativePath = substr($filePath, strlen(Config::get('solder.repo_location') . "serverpacks/" .
-                        $this->modpack->slug . "/root") + 1);
+                $relativePath = substr($filePath, strlen($dir) + 1);
 
                 // Add current file to archive
                 $zip->addFile($filePath, $relativePath);
             }
         }
-
 
         $zip->close();
 
