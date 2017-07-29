@@ -19,7 +19,7 @@
 		<a href="{{ URL::to("modpack/add-build/".$build->modpack->id."?action=clone&build_id=$build->id") }}" class="btn btn-xs btn-success">Clone</a>
 
 	</div>
-	Build Info: {{ $build->modpack->name }} - {{ $build->version }}
+	Build Info: {{ $build->modpack->name }} - Build {{ $build->version }}
 	</div>
 	<div class="panel-body">
 		<div class="col-md-6">
@@ -69,8 +69,22 @@
 				@endif
 			</div>
 		</div>
+
+        <div class="col-xs-12"><div class="form-inline">
+                <label for="server_pack">
+                    Server Pack:
+                </label>
+                <select onchange="update('server_pack', $(this).val())" id="server_pack" name="server_pack"
+                        class="form-control input-sm keep-select">
+                    <option value="0" {{!$build->is_server_pack ? "selected" : ""}}>No</option>
+                    <option value="1" {{$build->is_server_pack ? "selected" : ""}}>Yes</option>
+                </select>
+            </div>
+        </div>
 	</div>
+
 </div>
+
 <div class="panel panel-default">
 	<div class="panel-heading">
 	Build Management: {{ $build->modpack->name }} - Build {{ $build->version }}
@@ -122,6 +136,7 @@
 		</div>
 	</div>
 </div>
+
 <div class="panel panel-default">
 	<div class="panel-heading">
 	Build Management: {{ $build->modpack->name }} - {{ $build->version }}
@@ -203,7 +218,8 @@ if(
         var url = {
             "latest": "{{URL::to("modpack/modify/latest")}}",
             "recommended": "{{URL::to("modpack/modify/recommended")}}",
-            "published": "{{URL::to("modpack/modify/published")}}"
+            "published": "{{URL::to("modpack/modify/published")}}",
+            "server_pack" : "{{URL::to("modpack/modify/server_pack")}}"
         };
 
         var data = {
