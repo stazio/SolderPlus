@@ -252,7 +252,7 @@ class InstallController extends BaseController {
             Config::get('solder.install_stage', true)) === true;
     }
 
-    private function setStage($new) {
+    public static function setStage($new) {
         Cache::put('solder.install_stage', $new, 30);
         Config::write('solder.install_stage', $new);
     }
