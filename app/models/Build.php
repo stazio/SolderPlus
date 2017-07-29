@@ -42,11 +42,13 @@ class Build extends Eloquent {
 
         $versions = $this->modversions;
 	    foreach ($versions as $version) {
-            $fileZip = new ZipArchive();
-	        if ($fileZip->open($version->filepath) === TRUE) {
-                $fileZip->extractTo(Config::get('solder.repo_location') . "serverpacks/" .
-                    $this->modpack->slug . "/root/");
-                $fileZip->close();
+	        if ($version->mod->isUniversalMod() || $version->mod->isServerMod()) {
+                $fileZip = new ZipArchive();
+                if ($fileZip->open($version->filepath) === TRUE) {
+                    $fileZip->extractTo(Config::get('solder.repo_location') . "serverpacks/" .
+                        $this->modpack->slug . "/root/");
+                    $fileZip->close();
+                }
             }
         }
 
