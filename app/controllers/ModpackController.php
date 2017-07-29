@@ -586,6 +586,8 @@ class ModpackController extends BaseController {
 	    if ($build) {
             /** @var Build $build */
             $build->buildServerPack();
+            $build->server_pack_is_built = true;
+            $build->save();
 
             return Response::json([
                 'status' => 'success'
@@ -630,6 +632,7 @@ class ModpackController extends BaseController {
 					}
 				} else {
 					$status = 'success';
+                    Build::find(Input::get('build_id'))->update(['server_pack_is_built' => false]);
 				}
 				return Response::json(array(
 							'status' => $status,
@@ -644,7 +647,8 @@ class ModpackController extends BaseController {
 				$status = 'success';
 				if ($affected == 0){
 					$status = 'failed';
-				}
+				} else
+				    Build::find(Input::get('build_id'))->update(['server_pack_is_built' => false]);
 				return Response::json(array(
 							'status' => $status,
 							'reason' => 'Rows Affected: '.$affected
@@ -668,6 +672,8 @@ class ModpackController extends BaseController {
 								));
 				} else {
 					$build->modversions()->attach($ver->id);
+					$build->server_pack_is_built = false;
+					$build->save();
 					return Response::json(array(
 								'status' => 'success',
 								'pretty_name' => $mod->pretty_name,
