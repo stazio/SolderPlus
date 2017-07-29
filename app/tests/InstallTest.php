@@ -6,7 +6,7 @@
  * Time: 7:42 PM
  */
 
-class InstallTest extends TestCase
+class InstallTest //extends TestCase
 {
     public function setUp() {
         InstallController::setStage(1);
