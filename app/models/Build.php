@@ -16,6 +16,9 @@
  * @property Modversion[] modversions
  * @property Modpack modpack
  * @property boolean is_server_pack
+ * @property string server_pack_is_built
+ * @property string server_pack_file_path
+ * @property string server_pack_url
  */
 
 class Build extends Eloquent {
@@ -30,6 +33,16 @@ class Build extends Eloquent {
 	{
 		return $this->belongsToMany('Modversion')->withTimestamps();
 	}
+
+    public function getServerPackFilePathAttribute() {
+        return Config::get('solder.repo_location') . "serverpacks/" .
+        $this->modpack->slug . "/" . $this->version . ".zip";
+    }
+
+    public function getServerPackUrlAttribute() {
+	    return Config::get('solder.mirror_url') . "mods/". "serverpacks/" .
+            $this->modpack->slug . "/" . $this->version . ".zip";
+    }
 
 	public function buildServerPack() {
 
@@ -54,8 +67,7 @@ class Build extends Eloquent {
         }
 
         $zip = new ZipArchive();
-        $zip->open(Config::get('solder.repo_location') . "serverpacks/" .
-            $this->modpack->slug . "/" . $this->version . ".zip", ZipArchive::CREATE | ZipArchive::OVERWRITE);
+        $zip->open($this->server_pack_file_path, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
 
         $files = new RecursiveIteratorIterator(
