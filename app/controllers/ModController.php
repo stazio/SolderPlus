@@ -223,7 +223,7 @@ class ModController extends BaseController {
 
             /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $file */
 			if ($file = Input::file('modfile')) {
-                $location = Config::get('solder.repo_location') . "/mods";
+                $location = Modfile::getModFolder();
                 $dir = $location . $mod->name . '/';
                 $zipName = "$mod->name-$version.zip";
 
@@ -322,7 +322,7 @@ class ModController extends BaseController {
 
 	private function mod_md5($mod, $version)
 	{
-		$location = Config::get('solder.repo_location');
+		$location = Modfile::getModFolder();
 		$URI = $location . 'mods/'.$mod->name.'/'.$mod->name.'-'.$version.'.zip';
 
 		if (file_exists($URI)) {
