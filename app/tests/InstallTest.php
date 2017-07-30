@@ -43,7 +43,7 @@ class InstallTest extends TestCase
             'password'=> Config::get("database.connections.$driver.password"),
             'prefix' => Config::get("database.connections.$driver.prefix")
         ]);
-        $this->assertResponseOk();
+        $this->assertEquals(302, $response->getStatusCode());
     }
 
     /**
@@ -56,8 +56,7 @@ class InstallTest extends TestCase
             'mod_uri' => Config::get('solder.repo_location'),
             'mirror_url' => Config::get('solder.mirror_url')
         ]);
-        $this->assertResponseOk();
-    }
+	    $this->assertEquals(302, $response->getStatusCode());    }
 
     /**
      * @depends testSetStage2
@@ -69,8 +68,7 @@ class InstallTest extends TestCase
             'username' =>'admin',
             'password' => Hash::make('admin'),
         ]);
-        $this->assertResponseOk();
-    }
+	    $this->assertEquals(302, $response->getStatusCode());    }
 
     /**
      * @depends testSetStage3
@@ -81,8 +79,7 @@ class InstallTest extends TestCase
             'key' => 'sfIvEcNueZtwKsTAIYOIYng1iuPAgavJsfIvEcNueZtwKsTAIYOIYng1iuPAgavJ',
             'name' => 'Test Key',
         ]);
-        $this->assertResponseOk();
-    }
+	    $this->assertEquals(302, $response->getStatusCode());    }
 
     /**
      * @depends testSetStage4
@@ -90,8 +87,7 @@ class InstallTest extends TestCase
     public function testSetStage5() {
         $driver = getenv('DB');
         $response = $this->call('POST', '/install/stage5');
-        $this->assertResponseOk();
-    }
+	    $this->assertEquals(302, $response->getStatusCode());    }
 
     /**
      * @depends testSetStage5
