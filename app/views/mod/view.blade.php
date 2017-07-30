@@ -171,10 +171,10 @@
 @section('bottom')
     <script type="text/javascript">
 
-        var mirror_url = '{{ Config::get("solder.mirror_url") }}';
+        var mirror_url = '{{ Modfile::getModFolderURL() }}';
 
         $('#add-version').keyup(function () {
-            $("#add-url").html('<a href="' + mirror_url + 'mods/{{ $mod->name }}/{{ $mod->name }}-' + $(this).val() + '.zip" target="_blank">' + mirror_url + 'mods/{{ $mod->name }}/{{ $mod->name }}-' + $(this).val() + '.zip</a>');
+            $("#add-url").html('<a href="' + mirror_url + '{{ $mod->name }}/{{ $mod->name }}-' + $(this).val() + '.zip" target="_blank">' + mirror_url + 'mods/{{ $mod->name }}/{{ $mod->name }}-' + $(this).val() + '.zip</a>');
         });
 
         $('#add').submit(function (e) {

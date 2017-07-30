@@ -40,7 +40,7 @@ class Build extends Eloquent {
     }
 
     public function getServerPackUrlAttribute() {
-	    return Modfile::getModFolder() . "serverpacks/" .
+	    return Modfile::getModFolderURL() . "serverpacks/" .
             $this->modpack->slug . "/" . $this->modpack->slug . "-" . $this->version . ".zip";
     }
 

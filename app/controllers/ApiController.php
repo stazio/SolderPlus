@@ -246,7 +246,7 @@ class APIController extends BaseController
 
         $response['md5'] = $version->md5;
         $response['filesize'] = $version->filesize;
-        $response['url'] = Config::get('solder.mirror_url') . 'mods/' . $version->mod->name . '/' . $version->mod->name . '-' . $version->version . '.zip';
+        $response['url'] = Modfile::getModFolderURL() . $version->mod->name . '/' . $version->mod->name . '-' . $version->version . '.zip';
 
         return $response;
     }
@@ -281,7 +281,7 @@ class APIController extends BaseController
             }
         }
 
-        $response['mirror_url'] = Config::get('solder.mirror_url');
+        $response['mirror_url'] = Modfile::getModFolderURL();
 
         return $response;
     }
@@ -382,7 +382,7 @@ class APIController extends BaseController
                             "md5" => $modversion->md5,
                             "filesize" => $modversion->filesize,
                             'mod_type' => $modversion->mod->mod_type,
-                            "url" => Config::get('solder.mirror_url') . 'mods/' . $modversion->mod->name . '/' . $modversion->mod->name . '-' . $modversion->version . '.zip'
+                            "url" => Modfile::getModFolderURL() . $modversion->mod->name . '/' . $modversion->mod->name . '-' . $modversion->version . '.zip'
                         );
                     }
                 }
@@ -408,7 +408,7 @@ class APIController extends BaseController
                         "link" => $modversion->mod->link,
                         "donate" => $modversion->mod->donatelink,
                         "mod_type" => $modversion->mod_type,
-                        "url" => Config::get('solder.mirror_url') . 'mods/' . $modversion->mod->name . '/' . $modversion->mod->name . '-' . $modversion->version . '.zip'
+                        "url" => Modfile::getModFolderURL() . $modversion->mod->name . '/' . $modversion->mod->name . '-' . $modversion->version . '.zip'
                     );
 
                 }
