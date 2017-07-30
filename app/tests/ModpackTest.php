@@ -152,4 +152,10 @@ class ModpackTest extends TestCase {
 		$this->assertTrue((bool)($modpack->private));
 	}
 
+	public function testBuildPack() {
+		$build = Build::find(1);
+		$this->call('GET', '/modpack/build_server_pack/1');
+		$this->assertResponseOk();
+		$this->assertFileExists($build->server_pack_file_path);
+	}
 }
