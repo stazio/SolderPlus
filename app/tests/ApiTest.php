@@ -22,16 +22,6 @@ class ApiTest extends TestCase {
 		$this->assertTrue(array_key_exists('mirror_url', $json));
 	}
 
-	public function testMod()
-	{
-		$response = $this->call('GET', 'api/mod/');
-		$this->assertResponseOk();
-		$this->assertTrue(is_a($response,'Illuminate\Http\JsonResponse'));
-		$json = $response->getData(true);
-
-		$this->assertTrue(array_key_exists('mods', $json));
-	}
-
 	public function testInvalidModpack()
 	{
 		$response = $this->call('GET', 'api/modpack/bob');
@@ -55,13 +45,23 @@ class ApiTest extends TestCase {
 		$this->assertTrue(array_key_exists('url', $json));
 		$this->assertTrue(array_key_exists('icon', $json));
 		$this->assertTrue(array_key_exists('icon_md5', $json));
-		$this->assertTrue(array_key_exists('latest', $json));
 		$this->assertTrue(array_key_exists('logo', $json));
 		$this->assertTrue(array_key_exists('logo_md5', $json));
-		$this->assertTrue(array_key_exists('recommended', $json));
 		$this->assertTrue(array_key_exists('background', $json));
 		$this->assertTrue(array_key_exists('background_md5', $json));
+		$this->assertTrue(array_key_exists('recommended', $json));
+		$this->assertTrue(array_key_exists('latest', $json));
 		$this->assertTrue(array_key_exists('builds', $json));
+	}
+
+	public function testMod()
+	{
+		$response = $this->call('GET', 'api/mod/');
+		$this->assertResponseOk();
+		$this->assertTrue(is_a($response,'Illuminate\Http\JsonResponse'));
+		$json = $response->getData(true);
+
+		$this->assertTrue(array_key_exists('mods', $json));
 	}
 
 	public function testInvalidMod()
@@ -88,7 +88,12 @@ class ApiTest extends TestCase {
 		$this->assertTrue(array_key_exists('description', $json));
 		$this->assertTrue(array_key_exists('link', $json));
 		$this->assertTrue(array_key_exists('donate', $json));
+		$this->assertTrue(array_key_exists('mod_type', $json));
 		$this->assertTrue(array_key_exists('versions', $json));
+
+		$this->assertEquals('1.0', $json['versions'][0]['version']);
+		$this->assertEquals('bdbc6c6cc48c7b037e4aef64b58258a3', $json['versions'][0]['md5']);
+		$this->assertEquals('295', $json['versions'][0]['filesize']);
 	}
 
 	public function testModpackBuild()
