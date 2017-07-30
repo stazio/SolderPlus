@@ -60,4 +60,9 @@ class BaseController extends Controller {
 		$arr['error'] = $message;
 		return Response::json($arr);
 	}
+
+	public function success($message=true, $arr=[]) {
+		$arr['success'] = $message;
+		return Response::json($arr);
+	}
 }
