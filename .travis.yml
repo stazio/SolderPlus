@@ -51,4 +51,4 @@ script:
   - "vendor/bin/phpunit --verbose"
 
 after_script:
-  - cat apps/storage/logs/*
+  - cat app/storage/logs/*
