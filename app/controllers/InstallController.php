@@ -116,7 +116,7 @@ class InstallController extends BaseController {
         if (!ends_with('/', $app_url))
             $app_url .= "/";
 
-        if (!$this->validateAppURL($app_url))
+        if (getenv('APP_ENV') !== "testing" && !$this->validateAppURL($app_url))
             return Redirect::back()->withErrors(['Application URL is invalid!']);
 
         if (!ends_with('/', $mirror_url)) {
