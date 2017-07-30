@@ -44,7 +44,6 @@ class APIController extends BaseController
 
     }
 
-
     /**
      *
      * /api/
@@ -181,7 +180,8 @@ class APIController extends BaseController
             }
 
             if (empty($mod))
-                return Response::json(array('error' => 'Mod does not exist'));
+                return $this->error('Mod is missing');
+            	//return Response::json(array('error' => 'Mod does not exist'));
 
             if (empty($version))
                 return Response::json($this->fetchMod($mod));
@@ -205,7 +205,8 @@ class APIController extends BaseController
         $key = Key::where('api_key', '=', $key)->first();
 
         if (empty($key))
-            return Response::json(array("error" => "Invalid key provided."));
+        	return $this->error('Key is invalid');
+            //return Response::json(array("error" => "Invalid key provided."));
         else
             return Response::json(array("valid" => "Key validated.", "name" => $key->name, "created_at" => $key->created_at));
     }
