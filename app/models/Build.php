@@ -63,7 +63,7 @@ class Build extends Eloquent {
 	        if ($version->mod->isUniversalMod() || $version->mod->isServerMod()) {
 	        	Log::info("Adding $version->mod v. $version->version to server pack");
                 $fileZip = new ZipArchive();
-                if ($res = $fileZip->open($version->filepath) === TRUE) {
+                if (($res = $fileZip->open($version->filepath)) === TRUE) {
                     $fileZip->extractTo($dir);
                     $fileZip->close();
                 }else {
