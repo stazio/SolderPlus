@@ -7,6 +7,7 @@ return array(
 	 * This is the location of your mod reposistory. INCLUDE a trailing slash!
 	 * This can be a URL or an absolute file location.
 	 *
+	 * This is the location of the repo, not the actual folder!
 	 **/
 	'repo_location' => '',
 
