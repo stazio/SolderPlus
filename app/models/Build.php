@@ -67,7 +67,7 @@ class Build extends Eloquent {
                     $fileZip->extractTo($dir);
                     $fileZip->close();
                 }else {
-	                Log::error("Failed to open mod: $version->mod v. $version->version with Reason: $res");
+	                Log::error("Failed to open mod: $version->mod v. $version->version with Reason: $res ($version->filepath)");
                 	throw new Exception("Failed to open mod: $version->mod v. $version->version with Reason: $res");
                 }
             }
