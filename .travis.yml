@@ -52,4 +52,4 @@ script:
 
 after_script:
   - cat app/storage/logs/*
-  - ls -l $REPO
+  - ls -lr $REPO
