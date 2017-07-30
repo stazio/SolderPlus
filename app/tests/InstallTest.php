@@ -15,23 +15,64 @@ class InstallTest extends TestCase
 	    InstallController::setStage(true);
     }
 
-	public function testRedirects() {
-        for ($i = 1; $i <= self::STAGES; $i++) {
-            InstallController::setStage($i);
-            $response = $this->call('GET', '/');
-            $this->assertRedirectedTo('/install/stage' . InstallController::getStage());
-        }
-    }
+	public function testRedirectStage1() {
+		InstallController::setStage(1);
+		$response = $this->call('GET', '/');
+		$this->assertRedirectedTo('/install/stage' . InstallController::getStage());
+	}
+	public function testRedirectStage2() {
+		InstallController::setStage(2);
+		$response = $this->call('GET', '/');
+		$this->assertRedirectedTo('/install/stage' . InstallController::getStage());
+	}
+	public function testRedirectStage3() {
+		InstallController::setStage(3);
+		$response = $this->call('GET', '/');
+		$this->assertRedirectedTo('/install/stage' . InstallController::getStage());
+	}
+	public function testRedirectStage4() {
+		InstallController::setStage(4);
+		$response = $this->call('GET', '/');
+		$this->assertRedirectedTo('/install/stage' . InstallController::getStage());
+	}
+	public function testRedirectStage5() {
+		InstallController::setStage(5);
+		$response = $this->call('GET', '/');
+		$this->assertRedirectedTo('/install/stage' . InstallController::getStage());
+	}
 
-    public function testGetStages() {
-        for ($i = 1; $i <= self::STAGES; $i++) {
-            InstallController::setStage(1);
-            $response = $this->call('GET', '/install/stage' . $i);
-            $this->assertResponseOk();
-        }
-    }
+	public function testGetStage1() {
+		$i = 1;
+		InstallController::setStage($i);
+		$response = $this->call('GET', '/install/stage' . $i);
+		$this->assertResponseOk();
+	}
+	public function testGetStage2() {
+		$i = 2;
+		InstallController::setStage($i);
+		$response = $this->call('GET', '/install/stage' . $i);
+		$this->assertResponseOk();
+	}
+	public function testGetStage3() {
+		$i = 3;
+		InstallController::setStage($i);
+		$response = $this->call('GET', '/install/stage' . $i);
+		$this->assertResponseOk();
+	}
+	public function testGetStage4() {
+		$i = 41;
+		InstallController::setStage($i);
+		$response = $this->call('GET', '/install/stage' . $i);
+		$this->assertResponseOk();
+	}
+	public function testGetStage5() {
+		$i = 5;
+		InstallController::setStage($i);
+		$response = $this->call('GET', '/install/stage' . $i);
+		$this->assertResponseOk();
+	}
 
-    public function testSetStage1() {
+	public function testSetStage1() {
         InstallController::setStage(1);
         $driver = getenv('DB');
         $response = $this->call('POST', '/install/stage1', [
