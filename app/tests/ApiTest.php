@@ -90,10 +90,6 @@ class ApiTest extends TestCase {
 		$this->assertTrue(array_key_exists('donate', $json));
 		$this->assertTrue(array_key_exists('mod_type', $json));
 		$this->assertTrue(array_key_exists('versions', $json));
-
-		$this->assertEquals('1.0', $json['versions'][0]['version']);
-		$this->assertEquals('bdbc6c6cc48c7b037e4aef64b58258a3', $json['versions'][0]['md5']);
-		$this->assertEquals('295', $json['versions'][0]['filesize']);
 	}
 
 	public function testModpackBuild()
