@@ -10,7 +10,12 @@ class InstallTest extends TestCase
 {
     const STAGES = 5;
 
-    public function testRedirects() {
+    public function tearDown() {
+	    parent::tearDown();
+	    InstallController::setStage(true);
+    }
+
+	public function testRedirects() {
         for ($i = 1; $i <= self::STAGES; $i++) {
             InstallController::setStage($i);
             $response = $this->call('GET', '/');
