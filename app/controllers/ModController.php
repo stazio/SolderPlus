@@ -323,7 +323,7 @@ class ModController extends BaseController {
 	private function mod_md5($mod, $version)
 	{
 		$location = Modfile::getModFolder();
-		$URI = $location . 'mods/'.$mod->name.'/'.$mod->name.'-'.$version.'.zip';
+		$URI = $location . $mod->name.'/'.$mod->name.'-'.$version.'.zip';
 
 		if (file_exists($URI)) {
 			Log::info('Found \'' . $URI . '\'');
