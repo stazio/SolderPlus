@@ -19,7 +19,7 @@ class Modversion extends Eloquent {
 
     public function getFilepathAttribute($key)
     {
-        return Config::get('solder.repo_location') . $this->mod->name . "/" . $this->mod->name . "-$this->version.zip";
+        return Config::get('solder.repo_location') . "/mods/" . $this->mod->name . "/" . $this->mod->name . "-$this->version.zip";
     }
 
     public function mod()

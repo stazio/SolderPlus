@@ -35,7 +35,7 @@ class Build extends Eloquent {
 	}
 
     public function getServerPackFilePathAttribute() {
-        return Config::get('solder.repo_location') . "serverpacks/" .
+        return Config::get('solder.repo_location') . "mods/serverpacks/" .
         $this->modpack->slug . "/" . $this->modpack->slug . "-" . $this->version . ".zip";
     }
 
@@ -45,7 +45,7 @@ class Build extends Eloquent {
     }
 
 	public function buildServerPack() {
-        $dir = Config::get('solder.repo_location') . "serverpacks/" .
+        $dir = Config::get('solder.repo_location') . "mods/serverpacks/" .
             $this->modpack->slug . "/root";
 
         if (is_file($dir)) {
@@ -106,7 +106,7 @@ class Build extends Eloquent {
 
         $zip->close();
 
-        //$this->addDir(Config::get('solder.repo_location') . "serverpacks/" .
+        //$this->addDir(Config::get('solder.repo_location') . "mods/serverpacks/" .
           //  $this->modpack->slug . "/root/", "", $zip);
     }
 }

@@ -223,7 +223,7 @@ class ModController extends BaseController {
 
             /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $file */
 			if ($file = Input::file('modfile')) {
-                $location = Config::get('solder.repo_location');
+                $location = Config::get('solder.repo_location') . "/mods";
                 $dir = $location . $mod->name . '/';
                 $zipName = "$mod->name-$version.zip";
 
