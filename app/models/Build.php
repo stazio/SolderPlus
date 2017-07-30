@@ -48,28 +48,41 @@ class Build extends Eloquent {
         $dir = Config::get('solder.repo_location') . "serverpacks/" .
             $this->modpack->slug . "/root";
 
-        if (is_file($dir))
-            unlink($dir);
+        if (is_file($dir)) {
+	        Log::info("Deleting file $dir");
+        	unlink($dir);
+        }
 
-	    if (!is_dir($dir))
-	        mkdir($dir, 0777, true);
+	    if (!is_dir($dir)) {
+		    Log::info("Creating directory $dir");
+        	mkdir($dir, 0777, true);
+	    }
 
         $versions = $this->modversions;
 	    foreach ($versions as $version) {
 	        if ($version->mod->isUniversalMod() || $version->mod->isServerMod()) {
+	        	Log::info("Adding $version->mod v. $version->version to server pack");
                 $fileZip = new ZipArchive();
                 if ($fileZip->open($version->filepath) === TRUE) {
                     $fileZip->extractTo($dir);
                     $fileZip->close();
+                }else {
+	                Log::error("Failed to open mod: $version->mod v. $version->version");
+                	throw new Exception("Failed to open mod: $version->mod v. $version->version");
                 }
             }
         }
 
         $zip = new ZipArchive();
-	    if (file_exists($this->server_pack_file_path))
-	        unlink($this->server_pack_file_path);
+	    if (file_exists($this->server_pack_file_path)) {
+		    Log::info("Deleting old server pack $this->server_pack_file_path");
+	    	unlink($this->server_pack_file_path);
+	    }
 
-        $zip->open($this->server_pack_file_path, ZipArchive::CREATE);
+        if ($res = $zip->open($this->server_pack_file_path, ZipArchive::CREATE !== true)) {
+	    	Log::error("Failed to open modfile Reason ID: $res");
+	    	throw new Exception("Failed to open modfile Reason ID: $res" );
+        }
 
         $files = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($dir),
@@ -86,6 +99,7 @@ class Build extends Eloquent {
                 $relativePath = substr($filePath, strlen($dir) + 1);
 
                 // Add current file to archive
+	            Log::info("Adding $relativePath/$filePath to $relativePath");
                 $zip->addFile($filePath, $relativePath);
             }
         }
