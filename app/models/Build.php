@@ -79,7 +79,7 @@ class Build extends Eloquent {
 	    	unlink($this->server_pack_file_path);
 	    }
 
-        if ($res = $zip->open($this->server_pack_file_path, ZipArchive::CREATE !== true)) {
+        if (($res = $zip->open($this->server_pack_file_path, ZipArchive::CREATE) !== true)) {
 	    	Log::error("Failed to open modfile Reason ID: $res");
 	    	throw new Exception("Failed to open modfile Reason ID: $res" );
         }
