@@ -5,13 +5,13 @@
  *
  * @property int id
  * @property string name
- * @property string description
+ * @property string pretty_name
  * @property string author
+ * @property string description
  * @property string link
+ * @property string donatelink
  * @property string created_at
  * @property string updated_at
- * @property string pretty_name
- * @property string donatelink
  * @property int mod_type
  * @property Modversion[] versions
  */
@@ -20,6 +20,10 @@ class Mod extends Eloquent {
 
 
 	public $timestamps = true;
+
+	public $hidden = [
+
+	];
 
     const MOD_TYPE_UNIVERSAL = 0, MOD_TYPE_SERVER = 1, MOD_TYPE_CLIENT = 2;
     public static function notInBuild(Build $build)
