@@ -10,6 +10,6 @@ class Modfile {
     public static function getModFolder() {
     	if (Cache::has('solder.mod_folder'))
     		Cache::add('solder.mod_folder', Config::get('solder.repo_location') . '/mods/', 120);
-        return Cache::get('solder.mod_folder');
+        return Cache::get('solder.mod_folder', Config::get('solder.repo_location') . '/mods/');
     }
 }
