@@ -3,6 +3,7 @@
 class UpdateUtils {
 
 	public static $githubclient;
+	const OWNER = 'stazio', REPO = 'solderplus';
 
 	public static function init() {
 	
@@ -11,11 +12,10 @@ class UpdateUtils {
 	}
 
 	public static function getUpdateCheck() {
-
 		$allVersions = self::getAllVersions();
 
 		if(!array_key_exists('error', $allVersions)) {
-			if (version_compare(self::getLatestVersion()['name'], SOLDER_VERSION, '>')) {
+			if (self::version_compare(self::getLatestVersion()['tag_name'], SOLDER_VERSION, '>')) {
 				return true;
 			}
 		}
@@ -37,7 +37,7 @@ class UpdateUtils {
 	public static function getAllVersions() {
 
 		try {
-			return self::$githubclient->api('repo')->tags('technicpack', 'technicsolder');
+			return self::$githubclient->api('repo')->releases()->all(self::OWNER, self::REPO);
 		} catch (RuntimeException $e){
 			return array('error' => 'Unable to pull version from Github - ' . $e->getMessage());
 		}
@@ -51,7 +51,7 @@ class UpdateUtils {
 		}
 
 		try {
-			return self::$githubclient->api('repo')->commits()->show('technicpack', 'technicsolder', $commit);
+			return self::$githubclient->api('repo')->commits()->show(self::OWNER, self::REPO, $commit);
 		} catch (RuntimeException $e){
 			return array('error' => 'Unable to pull commit info from Github - ' . $e->getMessage());
 		}
@@ -61,10 +61,14 @@ class UpdateUtils {
 	public static function getLatestChangeLog($branch = 'master') {
 
 		try {
-			return self::$githubclient->api('repo')->commits()->all('technicpack', 'technicsolder', array('sha' => $branch));
+			return self::$githubclient->api('repo')->commits()->all(self::OWNER, self::REPO, array('sha' => $branch));
 		} catch(RuntimeException $e){
 			return array('error' => 'Unable to pull changelog from Github - ' . $e->getMessage());
 		}
 
+	}
+
+	private static function version_compare($first, $second, $op) {
+		return $first != $second;
 	}
 }

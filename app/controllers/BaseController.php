@@ -9,7 +9,7 @@ class BaseController extends Controller {
 		}
 
 		if(!defined('SOLDER_VERSION')) {
-			define('SOLDER_VERSION', 'v1.2.1');
+			define('SOLDER_VERSION', '1.2.1');
 		}
 
 		UpdateUtils::init();

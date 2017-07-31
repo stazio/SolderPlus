@@ -56,7 +56,7 @@ class SolderController extends BaseController {
 		$latestCommit = array_key_exists('error', $rawChangeLog) ? $rawChangeLog : $rawChangeLog[0];
 
 		$rawLatestVersion = UpdateUtils::getLatestVersion();
-		$latestVersion = array_key_exists('error', $rawLatestVersion) ? $rawLatestVersion : $rawLatestVersion['name'];
+		$latestVersion = array_key_exists('error', $rawLatestVersion) ? $rawLatestVersion : $rawLatestVersion['tag_name'];
 
 		$latestData = array('version' => $latestVersion,
 							'commit' => $latestCommit);

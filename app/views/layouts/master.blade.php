@@ -108,9 +108,9 @@
                       <li>
                           <a href="{{ URL::to('solder/configure') }}">Main Settings</a>
                       </li>
-                      {{--<li>
+                      <li>
                           <a href="{{ URL::to('solder/update') }}">Update Checker</a>
-                      </li>--}}
+                      </li>
                       <li>
                           <a href="{{ URL::to('user/list') }}">User Management</a>
                       </li>
