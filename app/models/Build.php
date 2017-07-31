@@ -23,6 +23,9 @@
 
 class Build extends Eloquent {
 	public $timestamps = true;
+	public $fillable = [
+		'server_pack_is_built'
+	];
 
 	public function modpack()
 	{

@@ -739,4 +739,74 @@ class ModpackController extends BaseController {
                 return Response::view('errors.missing', array(), 404);
 		}
 	}
+
+	public function getFileExplorer($build_id) {
+		$build = Build::find($build_id);
+		$path = Input::get('path', null);
+		if (!$build)
+			return Redirect::to('/modpack/list')->withErrors(['Build not found!']);
+
+		$zip = new ZipArchive();
+		$files = [];
+		foreach ($build->modversions as $modversion) {
+			$zipPath = $modversion->filepath;
+			if ($zip->open($zipPath) !== FALSE) {
+				for ($i = 0; $i < $zip->numFiles; $i++) {
+					$namePath = "/".$zip->getNameIndex($i);
+					$split = explode('/', $namePath);
+					$name = array_pop($split);
+					if ($name != "") {
+						$size = Modversion::toHumanFilesize($zip->statIndex($i)['size']);
+
+						self::put($split, ['name' => $name, 'modversion' => $modversion, 'size' => $size], $files);
+					}
+				}
+			}
+		}
+
+		if ($path) {
+			$files = self::get(explode('/', $path), $files);
+			if ($files === null)
+				return Redirect::action('ModpackController@getFileExplorer', ['build_id' => $build_id])->withErrors(['Folder not found!']);
+			$split = explode('/', $path);
+			$pathSplit = [['', '']];
+			$p = '';
+			for ($i = 1; $i < count($split); $i++) {
+				$pop = $split[$i];
+				$p .= "/$pop";
+				$pathSplit[] = [$pop, $p];
+			}
+		}else {
+			$files = self::get([''], $files, []);
+			$pathSplit = [];
+		}
+		return View::make('modpack.build.file-explore')->
+		with('build', $build)->
+			with('path', $path)->
+			with('pathSplit', $pathSplit)->
+			with('files', $files);
+	}
+
+	private static function put(array $keys, $val, &$arr) {
+		if (!isset($arr[$keys[0]]))
+			$arr[$keys[0]] = [];
+
+		if (count($keys) < 2) {
+			$arr[$keys[0]][] = $val;
+		} else {
+			$c = &$arr[$keys[0]];
+			array_splice($keys, 0, 1);
+			self::put($keys, $val, $c);
+		}
+	}
+
+	private static function get(array $keys, $arr, $default=null) {
+		if(count($keys) < 2)
+			return isset($arr[$keys[0]]) ? $arr[$keys[0]] : $default;
+		else {
+			$c = $arr[$keys[0]];
+			array_splice($keys, 0, 1);
+			return self::get($keys, $c);
+		}
+	}
 }

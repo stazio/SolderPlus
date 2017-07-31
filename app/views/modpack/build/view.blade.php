@@ -14,11 +14,11 @@
 	<div class="panel-heading">
 	<div class="pull-right">
 		<a href="{{ URL::current() }}" class="btn btn-xs btn-warning">Refresh</a>
+        <a href="{{ URL::to("modpack/file-explorer/".$build->id) }}" class="btn btn-xs btn-primary">File Explorer</a>
 		<a href="{{ URL::to('modpack/build/' . $build->id . '?action=edit') }}" class="btn btn-xs btn-danger">Edit</a>
 	    <a href="{{ URL::to('modpack/view/' . $build->modpack->id) }}" class="btn btn-xs btn-info">Back to Modpack</a>
-		<a href="{{ URL::to("modpack/add-build/".$build->modpack->id."?action=clone&build_id=$build->id") }}" class="btn btn-xs btn-success">Clone</a>
-
-	</div>
+        <a href="{{ URL::to("modpack/add-build/".$build->modpack->id."?action=clone&build_id=$build->id") }}" class="btn btn-xs btn-success">Clone</a>
+    </div>
 	Build Info: {{ $build->modpack->name }} - Build {{ $build->version }}
 	</div>
 	<div class="panel-body">

@@ -34,7 +34,10 @@ class Modversion extends Eloquent {
 
 	public function humanFilesize($unit = "")
 	{
-		$size = $this->filesize;
+		return self::toHumanFilesize($this->filesize, $unit);
+	}
+
+	public static function toHumanFilesize($size, $unit="") {
 		if( (!$unit && $size >= 1<<30) || $unit == "GB")
 			return number_format($size/(1<<30),2)." GB";
 		if( (!$unit && $size >= 1<<20) || $unit == "MB")
