@@ -1,10 +1,10 @@
 @extends('layouts/master')
 @section('title')
-    <title>{{ $build->version }} - {{ $build->modpack->name }} - TechnicSolder</title>
+    <title>{{ $build->version }} - {{ $build->modpack->name }} - SolderPlus</title>
 @stop
 @section('content')
     <div class="page-header">
-        <h1>Resource Viewer</h1>
+        <h1>File Explorer</h1>
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
