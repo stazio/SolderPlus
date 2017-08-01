@@ -34,15 +34,22 @@ class Modfile {
 					    mkdir(storage_path('temp/'. $path), 0777, true);
 				    file_put_contents(storage_path('temp/'. $name), $file);
 				    if ($zip2->open(storage_path('temp/'. $name)) === TRUE) {
-					    if ($mcmod = $zip2->getFromName('mcmod.info'))
-						    return json_decode($mcmod);
+					    if ($mcmod = $zip2->getFromName('mcmod.info')) {
+						    $json = json_decode($mcmod, true);
+						    if (isset($json['modList']))
+						    	return $json['modList'][0]; // New FML format(?)
+						    else {
+						    	if (isset($json[0]))
+						    		return $json[0]; // Old FML format(?)
+						    	else
+						    		return $json; // Uhhhhhhh, maybe?
+						    }
+					    }
 				    }
 				    $zip2->close();
 			    }
 		    }
 	    }
-	    $zip2->close();
-	    $zip->close();
 	    return null;
     }
 }
