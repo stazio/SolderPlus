@@ -206,7 +206,7 @@ class InstallController extends BaseController {
             'password' => $password), false)) {
             Auth::user()->last_ip = Request::ip();
             Auth::user()->save();
-            $this->setStage(true);
+            $this->setStage(4);
             return Redirect::refresh();
         } else {
             return Redirect::to('login')->with('login_failed',"Invalid Email/Password");
