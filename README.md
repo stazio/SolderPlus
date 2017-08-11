@@ -33,6 +33,9 @@ On some servers it could be called *public_html* or *htdocs*. Rename it accordin
 
 Then, simply run through the installer!  
 
+Upgrading from the original TechnicSolder to SolderPlus
+-------------
+View [this](https://github.com/stazio/SolderPlus/wiki/Upgrading-to-SolderPlus-from-the-Original-TechnicSolder) wiki page for more information.
 
 Dev Installation
 ----------------
