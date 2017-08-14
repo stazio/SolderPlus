@@ -60,3 +60,7 @@ Troubleshooting
 ---
 - Email me at [staz@staz.io](mailto:staz@staz.io).
 - Submit an [issue](https://github.com/stazio/SolderPlus/issues).
+
+Contributing
+---
+Just, submit pull requests! I'll update accordingly. Please use the master branch of SolderPlus when forking.
