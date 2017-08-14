@@ -1,6 +1,6 @@
 @extends('layouts/master')
 @section('title')
-    <title>{{ $modpack->name }} - TechnicSolder</title>
+    <title>{{ $modpack->name }} - SolderPlus</title>
 @stop
 @section('content')
 <div class="page-header">

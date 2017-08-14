@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     @section('title')
-      <title>TechnicSolder {{ SOLDER_VERSION }}</title>
+      <title>SolderPlus {{ SOLDER_VERSION }}</title>
     @show
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{{ asset('favicon.ico') }}}">

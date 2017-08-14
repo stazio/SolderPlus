@@ -1,6 +1,6 @@
 @extends('layouts/master')
 @section('title')
-    <title>API Key Management - TechnicSolder</title>
+    <title>API Key Management - SolderPlus</title>
 @stop
 @section('content')
 <h1>API Key Management</h1>

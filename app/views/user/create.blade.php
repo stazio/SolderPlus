@@ -1,6 +1,6 @@
 @extends('layouts/master')
 @section('title')
-    <title>Create User - TechnicSolder</title>
+    <title>Create User - SolderPlus</title>
 @stop
 @section('content')
 <div class="page-header">

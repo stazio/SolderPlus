@@ -1,6 +1,6 @@
 @extends('layouts/master')
 @section('title')
-    <title>Page not found! - TechnicSolder</title>
+    <title>Page not found! - SolderPlus</title>
 @stop
 @section('top')
     <link href="{{{ asset('css/errors.css') }}}" rel="stylesheet">

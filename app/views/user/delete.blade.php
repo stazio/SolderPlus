@@ -1,6 +1,6 @@
 @extends('layouts/master')
 @section('title')
-    <title>Delete User - TechnicSolder</title>
+    <title>Delete User - SolderPlus</title>
 @stop
 @section('content')
 <div class="page-header">

@@ -1,6 +1,6 @@
 @extends('layouts/master')
 @section('title')
-    <title>Mod Management - TechnicSolder</title>
+    <title>Mod Management - SolderPlus</title>
 @stop
 @section('content')
 <div class="page-header">

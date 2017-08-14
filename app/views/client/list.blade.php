@@ -1,6 +1,6 @@
 @extends('layouts/master')
 @section('title')
-    <title>Client Management - TechnicSolder</title>
+    <title>Client Management - SolderPlus</title>
 @stop
 @section('content')
 <h1>Client Management</h1>

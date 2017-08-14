@@ -1,6 +1,6 @@
 @extends('layouts/master')
 @section('title')
-    <title>{{ $build->version }} - {{ $build->modpack->name }} - TechnicSolder</title>
+    <title>{{ $build->version }} - {{ $build->modpack->name }} - SolderPlus</title>
 @stop
 @section('top')
     <script src="{{{ asset('js/selectize.min.js') }}}"></script>

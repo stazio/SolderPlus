@@ -1,6 +1,6 @@
 @extends('layouts/master')
 @section('title')
-    <title>User Management - TechnicSolder</title>
+    <title>User Management - SolderPlus</title>
 @stop
 @section('content')
 <div class="page-header">

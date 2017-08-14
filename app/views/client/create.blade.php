@@ -1,6 +1,6 @@
 @extends('layouts/master')
 @section('title')
-    <title>Create Client - TechnicSolder</title>
+    <title>Create Client - SolderPlus</title>
 @stop
 @section('content')
 <h1>Client Management</h1>

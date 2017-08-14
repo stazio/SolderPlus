@@ -1,6 +1,6 @@
 @extends('layouts/master')
 @section('title')
-    <title>{{ $user->username }} - TechnicSolder</title>
+    <title>{{ $user->username }} - SolderPlus</title>
 @stop
 @section('content')
 <div class="page-header">

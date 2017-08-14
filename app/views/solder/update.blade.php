@@ -1,6 +1,6 @@
 @extends('layouts/master')
 @section('title')
-    <title>Update Checker - TechnicSolder</title>
+    <title>Update Checker - SolderPlus</title>
 @stop
 @section('content')
 <div class="row">
