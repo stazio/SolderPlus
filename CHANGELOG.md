@@ -4,7 +4,9 @@
 + Fixed a bug where the update utility does not properly cache files
 + Fixed a bug with the installer that does not show stages 4 and 5
 + Fixed a bug where the menu bar glitches out when scrolling on a tablet device
-
++ Fixed a bug where the installer appends an unnecessary '/' to the application URL
++ Made some help text more appropriate.
++ SolderPlus will now not allow you to upload a mod if it detects you are using Amazon S3 or an external service.
 
 1.3.0
 ----
