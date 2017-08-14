@@ -111,7 +111,6 @@ input[type=file] {
 }
 
 .sidebar-scrolled {
-	position: fixed;
 	width: inherit;
 	top: 0;
 }
