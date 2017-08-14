@@ -358,4 +358,8 @@ class ModController extends BaseController {
 
 		return $hash;
 	}
+
+	public static function canUpload() {
+		return !starts_with(Modfile::getModFolder(), 'http') || !Config::get('solder.use_s3', false);
+	}
 }

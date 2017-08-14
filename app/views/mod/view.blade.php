@@ -67,7 +67,7 @@
                                     <label for="donatelink">Author Donation Link</label>
                                     <input type="text" class="form-control" name="donatelink" id="donatelink"
                                            value="{{ $mod->donatelink }}">
-                                    <span class="help-block">This is only in use by the official Technic Solder</span>
+                                    <span class="help-block">This is only used by the Technic Platform.</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="mod_type">Mod Type</label>
@@ -113,6 +113,7 @@
 
 
                                 <td>
+                                    @if(ModController::canUpload())
                                     <label class="btn btn-primary btn-sm" for="file">
                                         <input name="modfile" id="file" type="file" style="display:none;">
                                         File
@@ -123,6 +124,9 @@
                                             <small class="text-muted" id="file-name"></small>
                                         </div>
                                     </div>
+                                    @else
+                                        <button type="submit" class="btn btn-success btn-sm add">Add</button>
+                                    @endif
                                 </td>
                             </form>
                         </tr>
