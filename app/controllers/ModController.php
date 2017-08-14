@@ -222,28 +222,30 @@ class ModController extends BaseController {
 							));
 
             /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $file */
-			if ($file = Input::file('modfile')) {
-                $location = Modfile::getModFolder();
-                $dir = $location . $mod->name . '/';
-                $zipName = "$mod->name-$version.zip";
+            if ($file = Input::file('modfile')) {
+            	if (ModController::canUpload()) {
+		            $location = Modfile::getModFolder();
+		            $dir = $location.$mod->name.'/';
+		            $zipName = "$mod->name-$version.zip";
 
-                if (!is_dir($dir)) {
-                    if (is_file($dir))
-                        unlink($dir);
-                    mkdir($dir,0777,true);
-                }
+		            if (!is_dir($dir)) {
+			            if (is_file($dir))
+				            unlink($dir);
+			            mkdir($dir, 0777, true);
+		            }
 
-                if ($file->getClientOriginalExtension() == "jar") {
-                    $zip = new ZipArchive();
-                    if ($res=$zip->open("$dir/$zipName", ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE)==TRUE) {
-                        $zip->addFile($file->getRealPath(), "mods/$mod->name.jar");
-                        $zip->close();
-                    }else {
-                        Log::ERROR($res);
-                    }
-                }else{
-                    $file->move($dir, $zipName);
-                }
+		            if ($file->getClientOriginalExtension() == "jar") {
+			            $zip = new ZipArchive();
+			            if ($res = $zip->open("$dir/$zipName", ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE) == TRUE) {
+				            $zip->addFile($file->getRealPath(), "mods/$mod->name.jar");
+				            $zip->close();
+			            } else {
+				            Log::ERROR($res);
+			            }
+		            } else {
+			            $file->move($dir, $zipName);
+		            }
+	            }
             }
 
 			if (empty($md5)) {
