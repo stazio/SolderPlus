@@ -11,6 +11,14 @@ class ApiTest extends TestCase {
 		$this->assertEquals('{"api":"TechnicSolder","is_plus":true,"version":"'.SOLDER_VERSION.'","stream":"'.SOLDER_STREAM.'"}', $response->getContent());
 	}
 
+	public function testIndex() {
+		$response = $this->call('GET', 'api/');
+		$this->assertResponseOk();
+		$this->assertTrue(is_a($response,'Illuminate\Http\JsonResponse'));
+
+		$this->assertEquals('{"api":"TechnicSolder","is_plus":true,"version":"'.SOLDER_VERSION.'","stream":"'.SOLDER_STREAM.'"}', $response->getContent());
+	}
+
 	public function testModpack()
 	{
 		$response = $this->call('GET', 'api/modpack/');

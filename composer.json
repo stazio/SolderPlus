@@ -60,9 +60,13 @@
 			"php artisan optimize"
 		],
 		"tests": [
-			"php artisan migrate:refresh --force",
-			"php artisan db:seed --class=\"TestSeeder\" --force",
-			"vendor/bin/phpunit --verbose"
+			"if [ -f testing ]; then mkdir testing; fi",
+			"cp * testing -r || true",
+			"touch testing/app/database/production.sqlite",
+			"cp -r testing/app/config-sample testing/app/config",
+			"cd testing; DB=sqlite APP_ENV=testing php artisan migrate:refresh --force",
+			"cd testing; DB=sqlite APP_ENV=testing php artisan db:seed --class=\"TestSeeder\" --force",
+			"cd testing; DB=sqlite APP_ENV=testing vendor/bin/phpunit --verbose"
 		],
 		"create-build": [
 			"mkdir latest-build",

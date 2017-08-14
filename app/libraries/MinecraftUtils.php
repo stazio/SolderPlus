@@ -3,14 +3,17 @@
 class MinecraftUtils {
 
 	public static function getMinecraft($manual = false) {
+		$response = array();
 
 		if ($manual) {
 			Cache::forget('minecraftversions');
-		} else if (Cache::has('minecraftversions')) {
-			return Cache::get('minecraftversions');
+		} else if (!$manual && Cache::has('minecraftversions')) {
+			$response = Cache::get('minecraftversions');
 		}
 
-		return self::getVersions();
+		$response = self::getVersions();
+
+		return $response;
 	}
 
 	public static function getVersions() {
