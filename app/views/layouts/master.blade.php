@@ -102,7 +102,11 @@
                        <li><a href="{{ URL::to('mod/create') }}">Add a Mod</a></li>
                   </ul>
               </li>
-              <li @if(strpos(URL::current(), 'solder/') !== false) class="active" @endif>
+              <li @if(
+              strpos(URL::current(), 'solder/') !== false ||
+              strpos(URL::current(), 'user/') !== false ||
+              strpos(URL::current(), 'client/') !== false ||
+              strpos(URL::current(), 'key/') !== false) class="active" @endif>
                   <a href="#"><i class="fa fa-wrench fa-fw"></i> Configure Solder<span class="fa arrow"></span></a>
                   <ul class="nav nav-second-level">
                       <li>
