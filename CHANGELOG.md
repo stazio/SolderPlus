@@ -1,12 +1,16 @@
 1.3.1 (Not Released Yet) 
 ---
-+ Did a proper rebranding to SolderPlus
++ Did a proper (hopefully) rebranding to SolderPlus
 + Fixed a bug where the update utility does not properly cache files
 + Fixed a bug with the installer that does not show stages 4 and 5
 + Fixed a bug where the menu bar glitches out when scrolling on a tablet device
 + Fixed a bug where the installer appends an unnecessary '/' to the application URL
 + Made some help text more appropriate.
 + SolderPlus will now not allow you to upload a mod if it detects you are using Amazon S3 or an external service.
++ Created a new PlatformAPI library to connect with the Technic Platform. 
++ New checks have been added to ensure that there is no slug collision with the Technic Platform.
++ Checks have also been added to alert the user when the modpack is not on the Technic Platform.
++ Additional integrations has been added when editing a modpack
 
 1.3.0
 ----
