@@ -5,7 +5,7 @@ SolderPlus
 
 What is SolderPlus?
 -------------
-SolderPlus is a continuation of [TechnicSolder](http://solder.io).
+SolderPlus is a continuation of [TechnicSolder](http://docs.io).
 SolderPlus fixes many issues with the older solder, and implements a better workflow.
 
 Why Did I Continue It?
@@ -15,23 +15,23 @@ It was also extremely difficult for the less-technical-minded people to setup.
 
 Requirements
 -------------
+
 * PHP 5.5+
 * PHP MCrypt Extension
 * PHP Curl Extension
 * PHP GD Extension
-* A SQLlite, mysql, pgsql, or sqlsrv database
-* Curl
+* A sqllite, mysql, pgsql, or sqlsrv database
+* Composer - PHP Dependency Manager - http://getcomposer.org
 
 Installation
 -------------
+
 Installation is easy! Download the latest version [here](https://github.com/stazio/SolderPlus/releases).
 Extract the zip into the root of your server.
 **Note** that the *public* folder should be the main folder for production. 
 On some servers it could be called *public_html* or *htdocs*. Rename it accordingly.
 
-Then, simply open the installation in your favorite browser and the installer will guide you through the process.
-
-For more detailed information view the wiki guide [here](TODO).  
+Then, simply run through the installer!  
 
 
 Dev Installation
@@ -52,17 +52,22 @@ Copy the API key into the Configure Solder -> API Key Management page.
 
 Now you are free to use Solder with your modpacks! Enjoy!
 
+New Features
+-----
+- Installer (Yes I know it's not done)
+- Uploading files
+
 TODO
 -----
 - Bulk Uploader
+- Server Installer
+    - Endpoint
+    - App
 - Auto Updater
-- Test the user permissions system and fix accordingly. 
+- Create a rolling release system
+    - TravisCI
 
 Troubleshooting
 ---
 - Email me at [staz@staz.io](mailto:staz@staz.io).
 - Submit an [issue](https://github.com/stazio/SolderPlus/issues).
-
-Contributing
----
-Just, submit pull requests! I'll update accordingly. Please use the master branch of SolderPlus when forking.
