@@ -11,6 +11,7 @@
 + New checks have been added to ensure that there is no slug collision with the Technic Platform.
 + Checks have also been added to alert the user when the modpack is not on the Technic Platform.
 + Additional integrations has been added when editing a modpack
++ Sidebar now expands when a menu is opened
 
 1.3.0
 ----
