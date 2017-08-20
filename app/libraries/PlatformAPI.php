@@ -34,11 +34,15 @@ class PlatformAPI {
 		if ($useCache && Cache::has("platform_api_key_$url"))
 			return Cache::get("platform_api_key_$url");
 
-		$raw = file_get_contents($url);
-		if (!$raw)
-			return false;
-		$res = json_decode($raw, $assoc);
-		Cache::put("platform_api_key_$url", $res, 3600);
-		return $res;
+		try {
+			$raw = file_get_contents($url);
+			Log::info("Fetched $url Result: $raw");
+			if (!$raw)
+				return false;
+			$res = json_decode($raw, $assoc);
+			Cache::put("platform_api_key_$url", $res, 5);
+			return $res;
+		}catch(Exception $e) {}
+		return false;
 	}
 }
