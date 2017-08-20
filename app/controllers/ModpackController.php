@@ -194,10 +194,15 @@ class ModpackController extends BaseController {
 		if ($validation->fails())
 			return Redirect::to('modpack/create')->withErrors($validation->messages());
 
-		$slug = Str::slug(Input::get('slug'));
-		if (PlatformAPI::packInfo($slug) !== false)
-			return Redirect::back()->
-			withErrors(['This slug has been taken. Please try a different slug! (i.e. append a number to the end)']);
+		if (Input::has('slug')) {
+			$slug = Str::slug(Input::get('slug'));
+			$json = PlatformAPI::packInfo($slug);
+			if ($json && isset($json['solder']))
+				if (!($json['solder'] == URL::to('/api') || $json['solder'] == URL::secure('/api')))
+					return Redirect::back()->
+					withInput()->
+					withErrors(['This slug has been taken. Please try a different slug! (i.e. append a number to the end)']);
+		}
 
 		$modpack = new Modpack();
 		$modpack->name = Input::get('name');
@@ -295,7 +300,19 @@ class ModpackController extends BaseController {
 
 		$validation = Validator::make(Input::all(), $rules, $messages);
 		if ($validation->fails())
-			return Redirect::to('modpack/edit/'.$modpack_id)->withErrors($validation->messages());
+			return Redirect::to('modpack/edit/'.$modpack_id)->
+			withInput()->
+			withErrors($validation->messages());
+
+		if (Input::has('slug')) {
+			$slug = Str::slug(Input::get('slug'));
+			$json = PlatformAPI::packInfo($slug);
+			if ($json && isset($json['solder']))
+				if (!($json['solder'] == URL::to('/api') || $json['solder'] == URL::secure('/api')))
+					return Redirect::back()->
+					withInput()->
+					withErrors(['This slug has been taken. Please try a different slug! (i.e. append a number to the end)']);
+		}
 
 		$modpack->name = Input::get('name');
 		$oldSlug = $modpack->slug;
