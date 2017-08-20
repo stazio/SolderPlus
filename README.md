@@ -15,17 +15,15 @@ It was also extremely difficult for the less-technical-minded people to setup.
 
 Requirements
 -------------
-
 * PHP 5.5+
 * PHP MCrypt Extension
 * PHP Curl Extension
 * PHP GD Extension
-* A sqllite, mysql, pgsql, or sqlsrv database
-* Composer - PHP Dependency Manager - http://getcomposer.org
+* A SQLlite, mysql, pgsql, or sqlsrv database
+* Curl
 
 Installation
 -------------
-
 Installation is easy! Download the latest version [here](https://github.com/stazio/SolderPlus/releases).
 Extract the zip into the root of your server.
 **Note** that the *public* folder should be the main folder for production. 
@@ -52,22 +50,19 @@ Copy the API key into the Configure Solder -> API Key Management page.
 
 Now you are free to use Solder with your modpacks! Enjoy!
 
-New Features
------
-- Installer (Yes I know it's not done)
-- Uploading files
-
 TODO
 -----
 - Bulk Uploader
-- Server Installer
-    - Endpoint
-    - App
 - Auto Updater
-- Create a rolling release system
-    - TravisCI
+- Test the user permissions system and fix accordingly.
+- Update the wording because it is confusing and/or innacurate.
+- Use the language lines
 
 Troubleshooting
 ---
-- Email me at [staz@staz.io](mailto:staz@staz.io).
+- Email me at [staz@staz.io](malilto:staz@staz.io).
 - Submit an [issue](https://github.com/stazio/SolderPlus/issues).
+
+Contributing
+---
+Just, submit pull requests! I'll update accordingly. Please use the master branch of SolderPlus when forking.
