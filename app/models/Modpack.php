@@ -22,6 +22,8 @@
  * @property string icon_url
  * @property string logo_url
  * @property string background_url
+ * @property boolean is_on_platform
+ * @property array platform_info
  */
 class Modpack extends Eloquent {
 	public $timestamps = true;
@@ -46,5 +48,16 @@ class Modpack extends Eloquent {
 			}
 		}
 		return $private;
+	}
+
+	public function getIsOnPlatformAttribute() {
+		$json = $this->platform_info;
+		if ($json && isset($json['solder']))
+			return $json['solder'] == URL::to('/api') || $json['solder'] == URL::secure('/api');
+		return false;
+	}
+
+	public function getPlatformInfoAttribute() {
+		return $json = PlatformAPI::packInfo($this->slug);
 	}
 }

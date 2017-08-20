@@ -19,6 +19,18 @@
 			{{ Session::get('success') }}
 		</div>
 		@endif
+
+		@if (!$modpack->is_on_platform)
+			<div class="alert alert-danger">
+				Warning! This modpack is not on the Technic Platform!
+				It will not show up on the Technic Launcher!<br>
+
+				To add it to the launcher first login <a href="https://www.technicpack.net/dashboard">here</a>.
+				Then visit this <a href="https://www.technicpack.net/modpack/create/solder">page</a>
+				and add this modpack ({{$modpack->name}}) to the Technic Platform.
+			</div>
+		@endif
+
 		<div class="table-responsive">
 		<table class="table table-striped table-bordered table-hover" id="dataTables">
 			<thead>

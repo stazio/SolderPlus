@@ -28,10 +28,27 @@
                     <label for="name">Modpack Name</label>
                     <input type="text" class="form-control" name="name" id="name" value="{{ $modpack->name }}">
                 </div>
-                <div class="form-group">
-                    <label for="slug">Modpack Slug</label>
-                    <input type="text" class="form-control" name="slug" id="slug" value="{{ $modpack->slug }}">
-                </div>
+				<div class="form-group">
+					<label for="slug">Modpack Slug</label>
+					<input type="text" class="form-control" name="slug" id="slug" value="{{ $modpack->slug }}">
+				</div>
+				@if($modpack->is_on_platform)
+					<div class="alert alert-info">
+					More options such as editing the description, tags, website, server package location,
+					and more are available <a href="https://www.technicpack.net/modpack/edit/{{$modpack->platform_info['id']}}/main">here</a>
+					after logging into the Technic Platform <a href="https://www.technicpack.net/login">here</a>.
+					</div>
+				</div>
+				@else
+					<div class="alert alert-danger">
+						This modpack is not on the Technic Platform!
+						It will not show up on the Technic Launcher!<br>
+
+						To add it to the launcher first login <a href="https://www.technicpack.net/dashboard">here</a>.
+						Then visit this <a href="https://www.technicpack.net/modpack/create/solder">page</a>
+						and add this modpack ({{$modpack->name}}) to the Technic Platform.
+					</div>
+				@endif
                 <hr>
 				<div class="form-group">
 					<label class="control-label" for="hidden">Hide Modpack</label>

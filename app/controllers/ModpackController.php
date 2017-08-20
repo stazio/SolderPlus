@@ -194,9 +194,14 @@ class ModpackController extends BaseController {
 		if ($validation->fails())
 			return Redirect::to('modpack/create')->withErrors($validation->messages());
 
+		$slug = Str::slug(Input::get('slug'));
+		if (PlatformAPI::packInfo($slug) !== false)
+			return Redirect::back()->
+			withErrors(['This slug has been taken. Please try a different slug! (i.e. append a number to the end)']);
+
 		$modpack = new Modpack();
 		$modpack->name = Input::get('name');
-		$modpack->slug = Str::slug(Input::get('slug'));
+		$modpack->slug = $slug;
 		$modpack->icon_md5 = md5_file(public_path() . '/resources/default/icon.png');
 		$modpack->icon_url = URL::asset('/resources/default/icon.png');
 		$modpack->logo_md5 = md5_file(public_path() . '/resources/default/logo.png');
@@ -244,7 +249,7 @@ class ModpackController extends BaseController {
 	/**
 	 * Modpack Edit Interface
 	 * @param  Integer $modpack_id Modpack ID
-	 * @return View
+	 * @return View|\Illuminate\Http\RedirectResponse
 	 */
 	public function getEdit($modpack_id)
 	{
@@ -253,6 +258,12 @@ class ModpackController extends BaseController {
 		{
 			return Redirect::to('dashboard')->withErrors(new MessageBag(array('Modpack not found')));
 		}
+
+		$slug = Str::slug(Input::get('slug'));
+		if (PlatformAPI::packInfo($slug) !== false)
+			return Redirect::back()->
+			withErrors(['This slug has been taken. Please try a different slug! (i.e. append a number to the end)']);
+
 
 		$clients = array();
 		foreach ($modpack->clients as $client) {
