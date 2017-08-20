@@ -5,7 +5,7 @@ SolderPlus
 
 What is SolderPlus?
 -------------
-SolderPlus is a continuation of [TechnicSolder](http://docs.io).
+SolderPlus is a continuation of [TechnicSolder](http://solder.io).
 SolderPlus fixes many issues with the older solder, and implements a better workflow.
 
 Why Did I Continue It?
@@ -29,7 +29,9 @@ Extract the zip into the root of your server.
 **Note** that the *public* folder should be the main folder for production. 
 On some servers it could be called *public_html* or *htdocs*. Rename it accordingly.
 
-Then, simply run through the installer!  
+Then, simply open the installation in your favorite browser and the installer will guide you through the process.
+
+For more detailed information view the wiki guide [here](TODO).  
 
 
 Dev Installation
@@ -54,7 +56,7 @@ TODO
 -----
 - Bulk Uploader
 - Auto Updater
-- Test the user permissions system and fix accordingly.
+- Test the user permissions system and fix accordingly. 
 
 Troubleshooting
 ---
