@@ -130,7 +130,7 @@ class InstallController extends BaseController {
             if (!$result['success'])
                 return Redirect::back()->withErrors(['The Mirror URL is invalid!']);
         }else {
-            $mod_uri = realpath($mod_uri);
+            $mod_uri = realpath($mod_uri) . '/';
 
             // Let us test if the mirror URL and the repo URI are the same.
             if (!is_dir($mod_uri))
