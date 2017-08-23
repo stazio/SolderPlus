@@ -15,12 +15,20 @@ class PlatformAPI {
 	}
 
 	public static function packInfo($slug) {
-		$res = self::getPlatform('modpack/' . $slug);
+		$res = self::getPlatform('modpack/'. Str::slug($slug));
 		if (isset($res['error']))
 			return false;
 		return $res;
 	}
 
+	// Tools
+	public static function packExists($slugOrInfo) {
+		if (is_array($slugOrInfo))
+			return !isset($slugOrInfo['error']);
+		return self::packExists(self::packInfo($slugOrInfo));
+	}
+
+	// Private Functions
 	private static function getPlatform($request, $params=[]) {
 		$paramStr = "";
 		foreach ($params as $key => $val) {

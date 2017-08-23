@@ -52,7 +52,7 @@ class Modpack extends Eloquent {
 
 	public function getIsOnPlatformAttribute() {
 		$json = $this->platform_info;
-		if ($json && isset($json['solder'])) {
+		if (PlatformAPI::packExists($json)) {
 			return $json['solder'] == URL::to('/api') .'/' || $json['solder'] == URL::secure('/api').'/';
 
 			// taken from https://stackoverflow.com/a/18915457
