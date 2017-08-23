@@ -53,13 +53,15 @@ class Modpack extends Eloquent {
 	public function getIsOnPlatformAttribute() {
 		$json = $this->platform_info;
 		if ($json && isset($json['solder'])) {
+			return $json['solder'] == URL::to('/api') .'/' || $json['solder'] == URL::secure('/api').'/';
+
 			// taken from https://stackoverflow.com/a/18915457
 			$mustMatch = array_flip(['host', 'port', 'path']);
 			$url1 = array_intersect_key(parse_url($json['solder']), $mustMatch);
 			$url2 = array_intersect_key(parse_url(URL::to('/api')), $mustMatch);
 			return $url1 == $url2;
 		}
-			//return $json['solder'] == URL::to('/api') .'/' || $json['solder'] == URL::secure('/api').'/';
+
 		return false;
 	}
 
