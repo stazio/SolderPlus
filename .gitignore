@@ -21,6 +21,7 @@ app/storage/resources/*
 app/storage/sessions/*
 app/storage/views/*
 !app/storage/*/.gitgnore
+!app/storage/*/services.json
 _ide_helper.php
 apache_error.log
 public/install_test
