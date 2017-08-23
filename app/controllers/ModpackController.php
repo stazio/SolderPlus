@@ -194,6 +194,7 @@ class ModpackController extends BaseController {
 		if ($validation->fails())
 			return Redirect::to('modpack/create')->withErrors($validation->messages());
 
+		//TODO fix this. Doesn't work.
 		if (Input::has('slug')) {
 			$slug = Str::slug(Input::get('slug'));
 			$json = PlatformAPI::packInfo($slug);
@@ -304,11 +305,14 @@ class ModpackController extends BaseController {
 			withInput()->
 			withErrors($validation->messages());
 
+		//TODO fix this. it doesn't work...
 		if (Input::has('slug')) {
 			$slug = Str::slug(Input::get('slug'));
 			$json = PlatformAPI::packInfo($slug);
-			if ($json && isset($json['solder']))
-				if (!($json['solder'] == URL::to('/api') || $json['solder'] == URL::secure('/api')))
+			Log::info($json);
+			if (PlatformAPI::packExists($json) &&
+				!($json['solder'] == URL::to('/api') . '/' ||
+					$json['solder'] == URL::secure('/api') . '/'))
 					return Redirect::back()->
 					withInput()->
 					withErrors(['This slug has been taken. Please try a different slug! (i.e. append a number to the end)']);
