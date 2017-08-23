@@ -20,6 +20,7 @@ app/storage/meta/*
 app/storage/resources/*
 app/storage/sessions/*
 app/storage/views/*
+!app/storage/*/.gitgnore
 _ide_helper.php
 apache_error.log
 public/install_test
