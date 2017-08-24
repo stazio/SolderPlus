@@ -43,7 +43,7 @@ install:
 - php artisan migrate
 - php artisan db:seed --class="TestSeeder"
 script:
-- travis_retry vendor/bin/phpunit --verbose
+- vendor/bin/phpunit --verbose
 after_script:
 - cat app/storage/logs/*
 - ls -lR $REPO
