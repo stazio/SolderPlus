@@ -1,3 +1,7 @@
+Upcoming Release
+---
+N/A
+
 1.4.0
 ---
 + Did a proper (hopefully) rebranding to SolderPlus
