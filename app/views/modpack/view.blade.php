@@ -27,7 +27,10 @@
 
 				To add it to the launcher first login <a href="https://www.technicpack.net/dashboard">here</a>.
 				Then visit this <a href="https://www.technicpack.net/modpack/create/solder">page</a>
-				and add this modpack ({{$modpack->name}}) to the Technic Platform.
+				and add this modpack ({{$modpack->name}}) to the Technic Platform.<br>
+
+				Due to the way things work, this warning may be displayed even if you did everything correctly!
+				The warning will disappear after a couple of minutes.
 			</div>
 		@endif
 
