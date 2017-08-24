@@ -53,3 +53,4 @@ deploy:
   provider: script
   skip_cleanup: true
   script: sh USERNAME=$DEPLOY_USERNAME PASSWORD=$DEPLOY_PASSWORD $BRANCH=$TRAVIS_BRANCH $VERSION=$TRAVIS_BUILD_NUMBER $TRAVIS_BUILD_DIR/build-tools/deploy.sh
+  all_branches: true
