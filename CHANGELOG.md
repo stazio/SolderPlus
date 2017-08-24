@@ -13,6 +13,7 @@
 + Additional integrations has been added when editing a modpack
 + Sidebar now expands when a menu is opened
 + Changed composer dependencies to be stable / latest versions
++ SolderPlus will now not overwrite the config folder when updating. Updating is still overall a difficult process.
 
 1.3.0
 ----
