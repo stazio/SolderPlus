@@ -1,4 +1,4 @@
-1.4.0 (Not Released Yet) 
+1.4.0
 ---
 + Did a proper (hopefully) rebranding to SolderPlus
 + Fixed a bug where the update utility does not properly cache files
