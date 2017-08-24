@@ -12,6 +12,7 @@
 + Checks have also been added to alert the user when the modpack is not on the Technic Platform.
 + Additional integrations has been added when editing a modpack
 + Sidebar now expands when a menu is opened
++ Changed composer dependencies to be stable / latest versions
 
 1.3.0
 ----
