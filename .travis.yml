@@ -48,4 +48,4 @@ after_script:
 deploy:
   provider: script
   skip_cleanup: true
-  script: build-tools/deploy.sh
+  script: $TRAVIS_BUILD_DIR/build-tools/deploy.sh
