@@ -17,16 +17,16 @@
                "role": "Original Developers"
                	}],
 	"require": {
-		"laravel/framework": "4.2.*",
-		"patricktalmadge/bootstrapper": "5.5.*",
-		"intervention/image": "2.1.*",
-        "doctrine/dbal": "2.5.*",
-        "composer/composer": "1.0.0-alpha9",
-        "knplabs/github-api": "1.4.*",
-        "guzzlehttp/guzzle": "5.2.*",
+		"laravel/framework": "4.2.20",
+		"patricktalmadge/bootstrapper": "~5",
+		"intervention/image": "~2.4",
+		"doctrine/dbal": "2.5.*",
+		"composer/composer": "1.5.1",
+        "knplabs/github-api": "1.7.1",
+        "guzzlehttp/guzzle": "~6.3",
         "aws/aws-sdk-php": "2.7.*",
 
-		"barryvdh/laravel-ide-helper": "~1.1"
+		"barryvdh/laravel-ide-helper": "1.11"
 	},
 	"require-dev": {
         "mockery/mockery": "master@dev",
