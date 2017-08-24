@@ -1,56 +1,51 @@
 cache:
   directories:
-    - $HOME/.composer/cache
-    - vendor
-
+  - "$HOME/.composer/cache"
+  - vendor
 sudo: false
-
 language: php
 php:
-  - 5.6
-  - 7.0
-  - hhvm
-
+- 5.6
+- 7.0
+- hhvm
 env:
   global:
-    - APP_ENV='testing'
-
+  - APP_ENV='testing'
+  - secure: argqJ0YZqkn8Z0WtunTCc45l2FgYoi5flzWem81j7cv+XJ1wCjiBlX9/NXAP4iG9pab5iuy2Raf1M9UEBJfakZD4zyR+UAc8AqPE7UKdkHSHAgjM7IQCF4dcuJ1+N3detSCKdeX26JMASqHf3zirEmhhzBHKS8fgMScl5ypE2Wpk6luWQqm4xLwoh+Oub8sEyA6nZZuGIJmrXCe2AuQ4LFmt12iGeVcdyKvH3xUJNtLTOMhDgyG7fa6LnpPtXG6EXzsDsG1n1E6adfWQgbhY6vXP22wKhJqoWVXp/Km2/FtXG8xCsiUV5k0eP90eht4B+SxCZwkTw7Xay/N/Gn4fjy8PTnf2qAMb+Y0vY4GrYYJ9rdz+79uzc2YNV307LAjQ+ud0AGacn4eJl3MUEa33GC0ZZJermusGYQGk7iziT3bBz92BRqvwOw917pviW3O67SAB30sBn53BhYc9u5vf4ikogNpxW0aNl45QWGP1EPqm8xurCGRy64VVNOckLjl3HOYJdID0pvG7V9Zzfb2eYUa1E+7496dwntyXbU9vfsDrDrB++rsQT8yhVb6+02GSc9ZmJwKJ0xM1a1KyK1+24nG7oJRnr3LvW2qjiCeMIIhepHJLh9HC6gzC5CQ5DczOvA441bOP7tIPkhRkaNTPtV0FQ0ZYN0fv2SZh6T/CG7Y=
+  - secure: sF47gA4LebEKCXMcKHS8HXVRb81gv4GIB1fNvlWzO838mjdMQaI51PE6D33G+P+f/MNsKyRFaXxEJOTKsuWFGoGgv+BVZFaUvro0CSy4lbWVkYlK2xhCVRjam4ASx5LmJMGclPpmMTh7vLL4y325vniXjzW1RPHQyqXapXYYA1mHY0WP5wXUX14zoGtIPqwIQyO4sedxDEtYE2KbhxMPuuIqzM2m5OkNFY8YKoiUAFOxbpzHoGixYP8DAcj1lgfKizPb/rTuHY6Q0zFkudvlzs5vGpyg3YN2PQyHjMLo8Iy6JRwv/BBF0yzA+NYvLe1wLfGoB9dBvVngz2QWoFS690UP0sXjZ8RRJRwQR3pfGNtYDJPvgY6qL5o2OYdWX4j4e1aeS2EKKEvH9Nx2jd5qUGdABym3ohQkiYLzhsoetGoLNopRyr/PM2yZm1Ohots90v+atIfLS8xvFsWofXmVmNeSKMpvsuJTqq8ty8ledXrPeRMSUaqVQK+F/XS4VPGSC8GWQPJzP1qwBowBsOAOPMwxaQxksEMseEoLoB5/VsBEHidZmbVeLSMQp5TMnnB11fdcgckRnkdrgYpf1csZiLyjfiY0Jnb6pegO3Ha6scoWCquPwgVQTSQPRR5i8qLW4C2g9+ehVHf7oYcOQYZ/1K2do3ZSLarOfJt7NDZF2CY=
   matrix:
-    - DB="pgsql" REPO="$TRAVIS_BUILD_DIR/public/resources/default/" REPO_TYPE="local"
-    - DB="mysql" REPO="$TRAVIS_BUILD_DIR/public/resources/default/" REPO_TYPE="local"
-    #- DB="sqlite" REPO="$TRAVIS_BUILD_DIR/public/resources/default/" REPO_TYPE="local" Broken SQLITE
-
-    #- DB="pgsql" REPO="http://technic.pagefortress.com/" REPO_TYPE="remote" Broken URL
-    #- DB="mysql" REPO="http://technic.pagefortress.com/" REPO_TYPE="remote" Broken URL
+  - DB="pgsql" REPO="$TRAVIS_BUILD_DIR/public/resources/default/" REPO_TYPE="local"
+  - DB="mysql" REPO="$TRAVIS_BUILD_DIR/public/resources/default/" REPO_TYPE="local"
 matrix:
   fast_finish: true
   exclude:
-    - php: hhvm
-      env: DB="pgsql" REPO="$TRAVIS_BUILD_DIR/public/resources/default/" REPO_TYPE="local" # driver for PostgreSQL currently unsupported by HHVM, requires 3rd party dependency
-    - php: hhvm
-      env: DB="pgsql" REPO="http://technic.pagefortress.com/" REPO_TYPE="remote" # driver for PostgreSQL currently unsupported by HHVM, requires 3rd party dependency
-
+  - php: hhvm
+    env: DB="pgsql" REPO="$TRAVIS_BUILD_DIR/public/resources/default/" REPO_TYPE="local"
+  - php: hhvm
+    env: DB="pgsql" REPO="http://technic.pagefortress.com/" REPO_TYPE="remote"
 before_install:
-  - "echo Using Mod files from $REPO"
-  - "echo Disabling xdebug; rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini"
-  - "travis_retry composer self-update"
-
+- echo Using Mod files from $REPO
+- echo Disabling xdebug; rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
+- travis_retry composer self-update
 install:
-  - "cp app/config-sample app/config -r"
-  - "travis_retry composer install --prefer-source --no-interaction"
-  - "php artisan env"
-
-  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS solder;' -U postgres; fi"
-  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'create database solder;' -U postgres; fi"
-  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'create database IF NOT EXISTS solder;'; fi"
-
-  - php artisan migrate:install
-  - php artisan migrate
-  - php artisan db:seed --class="TestSeeder"
-
+- cp app/config-sample app/config -r
+- travis_retry composer install --prefer-source --no-interaction
+- php artisan env
+- sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS solder;' -U
+  postgres; fi"
+- sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'create database solder;' -U postgres;
+  fi"
+- sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'create database IF NOT EXISTS solder;';
+  fi"
+- php artisan migrate:install
+- php artisan migrate
+- php artisan db:seed --class="TestSeeder"
 script:
-  - "vendor/bin/phpunit --verbose"
-
+- vendor/bin/phpunit --verbose
 after_script:
-  - cat app/storage/logs/*
-  - ls -lR $REPO
+- cat app/storage/logs/*
+- ls -lR $REPO
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: "build-tools/deploy.sh"
