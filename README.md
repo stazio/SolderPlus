@@ -31,6 +31,24 @@ On some servers it could be called *public_html* or *htdocs*. Rename it accordin
 
 Then, simply run through the installer!  
 
+For more information visit the wiki guide [here](https://github.com/stazio/SolderPlus/wiki/Getting-Started).
+
+Latest Version Installation / Testing version
+--------------------------
+If you really really want to, you can clone the master branch of this repo and use the latest and greatest features!
+
+Creating a runnable installation of this app is as follows (On Linux only):
+```bash
+git clone https://github.com/stazio/SolderPlus.git
+cd SolderPlus
+wget https://getcomposer.org/download/1.5.1/composer.phar
+php composer.phar self-update
+cp app/config-sample app/config -r
+php composer.phar install --no-dev
+php artisan optimize
+php artisan up
+``` 
+
 
 Dev Installation
 ----------------
