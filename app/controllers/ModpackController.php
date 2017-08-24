@@ -195,8 +195,8 @@ class ModpackController extends BaseController {
 			return Redirect::to('modpack/create')->withErrors($validation->messages());
 
 		//TODO fix this. Doesn't work.
+		$slug = Str::slug(Input::get('slug'));
 		if (false && Input::has('slug')) {
-			$slug = Str::slug(Input::get('slug'));
 			$json = PlatformAPI::packInfo($slug);
 			if ($json && isset($json['solder']))
 				if (!($json['solder'] == URL::to('/api') || $json['solder'] == URL::secure('/api')))
@@ -306,8 +306,8 @@ class ModpackController extends BaseController {
 			withErrors($validation->messages());
 
 		//TODO fix this. it doesn't work...
+		$slug = Str::slug(Input::get('slug'));
 		if (false && Input::has('slug')) {
-			$slug = Str::slug(Input::get('slug'));
 			$json = PlatformAPI::packInfo($slug);
 			Log::info($json);
 			if (PlatformAPI::packExists($json) &&
