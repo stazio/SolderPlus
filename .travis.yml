@@ -47,7 +47,8 @@ script:
 after_script:
 - cat app/storage/logs/*
 - ls -lR $REPO
-deploy:
-  provider: script
-  skip_cleanup: true
-  script: sh $TRAVIS_BUILD_DIR/build-tools/deploy.sh
+
+#deploy:
+##  provider: script
+  #skip_cleanup: true
+  #script: sh $TRAVIS_BUILD_DIR/build-tools/deploy.sh
