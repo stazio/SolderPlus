@@ -41,11 +41,11 @@ install:
 - php artisan migrate
 - php artisan db:seed --class="TestSeeder"
 script:
-- vendor/bin/phpunit --verbose
+- travis_retry vendor/bin/phpunit --verbose
 after_script:
 - cat app/storage/logs/*
 - ls -lR $REPO
 deploy:
   provider: script
   skip_cleanup: true
-  script: $TRAVIS_BUILD_DIR/build-tools/deploy.sh
+  script: sh $TRAVIS_BUILD_DIR/build-tools/deploy.sh
