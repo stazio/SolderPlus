@@ -72,20 +72,20 @@
 			"mkdir latest-build",
 			"cp app bootstrap public vendor artisan latest-build -r",
 
-			"if [ -f latest-build/app/config ]; then rm -r latest-build/app/config; fi",
+			"rm -r latest-build/app/config || :",
 			"cp latest-build/app/config-sample/* latest-build/app/config -r",
 
-			"if [ -f latest-build/app/database/production.sqlite ]; then rm -r latest-build/app/database/production.sqlite; fi",
+			" rm -r latest-build/app/database/production.sqlite || :",
 			"touch latest-build/app/database/production.sqlite",
 
-			"rm -r latest-build/app/storage/cache/*",
-			"rm -r latest-build/app/storage/github-api-cache/*",
-			"rm -r latest-build/app/storage/logs/*",
-			"rm -r latest-build/app/storage/meta/*",
-			"rm -r latest-build/app/storage/views/*",
-			"rm -r latest-build/app/tests",
+			"rm -r latest-build/app/storage/cache/* || :",
+			"rm -r latest-build/app/storage/github-api-cache/* || :",
+			"rm -r latest-build/app/storage/logs/* || :",
+			"rm -r latest-build/app/storage/meta/* || :",
+			"rm -r latest-build/app/storage/views/ || :*",
+			"rm -r latest-build/app/tests || :",
 
-			"rm -r latest-build/public/mods/*",
+			"rm -r latest-build/public/mods/* || :",
 			"cd latest-build; php artisan optimize",
 
 			"cd latest-build; zip latest-build.zip * -r"
