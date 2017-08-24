@@ -72,8 +72,7 @@
 			"mkdir latest-build",
 			"cp app bootstrap public vendor artisan latest-build -r",
 
-			"rm -r latest-build/app/config/* || :",
-			"cp latest-build/app/config-sample/* latest-build/app/config -r",
+			"rm -r latest-build/app/config/ || :",
 
 			"rm -r latest-build/app/database/production.sqlite || :",
 			"touch latest-build/app/database/production.sqlite",
