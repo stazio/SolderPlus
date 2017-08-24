@@ -6,6 +6,10 @@
  * @author   Taylor Otwell <taylorotwell@gmail.com>
  */
 
+// This will check if a app/config directory exists. If not it will copy the config-sample
+if (!file_exists('../app/config'))
+	exec('cp ../app/config-sample ../app/config -r');
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
