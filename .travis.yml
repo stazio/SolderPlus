@@ -49,9 +49,9 @@ after_script:
 - cat app/storage/logs/*
 - ls -lR $REPO
 
-#deploy:
-#  provider: script
-#  skip_cleanup: true
-#  script: sh -c "USERNAME='$DEPLOY_USERNAME' PASSWORD='$DEPLOY_PASSWORD' $BRANCH=$TRAVIS_BRANCH $VERSION=$TRAVIS_BUILD_NUMBER $TRAVIS_BUILD_DIR/build-tools/deploy.sh"
-#  on:
-#    all_branches: true
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: sh $TRAVIS_BUILD_DIR/build-tools/deploy.sh
+  on:
+    all_branches: true
