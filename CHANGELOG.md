@@ -1,6 +1,6 @@
 Upcoming Release
 ---
-N/A
++ Added a filter in Build Management to show mods that can be updated
 
 1.4.0
 ---

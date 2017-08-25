@@ -163,6 +163,20 @@
 	Build Management: {{ $build->modpack->name }} - {{ $build->version }}
 	</div>
 	<div class="panel-body">
+        <form class="form-group form-inline" onchange="$(this).submit();">
+                <label class="radio-inline">
+                    <input type="radio" name="filter" value=""
+                            {{Input::get('filter', '') == "" ? "checked" : ""}}>
+                    All Mods
+                </label>
+
+                <label class="radio-inline">
+                <input type="radio" name="filter" value="updatable"
+                        {{Input::get('filter', '') == "updatable" ? "checked" : ""}}>
+                    Updatable Mods Only
+                </label>
+        </form>
+
 		<div class="table-responsive">
 		<table class="table" id="mod-list">
 			<thead>
@@ -174,10 +188,14 @@
 			</thead>
 			<tbody>
 				@foreach ($build->modversions->sortByDesc('build_id', SORT_NATURAL) as $ver)
+                    @if(Input::get('filter', '') == 'updatable' &&
+                        end($ver->mod->versions)[0]->id == $ver->id)
+                        <?php continue; ?>
+                    @endif
 				<tr>
 					<td>{{ HTML::link('mod/view/'.$ver->mod->id, $ver->mod->pretty_name) }} ({{ $ver->mod->name }})</td>
 					<td>
-						<form method="post" action="{{ URL::to('modpack/build/modify') }}" style="margin-bottom: 0" class="mod-version">
+						<form method="post" outdated=" ? "false" : "true"}}" action="{{ URL::to('modpack/build/modify') }}" style="margin-bottom: 0" class="mod-version">
 							<input type="hidden" class="build-id" name="build_id" value="{{ $build->id }}">
 							<input type="hidden" class="modversion-id" name="modversion_id" value="{{ $ver->pivot->modversion_id }}">
 							<input type="hidden" name="action" value="version">
@@ -411,14 +429,15 @@ if(
         refreshModVersions();
 	});
 }
+var $table;
 $( document ).ready(function() {
-	$("#mod-list").dataTable({
+	$table = $("#mod-list").DataTable({
     	"order": [[ 0, "asc" ]],
     	"autoWidth": false,
     	"columnDefs": [
 			{ "width": "60%", "targets": 0 },
 			{ "width": "30%", "targets": 1 }
-		]
+		    ]
     });
 });
 </script>
