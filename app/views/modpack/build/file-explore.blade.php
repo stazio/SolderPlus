@@ -11,10 +11,10 @@
             {{$build->modpack->name}} - Build {{ $build->version }}
 
             <div class="pull-right">
-                <a class="btn btn-xs btn-primary" href="{{URL::to('http://localhost/modpack/build/' . $build->id)}}">
+                <a class="btn btn-xs btn-primary" href="{{URL::to('modpack/build/' . $build->id)}}">
                     Return to build
                 </a>
-                <a class="btn btn-xs btn-warning" href="{{URL::to('http://localhost/modpack/view/' . $build->modpack->id)}}">
+                <a class="btn btn-xs btn-warning" href="{{URL::to('modpack/view/' . $build->modpack->id)}}">
                     Return to modpack
                 </a>
             </div>
