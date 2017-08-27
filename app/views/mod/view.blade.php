@@ -111,7 +111,6 @@
                                 <td><span id="add-url">N/A</span></td>
                                 <td>N/A</td>
 
-
                                 <td>
                                     @if(ModController::canUpload())
                                     <label class="btn btn-primary btn-sm" for="file">
@@ -151,19 +150,22 @@
                                         </button>
                                         <button class="btn btn-danger btn-xs delete" rel="{{ $ver->id }}">Delete
                                         </button>
+                                    </td>
                                 </form>
                             </tr>
-                            <tr class="version-details" rel="{{ $ver->id }}" style="display: none">
-                                <td colspan="5">
-                                    <h5>Builds Used In</h5>
-                                    <ul>
-                                        @foreach ($ver->builds as $build)
-                                            <li>{{ HTML::link('modpack/view/'.$build->modpack->id,$build->modpack->name) }}
-                                                - {{ HTML::link('modpack/build/'.$build->id,$build->version) }}</li>
-                                        @endforeach
-                                    </ul>
-                                </td>
-                            </tr>
+                            @if (count($ver->builds) > 0)
+                                <tr class="version-details" rel="{{ $ver->id }}" >
+                                    <td colspan="5">
+                                        <h5>Builds Used In</h5>
+                                        <ul>
+                                            @foreach ($ver->builds as $build)
+                                                <li>{{ HTML::link('modpack/view/'.$build->modpack->id,$build->modpack->name) }}
+                                                    - {{ HTML::link('modpack/build/'.$build->id,$build->version) }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
                         </tbody>
                     </table>
