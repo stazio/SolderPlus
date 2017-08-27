@@ -204,22 +204,15 @@ class ModController extends BaseController {
 
 	public function anyAddVersion()
 	{
-
+			if ($res = $this->validateAJAX([
+				'mod-id' => 'required|exists:mods,id',
+				'add-version' => 'required|unique:modversions,version'
+			])) return $res;
 			$mod_id = Input::get('mod-id');
 			$md5 = Input::get('add-md5');
 			$version = Input::get('add-version');
-			if (empty($mod_id) || empty($version))
-				return Response::json(array(
-							'status' => 'error',
-							'reason' => 'Missing Post Data'
-							));
 
 			$mod = Mod::find($mod_id);
-			if (empty($mod))
-				return Response::json(array(
-							'status' => 'error',
-							'reason' => 'Could not pull mod from database'
-							));
 
             /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $file */
             if ($file = Input::file('modfile')) {
