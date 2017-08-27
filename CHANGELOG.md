@@ -1,6 +1,7 @@
 Upcoming Release
 ---
 + Added a filter in Build Management to show mods that can be updated
++ Fixed a bug where the File Explorers "return to" buttons redirected to the localhost/ equivalent.
 
 1.4.0
 ---
