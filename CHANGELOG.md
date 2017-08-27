@@ -2,6 +2,10 @@ Upcoming Release
 ---
 + Added a filter in Build Management to show mods that can be updated
 + Fixed a bug where the File Explorers "return to" buttons redirected to the localhost/ equivalent.
++ Fixed a bug where the top navigation's Update Avaiable and help nav are on seperate lines when in tablet view.
++ Added a "Builds used in" view when in the mod view.
++ Fixes a bug where the panel heading does not expand on overflow
++ Fixed a bug where you can have identical versions
 
 1.4.0
 ---
@@ -15,7 +19,7 @@ Upcoming Release
 + Created a new PlatformAPI library to connect with the Technic Platform. 
 + New checks have been added to ensure that there is no slug collision with the Technic Platform.
 + Checks have also been added to alert the user when the modpack is not on the Technic Platform.
-+ Additional integrations has been added when editing a modpack
++ Additional integrations has been added    when editing a modpack
 + Sidebar now expands when a menu is opened
 + Changed composer dependencies to be stable / latest versions
 + SolderPlus will now not overwrite the config folder when updating. Updating is still overall a difficult process.
