@@ -51,21 +51,38 @@ class BaseController extends Controller {
 	}
 
 	public function validate($rules) {
-	    $validation = Validator::make(Input::all(), $rules);
+		$validation = Validator::make(Input::all(), $rules);
 
-	    if ($validation->fails()) {
-            return Redirect::back()->withErrors($validation->messages());
-        }
-        return false;
-    }
+		if ($validation->fails()) {
+			return Redirect::back()->withErrors($validation->messages());
+		}
+		return false;
+	}
+
+	public function validateAJAX($rules) {
+		$validation = Validator::make(Input::all(), $rules);
+
+		if ($validation->fails()) {
+			$msg = [];
+			foreach ($validation->messages()->toArray() as $error) {
+				$msg[] = implode("<br>", $error);
+			}
+			return $this->error(implode("<br>", $msg));
+		}
+		return false;
+	}
 
 	public function error($message, $arr=[]) {
-		$arr['error'] = $message;
+		if (!isset($arr['status']))
+		$arr['status'] = "error";
+		if (!isset($arr['reason']))
+		$arr['reason'] = $message;
 		return Response::json($arr);
 	}
 
-	public function success($message=true, $arr=[]) {
-		$arr['success'] = $message;
+	public function success($arr=[]) {
+		if (!isset($arr['status']))
+			$arr['status'] = 'success';
 		return Response::json($arr);
 	}
 }
