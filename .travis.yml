@@ -18,15 +18,15 @@ env:
   matrix:
   # MySQL
   - DB="mysql" REPO="$TRAVIS_BUILD_DIR/public/resources/default/" REPO_TYPE="local"
-  - DB="mysql" REPO="https://github.com/stazio/SolderPlus/raw/dev/public/resources/default/mods/" REPO_TYPE="remote"
+  - DB="mysql" REPO="https://github.com/stazio/SolderPlus/raw/dev/public/resources/default/" REPO_TYPE="remote"
 
   # PgSQL
   - DB="pgsql" REPO="$TRAVIS_BUILD_DIR/public/resources/default/" REPO_TYPE="local"
-  - DB="pgsql" REPO="https://github.com/stazio/SolderPlus/raw/dev/public/resources/default/mods/" REPO_TYPE="remote"
+  - DB="pgsql" REPO="https://github.com/stazio/SolderPlus/raw/dev/public/resources/default/" REPO_TYPE="remote"
 
   # Sqlite
   - DB="sqlite" REPO="$TRAVIS_BUILD_DIR/public/resources/default/" REPO_TYPE="local"
-  - DB="sqlite" REPO="https://github.com/stazio/SolderPlus/raw/dev/public/resources/default/mods/" REPO_TYPE="remote"
+  - DB="sqlite" REPO="https://github.com/stazio/SolderPlus/raw/dev/public/resources/default/" REPO_TYPE="remote"
 
 matrix:
   fast_finish: true
@@ -49,6 +49,7 @@ install:
   fi"
 - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'create database IF NOT EXISTS solder;';
   fi"
+- sh -c "if [ '$DB' = 'sqlite' ]; then mkdir app/database; touch app/database/database.sqlite; fi"
 - php artisan migrate:install
 - php artisan migrate
 - php artisan db:seed --class="TestSeeder"
