@@ -97,7 +97,7 @@ class ModTest extends TestCase {
 		$this->assertTrue(array_key_exists('status', $json));
 		$this->assertTrue(array_key_exists('reason', $json));
 		$this->assertEquals('error', $json['status']);
-		$this->assertEquals('Missing Post Data', $json['reason']);
+		$this->assertEquals('Version cannot be blank!', $json['reason']);
 	}
 
 	public function testModVersionAddPostEmptyModID()
@@ -113,7 +113,7 @@ class ModTest extends TestCase {
 		$this->assertTrue(array_key_exists('status', $json));
 		$this->assertTrue(array_key_exists('reason', $json));
 		$this->assertEquals('error', $json['status']);
-		$this->assertEquals('Missing Post Data', $json['reason']);
+		$this->assertEquals('The mod-id field is required.', $json['reason']);
 	}
 
 	public function testModVersionAddPostInvalidModID()
@@ -129,7 +129,7 @@ class ModTest extends TestCase {
 		$this->assertTrue(array_key_exists('status', $json));
 		$this->assertTrue(array_key_exists('reason', $json));
 		$this->assertEquals('error', $json['status']);
-		$this->assertEquals('Could not pull mod from database', $json['reason']);
+		$this->assertEquals('This mod does not exist.', $json['reason']);
 	}
 
 	public function testModVersionAddPost()
