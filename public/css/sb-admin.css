@@ -29,14 +29,19 @@
         border-left: 1px solid #e7e7e7;
     }
 }
+/* Navigation */
+
+/* ------------------------------- */
+
+/*
+Fixes an issue where the Update Avaiable and the help links are on seperate lines when in tablet
+ */
+.navbar-left { float:left;}
+.navbar-right {float: right;}
 
 .navbar-static-side ul li {
     border-bottom: 1px solid #e7e7e7;
 }
-
-/* Navigation */
-
-/* ------------------------------- */
 
 /* Top Right Navigation Dropdown Styles */
 
