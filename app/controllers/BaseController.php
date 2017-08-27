@@ -50,8 +50,8 @@ class BaseController extends Controller {
 		}
 	}
 
-	public function validate($rules) {
-		$validation = Validator::make(Input::all(), $rules);
+	public function validate($rules,  $messages = []) {
+		$validation = Validator::make(Input::all(), $rules, $messages);
 
 		if ($validation->fails()) {
 			return Redirect::back()->withErrors($validation->messages());
@@ -59,8 +59,8 @@ class BaseController extends Controller {
 		return false;
 	}
 
-	public function validateAJAX($rules) {
-		$validation = Validator::make(Input::all(), $rules);
+	public function validateAJAX($rules,  $messages = []) {
+		$validation = Validator::make(Input::all(), $rules, $messages);
 
 		if ($validation->fails()) {
 			$msg = [];
