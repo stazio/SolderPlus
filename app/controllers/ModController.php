@@ -207,7 +207,12 @@ class ModController extends BaseController {
 			if ($res = $this->validateAJAX([
 				'mod-id' => 'required|exists:mods,id',
 				'add-version' => 'required|unique:modversions,version'
+			], [
+				'mod-id.exists' => 'This mod does not exist.',
+				'add-version.unique' => 'Version number already exists!',
+				'add-version.required' => 'Version cannot be blank!'
 			])) return $res;
+
 			$mod_id = Input::get('mod-id');
 			$md5 = Input::get('add-md5');
 			$version = Input::get('add-version');
