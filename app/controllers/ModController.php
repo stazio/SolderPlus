@@ -320,6 +320,81 @@ class ModController extends BaseController {
 		return Response::view('errors.missing', array(), 404);
 	}
 
+	public function getImport() {
+		return View::make('mod.import');
+	}
+
+	public function postImport() {
+		$dir = scandir(Modfile::getModFolder());
+		$arr = [];
+
+		$dir = array_filter($dir, function($val) {
+			return $val != "." && $val != ".." && is_dir(Modfile::getModFolder() . $val);
+		});
+
+		foreach ($dir as $slug) {
+				$slugVers = scandir(Modfile::getModFolder()."$slug");
+
+			$slugVers = array_filter($slugVers, function($val) use ($slug) {
+				return $val != "." && $val != ".." && is_file(Modfile::getModFolder()."$slug/$val");
+			});
+
+				if (count($slugVers) > 0) {
+					$mod = Mod::where('name', $slug)->first();
+					if (!$mod) {
+						$mod = new Mod();
+						$mod->name = $mod->pretty_name = $slug;
+
+						$mod->save();
+
+					}
+
+					$vers = [];
+					foreach ($slugVers as $slugVer) {
+						$ver = explode("$slug-", $slugVer);
+						if (count($ver) > 1) {
+							$ver = $ver[1];
+							$ver = explode('.zip', $ver);
+							if (count($ver) > 1) {
+								$ver = $ver[0];
+								if (!Modversion::where('version', $ver)->exists()) {
+									$modversion = new Modversion();
+									$modversion->version = $ver;
+									$modversion->md5 = md5_file(Modfile::getModFolder()."$slug/$slugVer");
+									$modversion->mod_id = $mod->id;
+
+									$modversion->save();
+
+									$vers[] = $modversion->version;
+								}
+							};
+						}
+					}
+
+					$data = implode('<br>', $vers);
+					if ($data != "")
+					$arr[] = [
+						$mod->pretty_name,
+						$mod->name,
+						$mod->author ? $mod->author : "",
+						$mod->description ? $mod->description : "",
+						$mod->link ? $mod->link : "",
+						$mod->donatelink ? $mod->donatelink : "",
+						[
+							Mod::MOD_TYPE_UNIVERSAL => "Universal",
+							Mod::MOD_TYPE_SERVER => "Server",
+							Mod::MOD_TYPE_CLIENT => "Client",
+						][$mod->mod_type === null ? Mod::MOD_TYPE_UNIVERSAL : $mod->mod_type],
+						$data
+					];
+				}
+			}
+
+		return $this->success([
+			'data' => $arr
+		]);
+	}
+
 	private function mod_md5($mod, $version)
 	{
 		$location = Modfile::getModFolder();
