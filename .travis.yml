@@ -49,7 +49,7 @@ install:
   fi"
 - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'create database IF NOT EXISTS solder;';
   fi"
-- sh -c "if [ '$DB' = 'sqlite' ]; then touch app/database/database.sqlite; fi"
+- sh -c "if [ '$DB' = 'sqlite' ]; then touch app/database/production.sqlite; fi"
 - php artisan migrate:install
 - php artisan migrate
 - php artisan db:seed --class="TestSeeder"
