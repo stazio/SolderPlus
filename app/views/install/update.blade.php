@@ -59,6 +59,17 @@
 <script>
     $('#update').click(function() {
         $(this).css('display', 'none');
+        $.ajax({
+            type: "POST",
+            url: "{{ URL::current() }}",
+            success: function (data) {
+                $.jGrowl('Success!', {group: 'alert-primary'})
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $("#importing").html('Checking log status failed.<br>' + textStatus + ': ' + errorThrown);
+                $.jGrowl(textStatus + ': ' + errorThrown, {group: 'alert-danger'});
+            }
+        });
         checkState();
     });
 
