@@ -4,16 +4,7 @@ class BaseController extends Controller {
 
 	public function __construct()
 	{
-		if (file_exists(app_path('version.php')))
-			include_once(app_path('version.php'));
-		else {
-			// If version.php does not exist (or is ill-definde); include a dev only version
-			if (!defined('SOLDER_STREAM'))
-				define('SOLDER_STREAM', 'DEV');
 
-			if (!defined('SOLDER_VERSION'))
-				define('SOLDER_VERSION', 'indev');
-		}
 
 		UpdateUtils::init();
 	}
@@ -50,7 +41,7 @@ class BaseController extends Controller {
 		}
 	}
 
-	public function validate($rules,  $messages = []) {
+	public  static function validate($rules,  $messages = []) {
 		$validation = Validator::make(Input::all(), $rules, $messages);
 
 		if ($validation->fails()) {
@@ -59,7 +50,7 @@ class BaseController extends Controller {
 		return false;
 	}
 
-	public function validateAJAX($rules,  $messages = []) {
+	public static  function validateAJAX($rules,  $messages = []) {
 		$validation = Validator::make(Input::all(), $rules, $messages);
 
 		if ($validation->fails()) {
@@ -67,12 +58,12 @@ class BaseController extends Controller {
 			foreach ($validation->messages()->toArray() as $error) {
 				$msg[] = implode("<br>", $error);
 			}
-			return $this->error(implode("<br>", $msg));
+			return self::error(implode("<br>", $msg));
 		}
 		return false;
 	}
 
-	public function error($message, $arr=[]) {
+	public static function error($message, $arr=[]) {
 		if (!isset($arr['status']))
 			$arr['status'] = "error";
 		if (!isset($arr['error']))
@@ -82,7 +73,7 @@ class BaseController extends Controller {
 		return Response::json($arr);
 	}
 
-	public function success($arr=[]) {
+	public static  function success($arr=[]) {
 		if (!isset($arr['status']))
 			$arr['status'] = 'success';
 		return Response::json($arr);
