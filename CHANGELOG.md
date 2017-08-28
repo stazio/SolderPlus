@@ -1,4 +1,4 @@
-Upcoming Release
+1.5.0 (Upcoming Version)
 ---
 + Added a filter in Build Management to show mods that can be updated
 + Fixed a bug where the File Explorers "return to" buttons redirected to the localhost/ equivalent.
@@ -6,6 +6,7 @@ Upcoming Release
 + Added a "Builds used in" view when in the mod view.
 + Fixes a bug where the panel heading does not expand on overflow
 + Fixed a bug where you can have identical versions
++ Added a "mod import" that imports mods from the mods repo folder.
 
 1.4.0
 ---
