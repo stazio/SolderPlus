@@ -31,3 +31,10 @@ Route::get('logout', function() {
 	Auth::logout();
 	return Redirect::to('login')->with('logout','You have been logged out.');
 });
+
+/**
+ * Updater
+ */
+
+if (file_exists(app_path('update.php')))
+	include_once ('update.php');
