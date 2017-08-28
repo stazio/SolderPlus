@@ -15,7 +15,8 @@ class UpdateUtils {
 		$allVersions = self::getAllVersions();
 
 		if(!array_key_exists('error', $allVersions)) {
-			if (self::version_compare(self::getLatestVersion()['tag_name'], SOLDER_VERSION, '>')) {
+			$version = self::getLatestVersion();
+			if (!isset($version['tag_name']) || self::version_compare(self::getLatestVersion()['tag_name'], SOLDER_VERSION, '>')) {
 				return true;
 			}
 		}
