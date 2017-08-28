@@ -3,12 +3,18 @@
     <title>Auto Import</title>
 @stop
 @section('content')
+    <div class="page-header">
+        <h1>Automatic Modfile Importing</h1>
+    </div>
     <div class="panel panel-default">
         <div class="panel-heading">
             Auto Import
         </div>
         <div class="panel-body">
-        <div class="row" >
+        <h5>
+            Import mods from the specified mods folder
+        </h5>
+        <div class="row">
             <div class="col-sm-offset-3 col-sm-6">
                 <button class="btn btn-primary center-block"
                         style="min-height: 50px; min-width: 100px;"
