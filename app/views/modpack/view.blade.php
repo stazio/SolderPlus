@@ -3,7 +3,7 @@
     <title>{{ $modpack->name }} - SolderPlus</title>
 @stop
 @section('content')
-<h1>Build Management - {{ $modpack->name }}</h1>
+<h1>Modpack Management</h1>
 <hr>
 <div class="panel panel-default">
 	<div class="panel-heading">
@@ -11,7 +11,7 @@
 			<a class="btn btn-primary btn-xs" href="{{ URL::to('modpack/add-build/'.$modpack->id) }}">Create New Build</a>
 			<a class="btn btn-warning btn-xs" href="{{ URL::to('modpack/edit/'.$modpack->id) }}">Edit Modpack</a>
 		</div>
-	Build Management: {{ $modpack->name }}
+		Managing modpack: {{ $modpack->name }}
 	</div>
 	<div class="panel-body">
 		@if (Session::has('success'))
