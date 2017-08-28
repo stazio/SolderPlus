@@ -76,7 +76,7 @@ class BaseController extends Controller {
 		if (!isset($arr['status']))
 			$arr['status'] = "error";
 		if (!isset($arr['error']))
-			$arr['reason'] = $message;
+			$arr['error'] = $message;
 		return Response::json($arr);
 	}
 
