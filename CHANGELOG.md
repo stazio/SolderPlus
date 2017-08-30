@@ -7,6 +7,7 @@
 + Fixes a bug where the panel heading does not expand on overflow
 + Fixed a bug where you can have identical versions
 + Added a "mod import" that imports mods from the mods repo folder.
++ Fixes a bug where mod uploading does not work like mentioned on Firefox.
 
 1.4.0
 ---
