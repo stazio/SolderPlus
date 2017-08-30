@@ -185,10 +185,11 @@
 
         $('#add').submit(function (e) {
             e.preventDefault();
-            console.log('hello');
-            var fd = new FormData(document.querySelector("#add"));
-            console.log(document.getElementsByName("modfile")[0].files[0]);
+            var fd = new FormData();
             fd.append('modfile', document.getElementsByName("modfile")[0].files[0]);
+            fd.append('mod-id', "{{$mod->id}}");
+            fd.append('add-version', $("#add-version").val());
+            fd.append('add-md5', $("#add-md5").val());
             var xml = new XMLHttpRequest();
             xml.responseType = "json";
             xml.addEventListener("load", function () {
