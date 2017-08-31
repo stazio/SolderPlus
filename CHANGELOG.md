@@ -8,6 +8,7 @@
 + Fixed a bug where you can have identical versions
 + Added a "mod import" that imports mods from the mods repo folder.
 + Fixes a bug where mod uploading does not work like mentioned on Firefox.
++ Began work on a version updater. **NOTE:** This is in beta and no testing has been done
 
 1.4.0
 ---
