@@ -35,6 +35,11 @@ class UpdateUtils {
 
 	}
 
+	public static function getLatestVersionTag() {
+		return isset(self::getLatestVersion()['tag_name']) ?
+			self::getLatestVersion()['tag_name'] : null;
+	}
+
 	public static function getAllVersions() {
 
 		try {
