@@ -162,6 +162,7 @@ class ModTest extends TestCase {
 		$this->assertTrue(is_a($response,'Illuminate\Http\JsonResponse'));
 		$json = $response->getData(true);
 
+		Log::info($json);
 		$this->assertTrue(array_key_exists('status', $json));
 		$this->assertTrue(array_key_exists('version', $json));
 		$this->assertTrue(array_key_exists('filesize', $json));
@@ -341,6 +342,7 @@ class ModTest extends TestCase {
 		$this->assertResponseOk();
 		$this->assertTrue(is_a($response,'Illuminate\Http\JsonResponse'));
 		$json = $response->getData(true);
+		Log::info($json);
 
 		$this->assertTrue(array_key_exists('status', $json));
 		$this->assertTrue(array_key_exists('version_id', $json));
