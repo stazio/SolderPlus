@@ -154,6 +154,7 @@ class ModTest extends TestCase {
 
 	public function testModVersionAddPostManualMD5()
 	{
+		Modversion::where('mod_id', '=', '2')->where('version', '=', '1.7.10-4.0.0')->delete();
 		//Fake an AJAX call.
 		$response = $this->call('POST', '/mod/add-version/', array("add-version"=>"1.7.10-4.0.0","add-md5"=>"butts","mod-id"=>"2"),
 						array(), array("HTTP_X_REQUESTED_WITH"=>"XMLHttpRequest"));
