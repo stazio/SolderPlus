@@ -16,18 +16,6 @@
  */
 App::before(function($request)
 {
-
-	if (file_exists(app_path('version.php')))
-		include_once(app_path('version.php'));
-	else {
-		// If version.php does not exist (or is ill-definde); include a dev only version
-		if (!defined('SOLDER_STREAM'))
-			define('SOLDER_STREAM', 'DEV');
-
-		if (!defined('SOLDER_VERSION'))
-			define('SOLDER_VERSION', 'indev');
-	}
-
     // Staz'z Installer
     if (!InstallController::isInstalled() &&
         !Request::is('install*') &&
