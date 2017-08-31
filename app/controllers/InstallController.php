@@ -6,7 +6,10 @@ class InstallController extends BaseController {
     {
         parent::__construct();
         $this->beforeFilter(function() {
-            if ($this->isInstalled() && Request::getPathInfo() != "/install/update") {
+        	if (Request::getPathInfo() == "/install/update")
+	            return;
+
+            if ($this->isInstalled()) {
                 return Redirect::to("/");
             }
 
