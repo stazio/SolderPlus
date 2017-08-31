@@ -249,11 +249,6 @@ class InstallController extends BaseController {
         return Redirect::refresh();
     }
 
-
-	public function getUpdate( ){
-		return View::make('install.update');
-	}
-
 	public function postUpdate( ){
 		set_time_limit(0);
 
