@@ -429,7 +429,7 @@ class ModController extends BaseController {
 
 	private function remote_mod_md5($mod, $version, $location, $attempts = 0)
 	{
-		$URL = $location.'mods/'.$mod->name.'/'.$mod->name.'-'.$version.'.zip';
+		$URL = $location.''.$mod->name.'/'.$mod->name.'-'.$version.'.zip';
 
 		$hash = UrlUtils::get_remote_md5($URL);
 
