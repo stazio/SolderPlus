@@ -121,6 +121,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <small class="text-muted" id="file-name"></small>
+                                            <small class="text-muted">Max file size: {{$max_file_limit}}MB</small>
                                         </div>
                                     </div>
                                     @else

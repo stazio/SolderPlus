@@ -36,7 +36,14 @@ class ModController extends BaseController {
 		if (empty($mod))
 			return Redirect::to('mod/list')->withErrors(new MessageBag(array('Mod not found')));
 
-		return View::make('mod.view')->with(array('mod' => $mod));
+		$max_upload = (int)(ini_get('upload_max_filesize'));
+		$max_post = (int)(ini_get('post_max_size'));
+		$memory_limit = (int)(ini_get('memory_limit'));
+		$upload_mb = min($max_upload, $max_post, $memory_limit);
+		if ($upload_mb <= 0)
+			$upload_mb = false;
+
+		return View::make('mod.view')->with(array('mod' => $mod, 'max_file_limit' => $upload_mb));
 	}
 
 	public function getCreate()
