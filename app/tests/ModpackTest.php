@@ -154,7 +154,7 @@ class ModpackTest extends TestCase {
 
 	public function testBuildPack() {
 		$build = Build::find(1);
-		if (getenv('REPO_TYPE') != "REMOTE") {
+		if (getenv('REPO_TYPE') != "remote") {
 			$this->call('GET', '/modpack/build-server-pack/1');
 			$this->assertResponseOk();
 			$this->assertFileExists($build->server_pack_file_path);
