@@ -154,8 +154,12 @@ class ModpackTest extends TestCase {
 
 	public function testBuildPack() {
 		$build = Build::find(1);
-		$this->call('GET', '/modpack/build-server-pack/1');
-		$this->assertResponseOk();
-		$this->assertFileExists($build->server_pack_file_path);
+		if (getenv('REPO_TYPE') != "REMOTE") {
+			$this->call('GET', '/modpack/build-server-pack/1');
+			$this->assertResponseOk();
+			$this->assertFileExists($build->server_pack_file_path);
+		}else {
+			echo("Skipping test: ModpackTest::testBuildPack. Server pack building does not work remotely");
+		}
 	}
 }

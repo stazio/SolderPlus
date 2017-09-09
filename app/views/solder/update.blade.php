@@ -34,21 +34,35 @@
 		</div>
         <div class="panel panel-default">
             <div class="panel-heading">
-            Update Check
+                Update Check
             </div>
             <div class="panel-body">
                 @if (Cache::get('update'))
-                <p id='solder-update-ajax' class="alert alert-danger">Solder is out of date. Please refer to the wiki on how to update.</p>                
+                    <p id='solder-update-ajax' class="alert alert-danger">Solder is out of date. Please refer to the wiki on how to update.</p>
                 @else
-                <p id='solder-update-ajax' class="alert alert-success">Solder is up to date</p>
+                    <p id='solder-update-ajax' class="alert alert-success">Solder is up to date</p>
                 @endif
                 <a href="http://docs.solder.io/v0.7/docs/updating-solder" target="blank_"><button id='solder-wiki' class="btn btn-default">Updating Solder <i class="fa fa-question"></i></button></a>
                 <button id='solder-update' type="submit" class="btn btn-default">Check for update</button>
                 <span id="solder-checking" style="margin-left:10px;" class="hidden"><i class="fa fa-cog fa-spin"></i> Checking...</span>
             </div>
         </div>
+            <div class="panel panel-default" id="solder-update-panel" style="{{!Cache::get('update') ? 'display: none;' : ''}}">
+                <div class="panel-heading">
+                    Update Solder
+                </div>
+                <div class="panel-body">
+                    <div>
+                    <b>An update for SolderPlus is avaiable!</b>
+                    </div>
+                    <div>
+                    <button href="javascript:update();" class="btn btn-primary" id="update">Click here to update</button>
+                    <div id="output"></div>
+                    </div>
+                </div>
+            </div>
 	</div>
-	<div class="col-lg-6">
+    <div class="col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Activity Panel</h3>
@@ -56,15 +70,15 @@
             <div class="panel-body">
                 <div class="list-group">
                     @if (array_key_exists('error', $changelog))
-                    <div class="alert alert-warning">{{ $changelog['error'] }}</div>
+                        <div class="alert alert-warning">{{ $changelog['error'] }}</div>
                     @else
-                	@foreach ($changelog as $change)
-                    <a href="{{ $change['html_url'] }}" target="blank_" class="list-group-item">
-                        <span class="badge" style="margin-left:5px;">{{  date_format(date_create($change['commit']['author']['date']), 'M, d, Y | g:i a') }}</span>
-                        <img src="{{ $change['author']['avatar_url']}}" alt="{{ $change['author']['login']}}" height="23" width="23"> {{ $change['commit']['message'] }}
-                    </a>
-                    @endforeach
-                    @endif               
+                        @foreach ($changelog as $change)
+                            <a href="{{ $change['html_url'] }}" target="blank_" class="list-group-item">
+                                <span class="badge" style="margin-left:5px;">{{  date_format(date_create($change['commit']['author']['date']), 'M, d, Y | g:i a') }}</span>
+                                <img src="{{ $change['author']['avatar_url']}}" alt="{{ $change['author']['login']}}" height="23" width="23"> {{ $change['commit']['message'] }}
+                            </a>
+                        @endforeach
+                    @endif
                 </div>
                 <div class="text-right">
                     <a href="https://github.com/stazio/SolderPlus/commits/master">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
@@ -77,6 +91,39 @@
 @section('bottom')
 <script type="text/javascript">
 
+    // Updating
+    function update(){
+        $(this).css('display', 'none');
+        $.ajax({
+            type: "POST",
+            url: "{{ URL::current() }}",
+            success: function (data) {
+                $.jGrowl('Success!', {group: 'alert-primary'})
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $("#importing").html('Checking log status failed.<br>' + textStatus + ': ' + errorThrown);
+                $.jGrowl(textStatus + ': ' + errorThrown, {group: 'alert-danger'});
+            }
+        });
+        checkState();
+    }
+
+    function checkState() {
+        $.ajax({
+            type: "GET",
+            url: "{{ URL::to('update_log.txt') }}",
+            cache: false,
+            success: function (data) {
+                $("#output").text(data);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $("#importing").html('Checking log status failed.<br>' + textStatus + ': ' + errorThrown);
+                $.jGrowl(textStatus + ': ' + errorThrown, {group: 'alert-danger'});
+            }
+        });
+        setTimeout(checkState, 500);
+    }
+
 $('#solder-update').click(function(e) {
     $("#solder-checking").removeClass("hidden");
     $("#solder-update-ajax").fadeOut();
@@ -88,17 +135,21 @@ $('#solder-update').click(function(e) {
             if (data.status == "success") {
                 if(data.update) {
                     $("#solder-update-ajax").removeClass("alert-warning alert-success alert-danger").addClass("alert-danger").html('Solder is out of date. Please refer to the wiki on how to update.').fadeIn();
+                    $("#solder-update-panel").css('display', '');
                 } else {
                     $("#solder-update-ajax").removeClass("alert-warning alert-success alert-danger").addClass("alert-success").html('Solder is up to date.').fadeIn();
+                    $("#solder-update-panel").css('display', 'none');
                 }
             } else {
                 $("#solder-update-ajax").removeClass("alert-warning alert-success alert-danger").addClass("alert-danger").html('Error checking for update. ' + data.reason);
+                $("#solder-update-panel").css('display', 'none');
             }
             $("#solder-checking").addClass("hidden");
         },
         error: function (xhr, textStatus, errorThrown) {
             $("#solder-update-ajax").removeClass("alert-warning alert-success alert-danger").addClass("alert-danger").html('Error checking for update. ' + textStatus + ': ' + errorThrown);
             $("#solder-checking").addClass("hidden");
+            $("#solder-update-panel").css('display', 'none');
         }
     });
 });

@@ -16,9 +16,18 @@ env:
   # DEPLOY_PASSWORD
   - secure: T9cqJffr/OqvKJ6Inrt3OQteO61kh7lTISOY+Ye87Ujqd7DL8v9xm4N54VGU4T7HCD20MVVcPkD0AUeeXs8Uhtxi0S6J7Z3hKLLw2ZHmUx5bT8FUIC2MDkl4x2U1FobFYdGqab7zpboy7Gar9ZPXgM9Q3Uv/0MLo/PqYiTP9AyedgfekYmZRf4mVFgVYETlZ8TIEoOJlA+Ybs4hlv8eAlz8U8Yo/+4bVyYQs4qBg3CZ+IRa/suRwxj4RMFQMQpa8oPxnrWH+UO45q9gnzY78qe+XpafuwcCow1rxTWuvEspEardI12wlqujEm1cUTHrlmw920swGkdG/r6yQuk4pmHUUU2bholocA4FhZeTItruHWO81BHW4uL5VZ4xrR5yEp48nWyj5m9wQabHvy56KLdEdlkLD1PVtqky3RJfut0mBBxr450zMb3u5JrkJ1q8edEPoVR+Z0cuvoW4hA+Cdo9+AVmKRJk33XqaHg+aVgvtMatG7CT2hDzlzSJxnC09vSxERIKqx3b3upFICIxifHHHNKLONHY82YbCOu3plh5cWJEq8RBw1mvemi+f5wl8AqaPE/DdefKauevAmJCp3h+JFFrZkZn1KiMJtLWkRagpuNi2GoQCiFUBefgS15ggZLLlqKgt1XBfpZeCRXMI8Oo3Om3ptJBaYsLl4uXIiXw8=
   matrix:
-  - DB="pgsql" REPO="$TRAVIS_BUILD_DIR/public/resources/default/" REPO_TYPE="local"
-  - DB="pgsql" REPO="$TRAVIS_BUILD_DIR/public/resources/default/" REPO_TYPE="local"
+  # MySQL
   - DB="mysql" REPO="$TRAVIS_BUILD_DIR/public/resources/default/" REPO_TYPE="local"
+  - DB="mysql" REPO="https://github.com/stazio/SolderPlus/raw/dev/public/resources/default/" REPO_TYPE="remote"
+
+  # PgSQL
+  - DB="pgsql" REPO="$TRAVIS_BUILD_DIR/public/resources/default/" REPO_TYPE="local"
+  - DB="pgsql" REPO="https://github.com/stazio/SolderPlus/raw/dev/public/resources/default/" REPO_TYPE="remote"
+
+  # Sqlite
+  - DB="sqlite" REPO="$TRAVIS_BUILD_DIR/public/resources/default/" REPO_TYPE="local"
+  - DB="sqlite" REPO="https://github.com/stazio/SolderPlus/raw/dev/public/resources/default/" REPO_TYPE="remote"
+
 matrix:
   fast_finish: true
   exclude:
@@ -40,6 +49,7 @@ install:
   fi"
 - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'create database IF NOT EXISTS solder;';
   fi"
+- sh -c "if [ '$DB' = 'sqlite' ]; then touch app/database/production.sqlite; fi"
 - php artisan migrate:install
 - php artisan migrate
 - php artisan db:seed --class="TestSeeder"

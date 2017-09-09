@@ -111,7 +111,6 @@
                                 <td><span id="add-url">N/A</span></td>
                                 <td>N/A</td>
 
-
                                 <td>
                                     @if(ModController::canUpload())
                                     <label class="btn btn-primary btn-sm" for="file">
@@ -122,6 +121,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <small class="text-muted" id="file-name"></small>
+                                            <small class="text-muted">Max file size: {{$max_file_limit}}MB</small>
                                         </div>
                                     </div>
                                     @else
@@ -151,19 +151,22 @@
                                         </button>
                                         <button class="btn btn-danger btn-xs delete" rel="{{ $ver->id }}">Delete
                                         </button>
+                                    </td>
                                 </form>
                             </tr>
-                            <tr class="version-details" rel="{{ $ver->id }}" style="display: none">
-                                <td colspan="5">
-                                    <h5>Builds Used In</h5>
-                                    <ul>
-                                        @foreach ($ver->builds as $build)
-                                            <li>{{ HTML::link('modpack/view/'.$build->modpack->id,$build->modpack->name) }}
-                                                - {{ HTML::link('modpack/build/'.$build->id,$build->version) }}</li>
-                                        @endforeach
-                                    </ul>
-                                </td>
-                            </tr>
+                            @if (count($ver->builds) > 0)
+                                <tr class="version-details" rel="{{ $ver->id }}" >
+                                    <td colspan="5">
+                                        <h5>Builds Used In</h5>
+                                        <ul>
+                                            @foreach ($ver->builds as $build)
+                                                <li>{{ HTML::link('modpack/view/'.$build->modpack->id,$build->modpack->name) }}
+                                                    - {{ HTML::link('modpack/build/'.$build->id,$build->version) }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
                         </tbody>
                     </table>
@@ -183,10 +186,11 @@
 
         $('#add').submit(function (e) {
             e.preventDefault();
-            console.log('hello');
-            var fd = new FormData(document.querySelector("#add"));
-            console.log(document.getElementsByName("modfile")[0].files[0]);
+            var fd = new FormData();
             fd.append('modfile', document.getElementsByName("modfile")[0].files[0]);
+            fd.append('mod-id', "{{$mod->id}}");
+            fd.append('add-version', $("#add-version").val());
+            fd.append('add-md5', $("#add-md5").val());
             var xml = new XMLHttpRequest();
             xml.responseType = "json";
             xml.addEventListener("load", function () {

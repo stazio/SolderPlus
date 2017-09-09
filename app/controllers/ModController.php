@@ -36,7 +36,14 @@ class ModController extends BaseController {
 		if (empty($mod))
 			return Redirect::to('mod/list')->withErrors(new MessageBag(array('Mod not found')));
 
-		return View::make('mod.view')->with(array('mod' => $mod));
+		$max_upload = (int)(ini_get('upload_max_filesize'));
+		$max_post = (int)(ini_get('post_max_size'));
+		$memory_limit = (int)(ini_get('memory_limit'));
+		$upload_mb = min($max_upload, $max_post, $memory_limit);
+		if ($upload_mb <= 0)
+			$upload_mb = false;
+
+		return View::make('mod.view')->with(array('mod' => $mod, 'max_file_limit' => $upload_mb));
 	}
 
 	public function getCreate()
@@ -204,22 +211,20 @@ class ModController extends BaseController {
 
 	public function anyAddVersion()
 	{
+			if ($res = $this->validateAJAX([
+				'mod-id' => 'required|exists:mods,id',
+				'add-version' => 'required|unique:modversions,version'
+			], [
+				'mod-id.exists' => 'This mod does not exist.',
+				'add-version.unique' => 'Version number already exists!',
+				'add-version.required' => 'Version cannot be blank!'
+			])) return $res;
 
 			$mod_id = Input::get('mod-id');
 			$md5 = Input::get('add-md5');
 			$version = Input::get('add-version');
-			if (empty($mod_id) || empty($version))
-				return Response::json(array(
-							'status' => 'error',
-							'reason' => 'Missing Post Data'
-							));
 
 			$mod = Mod::find($mod_id);
-			if (empty($mod))
-				return Response::json(array(
-							'status' => 'error',
-							'reason' => 'Could not pull mod from database'
-							));
 
             /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $file */
             if ($file = Input::file('modfile')) {
@@ -322,6 +327,81 @@ class ModController extends BaseController {
 		return Response::view('errors.missing', array(), 404);
 	}
 
+	public function getImport() {
+		return View::make('mod.import');
+	}
+
+	public function postImport() {
+		$dir = scandir(Modfile::getModFolder());
+		$arr = [];
+
+		$dir = array_filter($dir, function($val) {
+			return $val != "." && $val != ".." && is_dir(Modfile::getModFolder() . $val);
+		});
+
+		foreach ($dir as $slug) {
+				$slugVers = scandir(Modfile::getModFolder()."$slug");
+
+			$slugVers = array_filter($slugVers, function($val) use ($slug) {
+				return $val != "." && $val != ".." && is_file(Modfile::getModFolder()."$slug/$val");
+			});
+
+				if (count($slugVers) > 0) {
+					$mod = Mod::where('name', $slug)->first();
+					if (!$mod) {
+						$mod = new Mod();
+						$mod->name = $mod->pretty_name = $slug;
+
+						$mod->save();
+
+					}
+
+					$vers = [];
+					foreach ($slugVers as $slugVer) {
+						$ver = explode("$slug-", $slugVer);
+						if (count($ver) > 1) {
+							$ver = $ver[1];
+							$ver = explode('.zip', $ver);
+							if (count($ver) > 1) {
+								$ver = $ver[0];
+								if (!Modversion::where('version', $ver)->exists()) {
+									$modversion = new Modversion();
+									$modversion->version = $ver;
+									$modversion->md5 = md5_file(Modfile::getModFolder()."$slug/$slugVer");
+									$modversion->mod_id = $mod->id;
+
+									$modversion->save();
+
+									$vers[] = $modversion->version;
+								}
+							};
+						}
+					}
+
+					$data = implode('<br>', $vers);
+					if ($data != "")
+					$arr[] = [
+						$mod->pretty_name,
+						$mod->name,
+						$mod->author ? $mod->author : "",
+						$mod->description ? $mod->description : "",
+						$mod->link ? $mod->link : "",
+						$mod->donatelink ? $mod->donatelink : "",
+						[
+							Mod::MOD_TYPE_UNIVERSAL => "Universal",
+							Mod::MOD_TYPE_SERVER => "Server",
+							Mod::MOD_TYPE_CLIENT => "Client",
+						][$mod->mod_type === null ? Mod::MOD_TYPE_UNIVERSAL : $mod->mod_type],
+						$data
+					];
+				}
+			}
+
+		return $this->success([
+			'data' => $arr
+		]);
+	}
+
 	private function mod_md5($mod, $version)
 	{
 		$location = Modfile::getModFolder();
@@ -349,7 +429,7 @@ class ModController extends BaseController {
 
 	private function remote_mod_md5($mod, $version, $location, $attempts = 0)
 	{
-		$URL = $location.'mods/'.$mod->name.'/'.$mod->name.'-'.$version.'.zip';
+		$URL = $location.''.$mod->name.'/'.$mod->name.'-'.$version.'.zip';
 
 		$hash = UrlUtils::get_remote_md5($URL);
 

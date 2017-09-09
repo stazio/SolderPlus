@@ -10,6 +10,7 @@
 	<div class="panel-heading">
 	<div class="pull-right">
 		<a href="{{ URL::to('mod/create') }}" class="btn btn-xs btn-success">Add Mod</a>
+		<a href="{{ URL::to('mod/import') }}" class="btn btn-xs btn-warning">Import Mods</a>
 	</div>
 	Mod List
 	</div>

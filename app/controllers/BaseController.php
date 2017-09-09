@@ -50,22 +50,41 @@ class BaseController extends Controller {
 		}
 	}
 
-	public function validate($rules) {
-	    $validation = Validator::make(Input::all(), $rules);
+	public  static function validate($rules,  $messages = []) {
+		$validation = Validator::make(Input::all(), $rules, $messages);
 
-	    if ($validation->fails()) {
-            return Redirect::back()->withErrors($validation->messages());
-        }
-        return false;
-    }
+		if ($validation->fails()) {
+			return Redirect::back()->withErrors($validation->messages());
+		}
+		return false;
+	}
 
-	public function error($message, $arr=[]) {
-		$arr['error'] = $message;
+	public static  function validateAJAX($rules,  $messages = []) {
+		$validation = Validator::make(Input::all(), $rules, $messages);
+
+		if ($validation->fails()) {
+			$msg = [];
+			foreach ($validation->messages()->toArray() as $error) {
+				$msg[] = implode("<br>", $error);
+			}
+			return self::error(implode("<br>", $msg));
+		}
+		return false;
+	}
+
+	public static function error($message, $arr=[]) {
+		if (!isset($arr['status']))
+			$arr['status'] = "error";
+		if (!isset($arr['error']))
+			$arr['error'] = $message;
+		if (!isset($arr['reason']))
+			$arr['reason'] = $message;
 		return Response::json($arr);
 	}
 
-	public function success($message=true, $arr=[]) {
-		$arr['success'] = $message;
+	public static  function success($arr=[]) {
+		if (!isset($arr['status']))
+			$arr['status'] = 'success';
 		return Response::json($arr);
 	}
 }

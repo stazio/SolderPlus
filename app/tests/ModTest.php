@@ -97,7 +97,7 @@ class ModTest extends TestCase {
 		$this->assertTrue(array_key_exists('status', $json));
 		$this->assertTrue(array_key_exists('reason', $json));
 		$this->assertEquals('error', $json['status']);
-		$this->assertEquals('Missing Post Data', $json['reason']);
+		$this->assertEquals('Version cannot be blank!', $json['reason']);
 	}
 
 	public function testModVersionAddPostEmptyModID()
@@ -113,7 +113,7 @@ class ModTest extends TestCase {
 		$this->assertTrue(array_key_exists('status', $json));
 		$this->assertTrue(array_key_exists('reason', $json));
 		$this->assertEquals('error', $json['status']);
-		$this->assertEquals('Missing Post Data', $json['reason']);
+		$this->assertEquals('The mod-id field is required.', $json['reason']);
 	}
 
 	public function testModVersionAddPostInvalidModID()
@@ -129,7 +129,7 @@ class ModTest extends TestCase {
 		$this->assertTrue(array_key_exists('status', $json));
 		$this->assertTrue(array_key_exists('reason', $json));
 		$this->assertEquals('error', $json['status']);
-		$this->assertEquals('Could not pull mod from database', $json['reason']);
+		$this->assertEquals('This mod does not exist.', $json['reason']);
 	}
 
 	public function testModVersionAddPost()
@@ -154,6 +154,7 @@ class ModTest extends TestCase {
 
 	public function testModVersionAddPostManualMD5()
 	{
+		Modversion::where('mod_id', '=', '2')->where('version', '=', '1.7.10-4.0.0')->delete();
 		//Fake an AJAX call.
 		$response = $this->call('POST', '/mod/add-version/', array("add-version"=>"1.7.10-4.0.0","add-md5"=>"butts","mod-id"=>"2"),
 						array(), array("HTTP_X_REQUESTED_WITH"=>"XMLHttpRequest"));
@@ -162,6 +163,7 @@ class ModTest extends TestCase {
 		$this->assertTrue(is_a($response,'Illuminate\Http\JsonResponse'));
 		$json = $response->getData(true);
 
+		Log::info($json);
 		$this->assertTrue(array_key_exists('status', $json));
 		$this->assertTrue(array_key_exists('version', $json));
 		$this->assertTrue(array_key_exists('filesize', $json));
@@ -341,6 +343,7 @@ class ModTest extends TestCase {
 		$this->assertResponseOk();
 		$this->assertTrue(is_a($response,'Illuminate\Http\JsonResponse'));
 		$json = $response->getData(true);
+		Log::info($json);
 
 		$this->assertTrue(array_key_exists('status', $json));
 		$this->assertTrue(array_key_exists('version_id', $json));

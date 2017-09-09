@@ -6,6 +6,9 @@ class InstallController extends BaseController {
     {
         parent::__construct();
         $this->beforeFilter(function() {
+        	if (Request::getPathInfo() == "/install/update")
+	            return;
+
             if ($this->isInstalled()) {
                 return Redirect::to("/");
             }
@@ -245,6 +248,64 @@ class InstallController extends BaseController {
         $this->setStage(true);
         return Redirect::refresh();
     }
+
+	public function postUpdate( ){
+		set_time_limit(0);
+
+		function put($text, $die=false) {
+			file_put_contents(public_path('update_log.txt'),
+				str_replace('\n', '<br>', $text), FILE_APPEND);
+			if ($die) {
+				http_response_code(500);
+				die();
+			}
+		}
+
+
+		file_put_contents(public_path('update_log.txt'), '');
+		chdir(base_path());
+
+		put('Entering maintenance mode<br>');
+		put (shell_exec('php artisan down'));
+
+		put ('Downloading new version of SolderPlus');
+
+		//This is the file where we save the    information
+		$fp = fopen (base_path('update.zip'), 'w+');
+		//Here is the file we are downloading, replace spaces with %20
+		UpdateUtils::init();
+		$latestVersion = UpdateUtils::getLatestVersion();
+		if (!isset($latestVersion['tag_name'])) {
+			Log::error($latestVersion);
+			put('Failure. Latest version could not be checked', true);
+		}
+		$latestVersion = $latestVersion['tag_name'];
+		$ch = curl_init(str_replace(" ","%20",
+			"https://github.com/stazio/SolderPlus/releases/download/$latestVersion/$latestVersion.zip"));
+		curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+		// write curl response to file
+		curl_setopt($ch, CURLOPT_FILE, $fp);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		// get curl response
+		curl_exec($ch);
+		curl_close($ch);
+		fclose($fp);
+
+		put('Extracting');
+		$zip = new ZipArchive();
+		if (($res = $zip->open(base_path('update.zip'))) !== TRUE)
+			put('Failed to open zip file<br>' . $res, true);
+		$zip->extractTo(base_path());
+		$zip->close();
+
+		put ('Updating database<br>');
+		put (shell_exec('php artisan migrate --force'));
+
+		put('<br>Exiting maintenance mode<br>');
+		put (shell_exec('php artisan up'));
+
+		return BaseController::success();
+	}
 
     // Private Functions
     public static function isInstalled() {
