@@ -1,3 +1,7 @@
+THIS PROJECT IS NOW DEAD
+-------
+This project is now dead and will not be continued. For more information see this [issue](https://github.com/stazio/SolderPlus/issues/27).
+
 SolderPlus
 =============
 [![Build Status](https://travis-ci.org/stazio/SolderPlus.svg?branch=master)](https://travis-ci.org/stazio/SolderPlus)
